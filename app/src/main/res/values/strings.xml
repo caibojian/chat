@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">聊聊</string>
+
+    <string name="et_account_hint">账号</string>
+    <string name="et_password_hint">密码</string>
+    <string name="login_error">无法登陆？</string>
+    <string name="register">新用户</string>
+    <string name="login">登陆</string>
+    <string name="app_cancle">取消</string>
+    <string name="app_change_user">注销用户</string>
+    <string name="app_exit_user">退出</string>
+
+    <string name="tab_view_title_message">消息</string>
+    <string name="tab_view_title_contacts">联系人</string>
+    <string name="tab_view_title_trend">发现</string>
+    <string name="tab_view_title_my">我</string>
+
+</resources>
