@@ -16,28 +16,35 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 
 
+import com.baoyz.swipemenulistview.SwipeMenuListView;
+import com.cai.chat_05.MainActivity;
+import com.cai.chat_05.R;
 import com.cai.chat_05.receiver.BaseFragment;
+import com.cai.chat_05.view.EmptyLayout;
+import com.cai.chat_05.view.TitleBarView;
 
 import java.util.List;
 
+import butterknife.ButterKnife;
+import butterknife.InjectView;
 
 
 public class MessageListFragment extends BaseFragment implements
 		SwipeRefreshLayout.OnRefreshListener {
-//	private MainActivity mContext;
-//	private View mBaseView;
+	private MainActivity mContext;
+	private View mBaseView;
 //
-//	@InjectView(R.id.title_bar)
-//	protected TitleBarView mTitleBarView;
+	@InjectView(R.id.title_bar)
+	protected TitleBarView mTitleBarView;
 //
-//	@InjectView(R.id.swiperefreshlayout)
-//	protected SwipeRefreshLayout mSwipeRefreshLayout;
+	@InjectView(R.id.swiperefreshlayout)
+	protected SwipeRefreshLayout mSwipeRefreshLayout;
 //
-//	@InjectView(R.id.recyclerview)
-//	protected SwipeMenuListView mSwipeMenuListView;
+	@InjectView(R.id.recyclerview)
+	protected SwipeMenuListView mSwipeMenuListView;
 //
-//	@InjectView(R.id.error_layout)
-//	protected EmptyLayout mErrorLayout;
+	@InjectView(R.id.error_layout)
+	protected EmptyLayout mErrorLayout;
 //
 //	private MessageListAdapter adapter;
 //	private List<ChatGroup> chatGroups;
@@ -48,7 +55,7 @@ public class MessageListFragment extends BaseFragment implements
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-//		mContext = (MainActivity) getActivity();
+		mContext = (MainActivity) getActivity();
 		super.onCreate(savedInstanceState);
 //		user = (User) CacheManager.readObject(mContext,
 //				Constants.CACHE_CURRENT_USER);
@@ -61,20 +68,20 @@ public class MessageListFragment extends BaseFragment implements
 		requestData(true);
 	}
 
-//	@Override
-//	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-//							 Bundle savedInstanceState) {
-//
-//		mBaseView = inflater.inflate(R.layout.fragment_message, container,
-//				false);
-//		Log.v("org.weishe.l", "onCreateView:" + this);
-//		return mBaseView;
-//	}
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+							 Bundle savedInstanceState) {
+
+		mBaseView = inflater.inflate(R.layout.fragment_message, container,
+				false);
+		Log.v("org.weishe.l", "onCreateView:" + this);
+		return mBaseView;
+	}
 
 	@Override
 	public void onViewCreated(View view, Bundle savedInstanceState) {
 		super.onViewCreated(view, savedInstanceState);
-//		ButterKnife.inject(this, view);
+		ButterKnife.inject(this, view);
 		init();
 
 		Log.v("org.weishe.l", "onViewCreated:" + this);
@@ -82,25 +89,25 @@ public class MessageListFragment extends BaseFragment implements
 
 	private void init() {
 		// 设置上方按钮
-//		mTitleBarView.setTitleLeft(R.string.message_list_message);
-//		mTitleBarView.setTitleRight(R.string.message_list_call);
-//		mTitleBarView.setLeftRightButtonVisibility(View.GONE);
+		mTitleBarView.setTitleLeft(R.string.message_list_message);
+		mTitleBarView.setTitleRight(R.string.message_list_call);
+		mTitleBarView.setLeftRightButtonVisibility(View.GONE);
 //		// 设置下拉刷新
-//		mSwipeRefreshLayout.setOnRefreshListener(this);
-//		mSwipeRefreshLayout.setColorSchemeResources(
-//				R.color.swiperefresh_color1, R.color.swiperefresh_color2,
-//				R.color.swiperefresh_color3, R.color.swiperefresh_color4);
-//		mTitleBarView.setBtnLeft(R.string.control);
-//		mTitleBarView.setBtnRight(R.drawable.qq_constact);
+		mSwipeRefreshLayout.setOnRefreshListener(this);
+		mSwipeRefreshLayout.setColorSchemeResources(
+				R.color.swiperefresh_color1, R.color.swiperefresh_color2,
+				R.color.swiperefresh_color3, R.color.swiperefresh_color4);
+		mTitleBarView.setBtnLeft(R.string.control);
+		mTitleBarView.setBtnRight(R.drawable.qq_constact);
 //
-//		mTitleBarView.setBtnRightOnclickListener(new OnClickListener() {
-//			@Override
-//			public void onClick(View v) {
-//				// Intent intent = new Intent(mContext,
-//				// SearchFriendActivity.class);
-//				// startActivity(intent);
-//			}
-//		});
+		mTitleBarView.setBtnRightOnclickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+//				 Intent intent = new Intent(mContext,
+//				 SearchFriendActivity.class);
+//				 startActivity(intent);
+			}
+		});
 //
 //		// 新的控件
 //		adapter = new MessageListAdapter(mContext);

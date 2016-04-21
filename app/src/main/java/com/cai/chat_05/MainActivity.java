@@ -161,7 +161,7 @@ public class MainActivity extends FragmentActivity {
 
 		mTabHost = (FragmentTabHost) findViewById(R.id.tabhost);
 		mTabHost.setup(this, getSupportFragmentManager(), R.id.realtabcontent);
-		// View view =layoutInflater.inflate(R.layout.tab_view, null);
+//		 View view =layoutInflater.inflate(R.layout.tab_view, null);
 		messageView = new TableView(this);
 		contactsView = new TableView(this);
 		trendView = new TableView(this);

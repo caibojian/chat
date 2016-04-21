@@ -1,18 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">聊聊</string>
 
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+    <!-- QQ -->
+    <string name="app_name">微聊</string>
     <string name="et_account_hint">账号</string>
     <string name="et_password_hint">密码</string>
     <string name="login_error">无法登陆？</string>
     <string name="register">新用户</string>
     <string name="login">登陆</string>
+    <string name="forget_password">忘记密码?</string>
+    <string name="tv_country">中国+86</string>
+    <string name="et_phoneNumber_hint">请输入你的手机号码</string>
+    <string name="title_phoneNumber">请填写手机号码</string>
+    <string name="btn_next">下一步</string>
+    <string name="tv_xieyi">我已阅读并同意</string>
+    <string name="tv_xieyi_url">使用条款和隐私政策</string>
+    <string name="back">返回</string>
+    <string name="tv_tips_password">密码由6-16位数字,字母或符号组成,不能是9位一下纯数字组成</string>
+    <string name="tv_tips_name">建议填写你的真实姓名,让你的朋友更容易人出你,此昵称以后可以随时修改</string>
+    <string name="et_name_hint">昵称</string>
+    <string name="register_complete">完成</string>
+    <string name="title_register_info">设置密码和昵称</string>
+    <string name="tv_qq">你已获得QQ号码</string>
+    <string name="tv_qq_number">525203053</string>
+    <string name="tv_register_result">启用通讯录查找更多好友,直接发起QQ聊天,我已阅读并同意</string>
+    <string name="tv_tiaokuan">服务声明</string>
+    <string name="tv_register_success">注册成功</string>
+    <string name="register_success">进入QQ</string>
+    <string name="tv_search">搜索</string>
+    <string name="news">消息</string>
+    <string name="user_name">开心一刻</string>
+    <string name="user_feel">好好学习,天天向上</string>
+    <string name="user_time">12:30</string>
+    <string name="tv_loading">正加载,请稍后...</string>
+    <string name="no_data">网络异常...</string>
+    <string name="pop_chat">多人聊天</string>
+    <string name="pop_sangzhao">分享</string>
+    <string name="pop_camera">水印相机</string>
+    <string name="pop_scan">扫一扫</string>
     <string name="app_cancle">取消</string>
     <string name="app_change_user">注销用户</string>
     <string name="app_exit_user">退出</string>
 
+    <!-- Refresh -->
+    <string name="p2refresh_head_load_more">加载更多</string>
+    <string name="p2refresh_end_load_more">更    多</string>
+    <string name="p2refresh_end_click_load_more">点击加载</string>
+    <string name="p2refresh_release_refresh">松开立即刷新</string>
+    <string name="p2refresh_pull_to_refresh">下拉刷新</string>
+    <string name="p2refresh_doing_head_refresh">正在刷新&#8230;</string>
+    <string name="p2refresh_doing_end_refresh">加载中&#8230;</string>
+    <string name="p2refresh_refresh_lasttime">最近更新&#160;&#058;&#160;</string>
+
+    <!-- ercode -->
+    <string name="scan_tip">请将二维码置于取景框内扫描</string>
+    <string name="scan_retry">二维码扫描出错啦,请重新扫描</string>
+    <string name="scan_title">扫一扫</string>
+    <string name="sd_pic">相册</string>
+    <string name="sacn_dialog_title">是否打开链接?</string>
+    <string name="scan_url">http://www.baidu.com</string>
+    <string name="cancle">取消</string>
+    <string name="sure">确定</string>
+    <string name="camera_water">水印相机</string>
+    <string name="camera_more">更多</string>
+    <string name="camera_day">2014-04-14</string>
+    <string name="camera_hour">21:01</string>
+    <string name="camera_day_hour">2014-04-14 21:01</string>
+    <string name="camera_address">珠海</string>
+    <string name="camera_tep">23℃多云</string>
+    <string name="camera_pm">PM2.5 32</string>
+    <string name="camera_txt">静静的享受独自一个人的午后</string>
+    <string name="camera_ni">虫虫</string>
+    <string name="tiaozheng">旋转</string>
+    <string name="control">管理</string>
+    <string name="group">分组</string>
+    <string name="all">全部</string>
+    <string name="cnews">消息</string>
+    <string name="call">通话</string>
+    <string name="tv_phone">通讯录</string>
+    <string name="tv_group">群组</string>
+    <string name="tv_discuss">讨论组</string>
+    <string name="tv_life">生活服务</string>
+    <string name="friend_group">好友分组</string>
+    <string name="device">我的设备</string>
+    <string name="group_count">1/2</string>
+    <string name="child_feel">[在线]好好学习天天向上</string>
+    <string name="tv_call1">你通话过的联系人都会在这里出现</string>
+    <string name="tv_call2">快和朋友开始语音通话吧</string>
+    <string name="btn_call">找人聊聊</string>
+    <string name="recentchat">最近聊天</string>
+    <string name="choose_constact">选择联系人</string>
+    <string name="search">请输入关键字</string>
+    <string name="dynamic">动态</string>
+    <string name="mime">我</string>
+    <string name="group_control">好友分组</string>
+    <string name="group_move">移动分组</string>
+    <string name="tv_friend">好友</string>
+    <string name="tv_tongxunlu">通讯录</string>
+    <string name="wifi_state">WLAN 状态</string>
+    <string name="instruction_pre">启动服务，可以从电脑远程管理手机文件</string>
+    <string name="instruction">请在"我的电脑"地址栏输入:</string>
+    <string name="notif_server_starting">远程管理已开启</string>
+    <string name="notif_title">远程管理</string>
+    <string name="no_wifi_hint">没有WLAN网络，请检查WLAN设置</string>
+    <string name="start_server">开启服务</string>
+    <string name="stop_server">停止服务</string>
+    <string name="no_wifi">没有WLAN网络</string>
+    <string name="storage_warning">没有外部存储设备或SD卡不可用</string>
+    <string name="wifi">文件管理</string>
+
+    <!-- 复制删除 -->
+    <string name="tip_delete_success">删除成功</string>
+    <string name="tip_delete_faile">无法删除</string>
+    <string name="copy">复制</string>
+    <string name="delete">删除</string>
+    <string name="copy_success">复制成功</string>
+    <string name="deleting">正在删除…</string>
+    <string name="delete_success">删除成功</string>
+    <string name="delete_faile">删除失败</string>
+
+    <!-- 崩溃提示 -->
+    <string name="app_error">应用程序错误</string>
+    <string name="app_error_message">很抱歉，小屁孩耍脾气啦。<br />我们会帮你教训一下这个小屁孩！</string>
+    <string name="submit_report">打报告去</string>
+    <string name="ok">确定</string>
+    <!-- 加载中 -->
+    <string name="loading">加载中…</string>
+    <string name="loading_no_more">已加载全部</string>
+    <!-- Error View -->
+    <string name="error_view_click_to_refresh">点击屏幕,重新加载</string>
+    <string name="error_view_no_data">暂无内容</string>
+    <string name="error_view_loading">加载中…</string>
+    <string name="error_view_load_error_click_to_refresh">内容加载失败\r\n点击重新加载</string>
+    <string name="error_view_network_error_click_to_refresh">没有可用的网络</string>
+    <string name="tip_network_error">没有可用的网络</string>
+    <!-- 下部tab -->
     <string name="tab_view_title_message">消息</string>
     <string name="tab_view_title_contacts">联系人</string>
     <string name="tab_view_title_trend">发现</string>
     <string name="tab_view_title_my">我</string>
+    <string name="search_friends_hit">输入查找账号或者昵称</string>
+    <string name="search_chat_group_hit">输入查找群号或者群组名</string>
+    <string name="search_button">查找</string>
+    <string name="search_friends">找人</string>
+    <string name="search_group">找群</string>
+    <string name="todo_argee">同意</string>
+    <string name="todo_refuse">拒绝</string>
+    <string name="press_record">按住，录音</string>
+    <string name="release_send">松开，发送</string>
+
+    <!-- 上部title -->
+    <string name="message_list_message">消息</string>
+    <string name="message_list_call">电话</string>
+    <string name="add_friends_group">添加好友分组</string>
+    <string name="add_chat_group">创建群</string>
+    <string name="add_discussion_group">创建讨论组</string>
+    <string name="cancell">取消</string>
+    <string name="friends_search">好友查找</string>
+
+    <!-- 添加分组 -->
+    <string name="add_chat_group_hit">请输入群名称</string>
+
+    <!-- 消息状态 -->
+    <string name="message_read">已阅</string>
+    <string name="message_send">已发送</string>
+    <string name="message_receive">已接收</string>
+    <!-- 群操作 -->
+    <string name="action_leave_chat_group">退出群</string>
+    <string name="action_join_chat_group">加入群</string>
+    <string name="chat_group_member">群成员</string>
+    <!-- 分享 -->
+    <string name="share_to">分享到</string>
+    <string name="platform_qq">QQ</string>
+    <string name="platform_copy_link">复制链接</string>
+    <string name="platform_more_option">更多</string>
+    <string name="platform_sina">微博</string>
+    <string name="platform_weichat">微信</string>
+    <string name="platform_weichat_circle">朋友圈</string>
+    <string name="share_title">开源中国分享</string>
+    <string name="share_title_news">开源中国资讯分享</string>
+    <string name="share_title_blog">开源中国博客分享</string>
+    <string name="share_title_soft">开源中国软件分享</string>
+    <string name="share_title_post">开源中国帖子分享</string>
+    <string name="tip_start_share">开始分享…</string>
+    <string name="tip_share_done">分享完成</string>
+    <string name="my_qr_code">我的二维码</string>
+    <string name="scan_qr_code_hit">扫一扫上面的二维码图案，加我微聊</string>
 
 </resources>
