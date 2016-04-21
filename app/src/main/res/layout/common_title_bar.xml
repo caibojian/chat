@@ -7,7 +7,8 @@
     <RelativeLayout
         android:id="@+id/title_bar"
         android:layout_width="match_parent"
-        android:layout_height="50dp" >
+        android:layout_height="50dp"
+        android:background="#06f9f5">
 
         <Button
             android:id="@+id/title_btn_left"

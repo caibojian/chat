@@ -22,6 +22,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
+import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TabHost.OnTabChangeListener;
 import android.widget.TabHost.TabSpec;
@@ -156,30 +157,26 @@ public class MainActivity extends FragmentActivity {
 	}
 
 	private void initView() {
-
 		top = this.findViewById(R.id.top);
 
 		mTabHost = (FragmentTabHost) findViewById(R.id.tabhost);
 		mTabHost.setup(this, getSupportFragmentManager(), R.id.realtabcontent);
+
 //		 View view =layoutInflater.inflate(R.layout.tab_view, null);
 		messageView = new TableView(this);
 		contactsView = new TableView(this);
 		trendView = new TableView(this);
 		myView = new TableView(this);
 
+
 		messageView.setTitle(
-				this.getResources()
-						.getDrawable(R.drawable.tab_message_selector),
+				R.drawable.tab_message_selector,
 				this.getResources().getString(R.string.tab_view_title_message));
-		contactsView.setTitle(
-				this.getResources().getDrawable(
-						R.drawable.tab_contacts_selector), this.getResources()
+		contactsView.setTitle(R.drawable.tab_contacts_selector, this.getResources()
 						.getString(R.string.tab_view_title_contacts));
-		trendView.setTitle(
-				this.getResources().getDrawable(R.drawable.tab_trend_selector),
+		trendView.setTitle(R.drawable.tab_trend_selector,
 				this.getResources().getString(R.string.tab_view_title_trend));
-		myView.setTitle(
-				this.getResources().getDrawable(R.drawable.tab_my_selector),
+		myView.setTitle(R.drawable.tab_my_selector,
 				this.getResources().getString(R.string.tab_view_title_my));
 
 		previousTab = "message";
@@ -196,7 +193,8 @@ public class MainActivity extends FragmentActivity {
 		mTabHost.addTab(trendTabSpec, Fragment.class, null);
 		mTabHost.addTab(myTabSpec, SettingFragment.class, null);
 		mTabHost.getTabWidget().setDividerDrawable(null);
-
+		//设置高度
+		mTabHost.getTabWidget().setMinimumHeight(10);
 		mTabHost.setOnTabChangedListener(new OnTabChangeListener() {
 
 			@Override

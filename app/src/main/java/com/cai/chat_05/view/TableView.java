@@ -24,12 +24,11 @@ public class TableView extends LinearLayout {
 	}
 
 	/**
-	 * 
-	 * @param icon
+	 *  @param icon
 	 * @param title
 	 */
-	public void setTitle(Drawable icon, String title) {
-		imageView.setImageDrawable(icon);
+	public void setTitle(int icon, String title) {
+		imageView.setImageResource(icon);
 		textView.setText(title);
 	}
 
