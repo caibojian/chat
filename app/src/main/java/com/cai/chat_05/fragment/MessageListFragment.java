@@ -19,6 +19,8 @@ import android.widget.AdapterView.OnItemClickListener;
 import com.baoyz.swipemenulistview.SwipeMenuListView;
 import com.cai.chat_05.MainActivity;
 import com.cai.chat_05.R;
+import com.cai.chat_05.adppter.MessageListAdapter;
+import com.cai.chat_05.menu.creator.MessageListItemSwipeMenuCreator;
 import com.cai.chat_05.receiver.BaseFragment;
 import com.cai.chat_05.view.EmptyLayout;
 import com.cai.chat_05.view.TitleBarView;
@@ -46,7 +48,7 @@ public class MessageListFragment extends BaseFragment implements
 	@InjectView(R.id.error_layout)
 	protected EmptyLayout mErrorLayout;
 //
-//	private MessageListAdapter adapter;
+	private MessageListAdapter adapter;
 //	private List<ChatGroup> chatGroups;
 //	private List<DiscussionGroup> discussionGroups;
 //	private User user;
@@ -110,14 +112,14 @@ public class MessageListFragment extends BaseFragment implements
 		});
 //
 //		// 新的控件
-//		adapter = new MessageListAdapter(mContext);
-//		mSwipeMenuListView.setAdapter(adapter);
+		adapter = new MessageListAdapter(mContext);
+		mSwipeMenuListView.setAdapter(adapter);
 //
 //		// step 1. create a MenuCreator
-//		MessageListItemSwipeMenuCreator creator = new MessageListItemSwipeMenuCreator(
-//				mContext, this, adapter);
+		MessageListItemSwipeMenuCreator creator = new MessageListItemSwipeMenuCreator(
+				mContext, this, adapter);
 //		// set creator
-//		mSwipeMenuListView.setMenuCreator(creator);
+		mSwipeMenuListView.setMenuCreator(creator);
 //
 //		// step 2. listener item click event
 //		mSwipeMenuListView.setOnMenuItemClickListener(creator);
