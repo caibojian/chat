@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/main_bg_color"
+    android:orientation="vertical" >
+
+    <com.cai.chat_05.view.TitleBarView
+        android:id="@+id/title_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <!-- google 官方下拉刷新 -->
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swiperefreshlayout"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:visibility="visible" >
+
+        <com.baoyz.swipemenulistview.SwipeMenuListView
+            android:id="@+id/recyclerview"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:background="@color/common_title"
+            android:divider="@color/list_divider_color"
+            android:dividerHeight="1px"
+            android:scrollbars="none"
+            android:scrollingCache="true" />
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+    <com.cai.chat_05.view.EmptyLayout
+        android:id="@+id/error_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="visible" />
+
+</LinearLayout>
