@@ -12,9 +12,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 
-public class LoginActivity extends Activity {
+import com.cai.chat_05.base.BaseActivity;
 
-//	private AppContext mAppContext;
+public class LoginActivity extends BaseActivity {
+
+	private AppContext mAppContext;
 	private Context mContext;
 	private RelativeLayout rl_user;
 	private Button mLoginButton;

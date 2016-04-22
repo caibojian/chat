@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/list_item_background"
+    android:paddingBottom="6.0dip"
+    android:paddingTop="6.0dip" >
+
+    <com.cai.chat_05.view.CircularImage
+        android:id="@+id/user_photo"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="10.0dip"
+        android:contentDescription="@string/app_name"
+        android:scaleType="fitXY"
+        android:src="@drawable/channel_qq" />
+
+    <TextView
+        android:id="@+id/subject"
+        android:layout_width="fill_parent"
+        android:layout_height="25.0dip"
+        android:layout_alignRight="@+id/request_msg"
+        android:layout_marginLeft="10.0dip"
+        android:layout_toRightOf="@id/user_photo"
+        android:ellipsize="end"
+        android:gravity="left|center"
+        android:includeFontPadding="false"
+        android:padding="0.0dip"
+        android:singleLine="true"
+        android:textSize="16.0sp" />
+
+    <TextView
+        android:id="@+id/request_msg"
+        android:layout_width="fill_parent"
+        android:layout_height="25.0dip"
+        android:layout_below="@id/subject"
+        android:layout_marginLeft="10.0dip"
+        android:layout_toLeftOf="@+id/agree_btn"
+        android:layout_toRightOf="@id/user_photo"
+        android:ellipsize="end"
+        android:gravity="left|center"
+        android:includeFontPadding="false"
+        android:padding="0.0dip"
+        android:singleLine="true"
+        android:textSize="12.0sp" />
+
+    <TextView
+        android:id="@+id/todo_date"
+        android:layout_width="wrap_content"
+        android:layout_height="25.0dip"
+        android:layout_alignParentRight="true"
+        android:layout_marginLeft="10.0dip"
+        android:layout_marginRight="18.0dip"
+        android:ellipsize="end"
+        android:gravity="left|center"
+        android:includeFontPadding="false"
+        android:padding="0.0dip"
+        android:singleLine="true"
+        android:text="18:10"
+        android:textSize="10.0sp" />
+
+</RelativeLayout>

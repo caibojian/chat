@@ -20,11 +20,17 @@ import com.baoyz.swipemenulistview.SwipeMenuListView;
 import com.cai.chat_05.MainActivity;
 import com.cai.chat_05.R;
 import com.cai.chat_05.adppter.MessageListAdapter;
+import com.cai.chat_05.bean.Todo;
+import com.cai.chat_05.bean.User;
+import com.cai.chat_05.core.bean.ChatMessage;
 import com.cai.chat_05.menu.creator.MessageListItemSwipeMenuCreator;
 import com.cai.chat_05.receiver.BaseFragment;
+import com.cai.chat_05.utils.DBHelper;
 import com.cai.chat_05.view.EmptyLayout;
 import com.cai.chat_05.view.TitleBarView;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.ButterKnife;
@@ -51,7 +57,7 @@ public class MessageListFragment extends BaseFragment implements
 	private MessageListAdapter adapter;
 //	private List<ChatGroup> chatGroups;
 //	private List<DiscussionGroup> discussionGroups;
-//	private User user;
+	private User user;
 
 	private boolean firstFlag = true;
 
@@ -86,7 +92,7 @@ public class MessageListFragment extends BaseFragment implements
 		ButterKnife.inject(this, view);
 		init();
 
-		Log.v("org.weishe.l", "onViewCreated:" + this);
+		Log.v("caibojian1", "onViewCreated:" + this);
 	}
 
 	private void init() {
@@ -113,27 +119,29 @@ public class MessageListFragment extends BaseFragment implements
 //
 //		// 新的控件
 		adapter = new MessageListAdapter(mContext);
+
 		mSwipeMenuListView.setAdapter(adapter);
 //
 //		// step 1. create a MenuCreator
 		MessageListItemSwipeMenuCreator creator = new MessageListItemSwipeMenuCreator(
 				mContext, this, adapter);
+
 //		// set creator
 		mSwipeMenuListView.setMenuCreator(creator);
 //
 //		// step 2. listener item click event
-//		mSwipeMenuListView.setOnMenuItemClickListener(creator);
-//		mSwipeMenuListView.setOnItemClickListener(new OnItemClickListener() {
-//			@Override
-//			public void onItemClick(AdapterView<?> parent, View view,
-//									int position, long id) {
-//				Object o = adapter.getData().get(position);
-//
-//				if (o instanceof ChatMessage) {
-//					ChatMessage msg = (ChatMessage) o;
-//					switch (msg.getMsgType()) {
-//					case ChatMessage.MSG_TYPE_UU:
-//
+		mSwipeMenuListView.setOnMenuItemClickListener(creator);
+		mSwipeMenuListView.setOnItemClickListener(new OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+									int position, long id) {
+				Object o = adapter.getData().get(position);
+
+				if (o instanceof ChatMessage) {
+					ChatMessage msg = (ChatMessage) o;
+					switch (msg.getMsgType()) {
+					case ChatMessage.MSG_TYPE_UU:
+
 //						Friends friend = null;
 //						for (Friends friends : mContext.getFriends()) {
 //							switch (msg.getType()) {
@@ -162,8 +170,8 @@ public class MessageListFragment extends BaseFragment implements
 //						} else {
 //							Log.v("org.weishe.weichat", "好友不存在！");
 //						}
-//						break;
-//					case ChatMessage.MSG_TYPE_UCG:
+						break;
+					case ChatMessage.MSG_TYPE_UCG:
 //						ChatGroup cg = null;
 //						for (ChatGroup g : chatGroups) {
 //							if (msg.getChatGroupId() == g.getId()) {
@@ -175,8 +183,8 @@ public class MessageListFragment extends BaseFragment implements
 //							UIHelper.startChatActivity(mContext,
 //									ChatMessage.MSG_TYPE_UCG, null, cg, null);
 //						}
-//						break;
-//					case ChatMessage.MSG_TYPE_UDG:
+						break;
+					case ChatMessage.MSG_TYPE_UDG:
 //						DiscussionGroup dg = null;
 //						for (DiscussionGroup g : discussionGroups) {
 //							if (msg.getDiscussionGroupId() == g.getId()) {
@@ -188,15 +196,15 @@ public class MessageListFragment extends BaseFragment implements
 //							UIHelper.startChatActivity(mContext,
 //									ChatMessage.MSG_TYPE_UCG, null, null, dg);
 //						}
-//						break;
-//					}
-//				}
-//			}
-//		});
-//		if (!firstFlag) {
-//			requestData(false);
-//		}
-//		firstFlag = false;
+						break;
+					}
+				}
+			}
+		});
+		if (!firstFlag) {
+			requestData(false);
+		}
+		firstFlag = false;
 	}
 
 	/**
@@ -207,10 +215,29 @@ public class MessageListFragment extends BaseFragment implements
 //				user.getId());
 //		CacheManager.saveObject(mContext, data,
 //				Constants.CACHE_CURRENT_MESSAGE_LIST + "_" + user.getId());
-//		adapter.setData(data);
-//		adapter.notifyDataSetChanged();
-//		mState = STATE_NONE;
-//		setSwipeRefreshLoadedState();
+		Log.v("cai1", "onCreateView:" + mContext);
+		List data = new ArrayList();
+		ChatMessage msg = new ChatMessage(123L, 123, "聊天",
+				123, 321, new Date(), 1,
+				0, 0, 0,
+				123, true, 123456L,
+				0, "", "",
+				"adc", 2);
+		Todo todo = new Todo(456L, 123, 123, true,
+				0, 678, 0,
+				new Date(), true, true,
+				"sss", "ddd", "fff",
+				"ggg");
+		data.add(msg);
+		data.add(todo);
+		adapter.setData(data);
+		Log.v("cai2", "onCreateView:" + mContext);
+		adapter.notifyDataSetChanged();
+		Log.v("cai3", "onCreateView:" + mContext);
+		mState = STATE_NONE;
+		setSwipeRefreshLoadedState();
+		Log.v("cai4", "onCreateView:" + mContext);
+
 	}
 
 	private void requestData(boolean refresh) {
@@ -352,10 +379,10 @@ public class MessageListFragment extends BaseFragment implements
 
 	/** 设置顶部加载完毕的状态 */
 	private void setSwipeRefreshLoadedState() {
-//		if (mSwipeRefreshLayout != null) {
-//			mSwipeRefreshLayout.setRefreshing(false);
-//			mSwipeRefreshLayout.setEnabled(true);
-//		}
+		if (mSwipeRefreshLayout != null) {
+			mSwipeRefreshLayout.setRefreshing(false);
+			mSwipeRefreshLayout.setEnabled(true);
+		}
 	}
 
 	// 下拉刷新数据
