@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/whites" >
+
+    <com.cai.chat_05.sort.ClearEditText
+        android:id="@+id/filter_edit"
+        android:layout_width="fill_parent"
+        android:layout_height="35dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="5dip"
+        android:background="@drawable/acm_inputbox"
+        android:drawableLeft="@drawable/search"
+        android:hint="@string/search"
+        android:imeOptions="actionSearch"
+        android:singleLine="true"
+        android:textSize="15.0dip" />
+    <!-- android:paddingLeft="5dp" -->
+
+    <LinearLayout
+        android:id="@+id/ll_center"
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        android:layout_below="@id/filter_edit"
+        android:layout_marginTop="10dp"
+        android:background="@color/whites"
+        android:gravity="center_vertical"
+        android:orientation="horizontal" >
+
+        <RelativeLayout
+            android:id="@+id/rl_friends"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/btn_add_friends_group_selector"
+            android:clickable="true" >
+
+            <ImageView
+                android:id="@+id/iv_phone"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_centerHorizontal="true"
+                android:contentDescription="@string/app_name"
+                android:scaleType="fitXY"
+                android:src="@drawable/add_contacts_look_for_similarity" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/iv_phone"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="3dp"
+                android:text="@string/tv_friend" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_group"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/btn_add_friends_group_selector"
+            android:clickable="true" >
+
+            <ImageView
+                android:id="@+id/iv_discuss"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_centerHorizontal="true"
+                android:contentDescription="@string/app_name"
+                android:scaleType="fitXY"
+                android:src="@drawable/qq_contact_list_troop_entry_icon" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/iv_discuss"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="3dp"
+                android:text="@string/tv_group" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_discuss"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/btn_add_friends_group_selector"
+            android:clickable="true" >
+
+            <ImageView
+                android:id="@+id/iv_life"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_centerHorizontal="true"
+                android:contentDescription="@string/app_name"
+                android:scaleType="fitXY"
+                android:src="@drawable/qq_contact_list_dgroup" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/iv_life"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="3dp"
+                android:text="@string/tv_discuss" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_contacts"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/btn_add_friends_group_selector"
+            android:clickable="true" >
+
+            <ImageView
+                android:id="@+id/iv_group"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_centerHorizontal="true"
+                android:contentDescription="@string/app_name"
+                android:scaleType="fitXY"
+                android:src="@drawable/qq_contact_list_phone_enter_icon" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/iv_group"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="3dp"
+                android:text="@string/tv_tongxunlu" />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/list_view_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ll_center"
+        android:layout_margin="5dp"
+        android:gravity="center_vertical"
+        android:text="@string/tv_friend" />
+
+    <RelativeLayout
+        android:id="@+id/add_rl"
+        android:layout_width="160dip"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/list_view_title"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/btn_add_friends_group_selector"
+        android:clickable="true"
+        android:paddingLeft="10dip"
+        android:paddingRight="10dip" >
+
+        <TextView
+            android:id="@+id/add_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="@string/add_chat_group"
+            android:textSize="@dimen/text_size_16" />
+
+        <ImageView
+            android:id="@+id/add_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/add_title"
+            android:src="@drawable/ic_input_add" />
+    </RelativeLayout>
+
+    <FrameLayout
+        android:id="@+id/fcgd_list_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/add_rl" />
+
+</RelativeLayout>

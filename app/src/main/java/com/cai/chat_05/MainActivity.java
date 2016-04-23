@@ -9,6 +9,7 @@ import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.RemoteException;
@@ -29,11 +30,15 @@ import android.widget.TabHost.TabSpec;
 import android.widget.TextView;
 
 
+import com.cai.chat_05.aidl.SessionService;
 import com.cai.chat_05.bean.Constants;
 import com.cai.chat_05.fragment.ConstactFatherFragment;
 import com.cai.chat_05.fragment.MessageListFragment;
 import com.cai.chat_05.fragment.SettingFragment;
 import com.cai.chat_05.view.TableView;
+import com.google.android.gms.appindexing.Action;
+import com.google.android.gms.appindexing.AppIndex;
+import com.google.android.gms.common.api.GoogleApiClient;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +47,7 @@ public class MainActivity extends FragmentActivity {
 	public static final int START_TYPE_NORMAL = 0;
 	public static final int START_TYPE_TODO = 1;
 
-//	private SessionService mSessionService;
+	private SessionService mSessionService;
 //	private User user;
 //	private List<Friends> friends;
 //	private List<FriendsGroup> friendsGroups;
@@ -82,8 +87,8 @@ public class MainActivity extends FragmentActivity {
 //						MainActivity.this,
 //						FriendsGroup.getCacheKey(user.getId()));
 //				break;
-			default:
-				break;
+				default:
+					break;
 			}
 		}
 	};
@@ -91,7 +96,7 @@ public class MainActivity extends FragmentActivity {
 
 		@Override
 		public void onServiceConnected(ComponentName name, IBinder service) {
-//			mSessionService = SessionService.Stub.asInterface(service);
+			mSessionService = SessionService.Stub.asInterface(service);
 //			Log.v("org.weishe.weichat", "获取  SessionService！");
 //			try {
 //				int fromMessageId = 0;
@@ -119,6 +124,11 @@ public class MainActivity extends FragmentActivity {
 		}
 
 	};
+	/**
+	 * ATTENTION: This was auto-generated to implement the App Indexing API.
+	 * See https://g.co/AppIndexing/AndroidStudio for more information.
+	 */
+	private GoogleApiClient client;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -145,6 +155,9 @@ public class MainActivity extends FragmentActivity {
 		findView();
 		initView();
 		init();
+		// ATTENTION: This was auto-generated to implement the App Indexing API.
+		// See https://g.co/AppIndexing/AndroidStudio for more information.
+		client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
 	}
 
 	private void findView() {
@@ -173,7 +186,7 @@ public class MainActivity extends FragmentActivity {
 				R.drawable.tab_message_selector,
 				this.getResources().getString(R.string.tab_view_title_message));
 		contactsView.setTitle(R.drawable.tab_contacts_selector, this.getResources()
-						.getString(R.string.tab_view_title_contacts));
+				.getString(R.string.tab_view_title_contacts));
 		trendView.setTitle(R.drawable.tab_trend_selector,
 				this.getResources().getString(R.string.tab_view_title_trend));
 		myView.setTitle(R.drawable.tab_my_selector,
@@ -259,9 +272,9 @@ public class MainActivity extends FragmentActivity {
 
 	}
 
-//	public SessionService getSessionService() {
-//		return mSessionService;
-//	}
+	public SessionService getSessionService() {
+		return mSessionService;
+	}
 //
 //	public List<Friends> getFriends() {
 //		return friends;
@@ -277,7 +290,7 @@ public class MainActivity extends FragmentActivity {
 
 	/**
 	 * 当好友列表发生该表时调用
-	 * 
+	 *
 	 * @param data
 	 */
 //	public void addData(List<Friends> data) {
@@ -286,10 +299,49 @@ public class MainActivity extends FragmentActivity {
 //		}
 //		this.friends.addAll(data);
 //	}
-
 	protected void onDestroy() {
 		this.unbindService(connection);
 		this.unregisterReceiver(receiver);
 		super.onDestroy();
+	}
+
+	@Override
+	public void onStart() {
+		super.onStart();
+
+		// ATTENTION: This was auto-generated to implement the App Indexing API.
+		// See https://g.co/AppIndexing/AndroidStudio for more information.
+		client.connect();
+		Action viewAction = Action.newAction(
+				Action.TYPE_VIEW, // TODO: choose an action type.
+				"Main Page", // TODO: Define a title for the content shown.
+				// TODO: If you have web page content that matches this app activity's content,
+				// make sure this auto-generated web page URL is correct.
+				// Otherwise, set the URL to null.
+				Uri.parse("http://host/path"),
+				// TODO: Make sure this auto-generated app URL is correct.
+				Uri.parse("android-app://com.cai.chat_05/http/host/path")
+		);
+		AppIndex.AppIndexApi.start(client, viewAction);
+	}
+
+	@Override
+	public void onStop() {
+		super.onStop();
+
+		// ATTENTION: This was auto-generated to implement the App Indexing API.
+		// See https://g.co/AppIndexing/AndroidStudio for more information.
+		Action viewAction = Action.newAction(
+				Action.TYPE_VIEW, // TODO: choose an action type.
+				"Main Page", // TODO: Define a title for the content shown.
+				// TODO: If you have web page content that matches this app activity's content,
+				// make sure this auto-generated web page URL is correct.
+				// Otherwise, set the URL to null.
+				Uri.parse("http://host/path"),
+				// TODO: Make sure this auto-generated app URL is correct.
+				Uri.parse("android-app://com.cai.chat_05/http/host/path")
+		);
+		AppIndex.AppIndexApi.end(client, viewAction);
+		client.disconnect();
 	}
 }

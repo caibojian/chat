@@ -13,6 +13,10 @@ import android.webkit.WebViewClient;
 import android.widget.ZoomButtonsController;
 
 import com.cai.chat_05.LoginActivity;
+import com.cai.chat_05.MainActivity;
+import com.cai.chat_05.bean.ChatGroup;
+import com.cai.chat_05.bean.DiscussionGroup;
+import com.cai.chat_05.bean.Friends;
 
 /**
  * 界面帮助类
@@ -114,7 +118,7 @@ public class UIHelper {
 	/**
 	 * 发送App异常崩溃报告
 	 * 
-	 * @param cont
+	 * @param
 	 * @param crashReport
 	 */
 	public static void sendAppCrashReport(final Context context,
@@ -197,9 +201,9 @@ public class UIHelper {
 		mContext.finish();
 	}
 
-//	public static void startChatActivity(Activity mContext, int chatType,
-//			Friends friends, ChatGroup chatGroup,
-//			DiscussionGroup discussionGroup) {
+	public static void startChatActivity(Activity mContext, int chatType,
+										 Friends friends, ChatGroup chatGroup,
+										 DiscussionGroup discussionGroup) {
 //		Intent intent = new Intent(mContext, ChatActivity.class);
 //		intent.putExtra(Constants.INTENT_EXTRA_CHAT_TYPE, chatType);
 //		switch (chatType) {
@@ -218,7 +222,7 @@ public class UIHelper {
 //		}
 //
 //		mContext.startActivity(intent);
-//	}
+	}
 
 	public static void showMainActivity(Context mContext, int startType) {
 //		Intent intent = new Intent(mContext, MainActivity.class);
@@ -227,10 +231,10 @@ public class UIHelper {
 //		mContext.startActivity(intent);
 	}
 
-//	public static void startGroupControlActivity(MainActivity mContext) {
+	public static void startGroupControlActivity(MainActivity mContext) {
 //		Intent intent = new Intent(mContext, GroupActivity.class);
 //		mContext.startActivity(intent);
-//	}
+	}
 
 //	public static void startGroupSelectorActivity(Context context,
 //			Friends mFriends) {
@@ -239,10 +243,10 @@ public class UIHelper {
 //		context.startActivity(intent);
 //	}
 
-//	public static void startAddChatGroupActivity(Context context) {
+	public static void startAddChatGroupActivity(Context context) {
 //		Intent intent = new Intent(context, AddChatGroupActivity.class);
 //		context.startActivity(intent);
-//	}
+	}
 
 //	public static void startChatGroupInforActivity(Context context,
 //			int groupId, String type) {

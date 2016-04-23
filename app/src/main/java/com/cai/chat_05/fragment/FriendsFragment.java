@@ -13,6 +13,12 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.TextView;
 
 
+import com.cai.chat_05.MainActivity;
+import com.cai.chat_05.R;
+import com.cai.chat_05.adppter.FriendsAdapter;
+import com.cai.chat_05.sort.SideBar;
+import com.cai.chat_05.view.CustomListView;
+import com.cai.chat_05.view.LoadingView;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -20,14 +26,14 @@ import java.util.List;
 import java.util.Map;
 
 public class FriendsFragment extends Fragment {
-//	private MainActivity mContext;
-//	private CustomListView mCustomListView;
-//	private LoadingView mLoadingView;
-//	private SideBar sideBar;
+	private MainActivity mContext;
+	private CustomListView mCustomListView;
+	private LoadingView mLoadingView;
+	private SideBar sideBar;
 	private TextView dialog;
 
 	private View mBaseView;
-//	private FriendsAdapter adapter;
+	private FriendsAdapter adapter;
 	private Map<String, String> callRecords;
 	/**
 	 * 汉字转换成拼音的类
@@ -43,19 +49,19 @@ public class FriendsFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 							 Bundle savedInstanceState) {
-//		mContext = (MainActivity) getActivity();
-//		mBaseView = inflater.inflate(R.layout.fragment_all_friend, null);
-//		initView();
-//		init();
+		mContext = (MainActivity) getActivity();
+		mBaseView = inflater.inflate(R.layout.fragment_all_friend, null);
+		initView();
+		init();
 		return mBaseView;
 	}
 
 	private void initView() {
-//		mCustomListView = (CustomListView) mBaseView
-//				.findViewById(R.id.fragment_list_view);
-//		mLoadingView = (LoadingView) mBaseView.findViewById(R.id.loading);
-//		sideBar = (SideBar) mBaseView.findViewById(R.id.sidrbar);
-//		dialog = (TextView) mBaseView.findViewById(R.id.dialog);
+		mCustomListView = (CustomListView) mBaseView
+				.findViewById(R.id.fragment_list_view);
+		mLoadingView = (LoadingView) mBaseView.findViewById(R.id.loading);
+		sideBar = (SideBar) mBaseView.findViewById(R.id.sidrbar);
+		dialog = (TextView) mBaseView.findViewById(R.id.dialog);
 	}
 
 	private void init() {

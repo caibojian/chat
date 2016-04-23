@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="6.0dip"
+    android:paddingTop="6.0dip"
+    tools:context=".MainActivity" >
+
+    <com.cai.chat_05.view.CircularImage
+        android:id="@+id/user_photo"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="10.0dip"
+        android:contentDescription="@string/app_name"
+        android:scaleType="fitXY"
+        android:src="@drawable/channel_qq" />
+
+    <ImageView
+        android:id="@+id/stateicon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/user_photo"
+        android:layout_alignRight="@id/user_photo"
+        android:contentDescription="@string/app_name"
+        android:src="@drawable/status_online" />
+
+    <TextView
+        android:id="@+id/friend_list_name"
+        android:layout_width="fill_parent"
+        android:layout_height="25.0dip"
+        android:layout_marginLeft="10.0dip"
+        android:layout_marginRight="18.0dip"
+        android:layout_toRightOf="@id/user_photo"
+        android:drawableRight="@drawable/terminal_icon_ios"
+        android:ellipsize="end"
+        android:gravity="left|center"
+        android:includeFontPadding="false"
+        android:padding="0.0dip"
+        android:singleLine="true"
+        android:text="离落风清"
+        android:textSize="16.0sp" />
+
+    <TextView
+        android:id="@+id/friends_signature"
+        android:layout_width="fill_parent"
+        android:layout_height="25.0dip"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/friend_list_name"
+        android:layout_marginLeft="10.0dip"
+        android:layout_marginRight="18.0dip"
+        android:layout_toRightOf="@id/user_photo"
+        android:ellipsize="end"
+        android:gravity="left|center"
+        android:includeFontPadding="false"
+        android:padding="0.0dip"
+        android:singleLine="true"
+        android:text="好好学习"
+        android:textColor="@color/gray"
+        android:textSize="12.0sp" />
+
+</RelativeLayout>
