@@ -13,7 +13,10 @@ import android.widget.TextView;
 
 import com.cai.chat_05.MainActivity;
 import com.cai.chat_05.R;
+import com.cai.chat_05.bean.Attachment;
+import com.cai.chat_05.bean.ChatGroup;
 import com.cai.chat_05.bean.Todo;
+import com.cai.chat_05.bean.User;
 import com.cai.chat_05.core.bean.ChatMessage;
 import com.cai.chat_05.view.CircularImage;
 
@@ -33,8 +36,8 @@ public class MessageListAdapter extends BaseAdapter {
 	public static final int TYPE_TODO = 4;
 	private MainActivity mActivity;
 	private List data;
-//	private User user;
-//	private List<ChatGroup> chatGroups;
+	private User user;
+	private List<ChatGroup> chatGroups;
 	private LayoutInflater mInflater;
 
 	public MessageListAdapter(MainActivity context) {
@@ -249,16 +252,16 @@ public class MessageListAdapter extends BaseAdapter {
 			// mhcg.avatarView.setImageResource(R.drawable.channel_qq);
 			String namecg = "";
 
-//			for (ChatGroup cg : chatGroups) {
-//				if (cg.getId() == message.getChatGroupId()) {
-//					namecg = cg.getName();
-//				}
-//			}
-//			mhcg.avatarView.setImageDrawable(mActivity.getResources()
-//					.getDrawable(R.drawable.grouphead_normal));
-//			mhcg.nameView.setText(namecg);
+			for (ChatGroup cg : chatGroups) {
+				if (cg.getId() == message.getChatGroupId()) {
+					namecg = cg.getName();
+				}
+			}
+			mhcg.avatarView.setImageDrawable(mActivity.getResources()
+					.getDrawable(R.drawable.grouphead_normal));
+			mhcg.nameView.setText(namecg);
 //			mhcg.dateView.setText(StringUtils.friendly_time(message.getDate()));
-//			if (message.getContentType() == ChatMessage.CONTENT_TYPE_ATTACHMENT) {
+			if (message.getContentType() == ChatMessage.CONTENT_TYPE_ATTACHMENT) {
 //				Attachment a = DBHelper.getgetInstance(mActivity)
 //						.getAttachment(message.getFileGroupName(),
 //								message.getFilePath());
@@ -276,15 +279,15 @@ public class MessageListAdapter extends BaseAdapter {
 //					}
 //
 //				}
-//			} else {
-//
+			} else {
+
 //				Spanned span = Html.fromHtml(TweetTextView.modifyPath(message
 //						.getContent()));
 //				span = InputHelper.displayEmoji(mActivity.getResources(),
 //						span.toString());
 //
 //				mhcg.messageView.setText(span);
-//			}
+			}
 
 			break;
 		case TYPE_UDG_CHATMESSAGE:

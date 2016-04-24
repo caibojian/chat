@@ -20,6 +20,8 @@ import com.baoyz.swipemenulistview.SwipeMenuListView;
 import com.cai.chat_05.MainActivity;
 import com.cai.chat_05.R;
 import com.cai.chat_05.adppter.MessageListAdapter;
+import com.cai.chat_05.bean.ChatGroup;
+import com.cai.chat_05.bean.Friends;
 import com.cai.chat_05.bean.Todo;
 import com.cai.chat_05.bean.User;
 import com.cai.chat_05.core.bean.ChatMessage;
@@ -55,7 +57,7 @@ public class MessageListFragment extends BaseFragment implements
 	protected EmptyLayout mErrorLayout;
 //
 	private MessageListAdapter adapter;
-//	private List<ChatGroup> chatGroups;
+	private List<ChatGroup> chatGroups;
 //	private List<DiscussionGroup> discussionGroups;
 	private User user;
 
@@ -142,47 +144,47 @@ public class MessageListFragment extends BaseFragment implements
 					switch (msg.getMsgType()) {
 					case ChatMessage.MSG_TYPE_UU:
 
-//						Friends friend = null;
-//						for (Friends friends : mContext.getFriends()) {
-//							switch (msg.getType()) {
-//							case ChatMessage.TYPE_RECEIVE:
-//								if (friends.getUserId() == msg.getFromId()) {
-//									friend = friends;
-//								}
-//								break;
-//							case ChatMessage.TYPE_SEND:
-//								if (friends.getUserId() == msg.getToId()) {
-//									friend = friends;
-//								}
-//								break;
-//							default:
-//								break;
-//							}
-//						}
-//						if (friend != null) {
-//							// 将所有与该人聊天的记录都至为已读
+						Friends friend = null;
+						for (Friends friends : mContext.getFriends()) {
+							switch (msg.getType()) {
+							case ChatMessage.TYPE_RECEIVE:
+								if (friends.getUserId() == msg.getFromId()) {
+									friend = friends;
+								}
+								break;
+							case ChatMessage.TYPE_SEND:
+								if (friends.getUserId() == msg.getToId()) {
+									friend = friends;
+								}
+								break;
+							default:
+								break;
+							}
+						}
+						if (friend != null) {
+							// 将所有与该人聊天的记录都至为已读
 //							DBHelper.getgetInstance(mContext)
 //									.updateChatMessageChecked(user.getId(),
 //											friend.getUserId());
 //							// rushDBData();
 //							UIHelper.startChatActivity(mContext,
 //									ChatMessage.MSG_TYPE_UU, friend, null, null);
-//						} else {
-//							Log.v("org.weishe.weichat", "好友不存在！");
-//						}
+						} else {
+							Log.v("org.weishe.weichat", "好友不存在！");
+						}
 						break;
 					case ChatMessage.MSG_TYPE_UCG:
-//						ChatGroup cg = null;
-//						for (ChatGroup g : chatGroups) {
-//							if (msg.getChatGroupId() == g.getId()) {
-//								cg = g;
-//								break;
-//							}
-//						}
-//						if (cg != null) {
+						ChatGroup cg = null;
+						for (ChatGroup g : chatGroups) {
+							if (msg.getChatGroupId() == g.getId()) {
+								cg = g;
+								break;
+							}
+						}
+						if (cg != null) {
 //							UIHelper.startChatActivity(mContext,
 //									ChatMessage.MSG_TYPE_UCG, null, cg, null);
-//						}
+						}
 						break;
 					case ChatMessage.MSG_TYPE_UDG:
 //						DiscussionGroup dg = null;
@@ -221,7 +223,7 @@ public class MessageListFragment extends BaseFragment implements
 				123, 321, new Date(), 1,
 				0, 0, 0,
 				123, true, 123456L,
-				0, "", "",
+				0, "111", "1111",
 				"adc", 2);
 		Todo todo = new Todo(456L, 123, 123, true,
 				0, 678, 0,
@@ -370,11 +372,11 @@ public class MessageListFragment extends BaseFragment implements
 
 	/** 设置顶部正在加载的状态 */
 	private void setSwipeRefreshLoadingState() {
-//		if (mSwipeRefreshLayout != null) {
-//			mSwipeRefreshLayout.setRefreshing(true);
-//			// 防止多次重复刷新
-//			mSwipeRefreshLayout.setEnabled(false);
-//		}
+		if (mSwipeRefreshLayout != null) {
+			mSwipeRefreshLayout.setRefreshing(true);
+			// 防止多次重复刷新
+			mSwipeRefreshLayout.setEnabled(false);
+		}
 	}
 
 	/** 设置顶部加载完毕的状态 */

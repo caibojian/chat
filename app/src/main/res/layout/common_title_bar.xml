@@ -8,7 +8,7 @@
         android:id="@+id/title_bar"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="#06f9f5">
+        android:background="#f2f9f9">
 
         <Button
             android:id="@+id/title_btn_left"

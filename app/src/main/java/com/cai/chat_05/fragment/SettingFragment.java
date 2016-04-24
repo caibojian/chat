@@ -15,54 +15,62 @@ import android.widget.PopupWindow.OnDismissListener;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.cai.chat_05.R;
+import com.cai.chat_05.bean.Attachment;
+import com.cai.chat_05.bean.User;
+import com.cai.chat_05.view.CircularImage;
+import com.cai.chat_05.view.TitleBarView;
+
+import butterknife.ButterKnife;
+import butterknife.InjectView;
 
 
 public class SettingFragment extends Fragment {
 
 	private Activity mContext;
 	private View mBaseView;
-//	@InjectView(R.id.title_bar)
-//	protected TitleBarView mTitleBarView;
+	@InjectView(R.id.title_bar)
+	protected TitleBarView mTitleBarView;
 
 	private PopupWindow mPopupWindow;
 	private ImageView mChats, mShare, mCamera, mScan;
 	private View mPopView;
 
-//	@InjectView(R.id.pic)
-//	protected CircularImage photo;
+	@InjectView(R.id.pic)
+	protected CircularImage photo;
 
-//	@InjectView(R.id.name)
-//	protected TextView name;
-//	@InjectView(R.id.signature)
-//	protected TextView signature;
+	@InjectView(R.id.name)
+	protected TextView name;
+	@InjectView(R.id.signature)
+	protected TextView signature;
 
-//	@InjectView(R.id.set_rl)
-//	protected RelativeLayout setRl;
-//
-//	@InjectView(R.id.qr_code_rl)
-//	protected RelativeLayout qrCodeRl;
-//	@InjectView(R.id.update_rl)
-//	protected RelativeLayout updateRl;
-//	@InjectView(R.id.gender)
-//	protected ImageView gender;
-//
-//	@InjectView(R.id.rl_canvers)
-//	protected RelativeLayout mCanversLayout;
+	@InjectView(R.id.set_rl)
+	protected RelativeLayout setRl;
+
+	@InjectView(R.id.qr_code_rl)
+	protected RelativeLayout qrCodeRl;
+	@InjectView(R.id.update_rl)
+	protected RelativeLayout updateRl;
+	@InjectView(R.id.gender)
+	protected ImageView gender;
+
+	@InjectView(R.id.rl_canvers)
+	protected RelativeLayout mCanversLayout;
 
 //	final UMSocialService mController = UMServiceFactory
 //			.getUMSocialService("com.umeng.share");
 	public static final String DEFAULT = "http://www.weishe.org/";
 	private String mCurrentUrl = DEFAULT;
-//	private User user;
+	private User user;
 
-//	private Attachment avatar;
+	private Attachment avatar;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 							 Bundle savedInstanceState) {
-//		mContext = getActivity();
-//		mBaseView = inflater.inflate(R.layout.fragment_my, null);
-//		mPopView = inflater.inflate(R.layout.fragment_tools_pop, null);
+		mContext = getActivity();
+		mBaseView = inflater.inflate(R.layout.fragment_my, null);
+		mPopView = inflater.inflate(R.layout.fragment_tools_pop, null);
 //		user = (User) CacheManager.readObject(mContext,
 //				Constants.CACHE_CURRENT_USER);
 //		avatar = JSON.parseObject(user.getAvatar(), Attachment.class);
@@ -76,65 +84,65 @@ public class SettingFragment extends Fragment {
 	}
 
 	private void init(View view) {
-//		ButterKnife.inject(this, view);
-//
-//		mTitleBarView.setCommonTitle(View.GONE, View.VISIBLE, View.GONE,
-//				View.VISIBLE);
-//		mTitleBarView.setTitleText(R.string.mime);
-//		mTitleBarView.setBtnRight(R.drawable.skin_conversation_title_right_btn);
-//		mTitleBarView.setBtnRightOnclickListener(new OnClickListener() {
-//			@Override
-//			public void onClick(View v) {
-//				mTitleBarView.setPopWindow(mPopupWindow, mTitleBarView);
-//				mCanversLayout.setVisibility(View.VISIBLE);
-//			}
-//		});
-//
-//		mChats = (ImageView) mPopView.findViewById(R.id.pop_chat);
-//		mShare = (ImageView) mPopView.findViewById(R.id.pop_sangzhao);
-//		mCamera = (ImageView) mPopView.findViewById(R.id.pop_camera);
-//		mScan = (ImageView) mPopView.findViewById(R.id.pop_scan);
-//
-//		mPopupWindow = new PopupWindow(mPopView, LayoutParams.MATCH_PARENT,
-//				LayoutParams.WRAP_CONTENT, true);
-//		mPopupWindow.setOnDismissListener(new OnDismissListener() {
-//			@Override
-//			public void onDismiss() {
-//				mTitleBarView
-//						.setBtnRight(R.drawable.skin_conversation_title_right_btn);
-//				mCanversLayout.setVisibility(View.GONE);
-//			}
-//		});
-//
-//		mScan.setOnClickListener(new OnClickListener() {
-//			@Override
-//			public void onClick(View v) {
+		ButterKnife.inject(this, view);
+
+		mTitleBarView.setCommonTitle(View.GONE, View.VISIBLE, View.GONE,
+				View.VISIBLE);
+		mTitleBarView.setTitleText(R.string.mime);
+		mTitleBarView.setBtnRight(R.drawable.skin_conversation_title_right_btn);
+		mTitleBarView.setBtnRightOnclickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				mTitleBarView.setPopWindow(mPopupWindow, mTitleBarView);
+				mCanversLayout.setVisibility(View.VISIBLE);
+			}
+		});
+
+		mChats = (ImageView) mPopView.findViewById(R.id.pop_chat);
+		mShare = (ImageView) mPopView.findViewById(R.id.pop_sangzhao);
+		mCamera = (ImageView) mPopView.findViewById(R.id.pop_camera);
+		mScan = (ImageView) mPopView.findViewById(R.id.pop_scan);
+
+		mPopupWindow = new PopupWindow(mPopView, LayoutParams.MATCH_PARENT,
+				LayoutParams.WRAP_CONTENT, true);
+		mPopupWindow.setOnDismissListener(new OnDismissListener() {
+			@Override
+			public void onDismiss() {
+				mTitleBarView
+						.setBtnRight(R.drawable.skin_conversation_title_right_btn);
+				mCanversLayout.setVisibility(View.GONE);
+			}
+		});
+
+		mScan.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
 //				UIHelper.startErCodeScanActivity(mContext);
 //				mPopupWindow.dismiss();
-//			}
-//		});
-//
-//		mCamera.setOnClickListener(new OnClickListener() {
-//
-//			@Override
-//			public void onClick(View v) {
+			}
+		});
+
+		mCamera.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
 //				Intent intent = new Intent(mContext, WaterCameraActivity.class);
 //				startActivity(intent);
 //				mPopupWindow.dismiss();
-//
-//			}
-//		});
-//		mShare.setOnClickListener(new OnClickListener() {
-//
-//			@Override
-//			public void onClick(View v) {
+
+			}
+		});
+		mShare.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
 //				Intent intent = new Intent(mContext, WaterCameraActivity.class);
 //
 //				mPopupWindow.dismiss();
 //				showSharedDialog();
-//			}
-//		});
-//
+			}
+		});
+
 //		name.setText(user.getName());
 //		signature.setText(user.getSignature());
 //		switch (user.getGender()) {
@@ -146,23 +154,23 @@ public class SettingFragment extends Fragment {
 //			gender.setImageResource(R.drawable.male);
 //			break;
 //		}
-//		if (avatar != null) {
+		if (avatar != null) {
 //			photo.setImage(avatar.getGroupName(), avatar.getPath());
-//		}
-//
-//		qrCodeRl.setOnClickListener(new OnClickListener() {
-//			@Override
-//			public void onClick(View v) {
+		}
+
+		qrCodeRl.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
 //				UIHelper.startQrCodeActivity(mContext);
-//			}
-//		});
-//
-//		updateRl.setOnClickListener(new OnClickListener() {
-//			@Override
-//			public void onClick(View v) {
+			}
+		});
+
+		updateRl.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
 //				UpdateManager.getUpdateManager().checkAppUpdate(mContext, true);
-//			}
-//		});
+			}
+		});
 	}
 
 	/**
@@ -256,7 +264,7 @@ public class SettingFragment extends Fragment {
 	}
 
 	private void shareToSinaWeibo() {
-		// 设置新浪微博SSO handler
+//		// 设置新浪微博SSO handler
 //		mController.getConfig().setSsoHandler(new SinaSsoHandler());
 //		if (OauthHelper.isAuthenticated(getActivity(), SHARE_MEDIA.SINA)) {
 //			shareContent(SHARE_MEDIA.SINA);
