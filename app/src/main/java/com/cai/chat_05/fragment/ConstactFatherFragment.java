@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.RemoteException;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -62,6 +63,7 @@ public class ConstactFatherFragment extends Fragment {
 //				} catch (RemoteException e) {
 //					e.printStackTrace();
 //				}
+				UIHelper.startSearchActivity(getActivity());
 			}
 		});
 
@@ -90,14 +92,18 @@ public class ConstactFatherFragment extends Fragment {
 			@SuppressLint("NewApi")
 			@Override
 			public void onClick(View v) {
+
 				if (mTitleBarView.getTitleRight().isEnabled()) {
 					mTitleBarView.getTitleLeft().setEnabled(true);
 					mTitleBarView.getTitleRight().setEnabled(false);
 
 					FragmentTransaction ft = getFragmentManager()
 							.beginTransaction();
+					Log.v("com.cai.chat_05.fragment.ConstactFatherFragment1", "点击右边按钮！");
 					friendFragment = getFriendsFragment();
+
 					ft.replace(R.id.rl_content, friendFragment);
+					Log.v("com.cai.chat_05.fragment.ConstactFatherFragment2", "点击右边按钮！");
 					ft.commit();
 				}
 

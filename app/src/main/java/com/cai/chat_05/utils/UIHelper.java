@@ -14,6 +14,7 @@ import android.widget.ZoomButtonsController;
 
 import com.cai.chat_05.LoginActivity;
 import com.cai.chat_05.MainActivity;
+import com.cai.chat_05.SearchActivity;
 import com.cai.chat_05.bean.ChatGroup;
 import com.cai.chat_05.bean.DiscussionGroup;
 import com.cai.chat_05.bean.Friends;
@@ -172,6 +173,12 @@ public class UIHelper {
 //		intent.putExtra(Constants.INTENT_EXTRA_USER_ID, userId);
 //		intent.putExtra(Constants.INTENT_EXTRA_TOKEN, token);
 //		context.startActivity(intent);
+	}
+	//测试用
+	public static void startSearchActivity(Activity context) {
+
+		Intent intent = new Intent(context, SearchActivity.class);
+		context.startActivity(intent);
 	}
 
 	/**

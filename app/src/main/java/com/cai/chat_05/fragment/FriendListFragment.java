@@ -30,6 +30,7 @@ import android.widget.TextView;
 import com.cai.chat_05.MainActivity;
 import com.cai.chat_05.R;
 import com.cai.chat_05.adppter.FriendListAdapter;
+import com.cai.chat_05.bean.Constants;
 import com.cai.chat_05.bean.Friends;
 import com.cai.chat_05.receiver.BaseFragment;
 import com.cai.chat_05.view.EmptyLayout;
@@ -227,11 +228,11 @@ public class FriendListFragment extends BaseFragment implements
 
 	@Override
 	public void registerReceiver(BroadcastReceiver receiver) {
-//		IntentFilter intentFilter = new IntentFilter();
-//		intentFilter.addAction(Constants.INTENT_ACTION_RECEIVE_FRIEND_LIST);
-//		intentFilter
-//				.addAction(Constants.INTENT_ACTION_RECEIVE_FRIEND_GROUP_LIST);
-//		mainActivity.registerReceiver(receiver, intentFilter);
+		IntentFilter intentFilter = new IntentFilter();
+		intentFilter.addAction(Constants.INTENT_ACTION_RECEIVE_FRIEND_LIST);
+		intentFilter
+				.addAction(Constants.INTENT_ACTION_RECEIVE_FRIEND_GROUP_LIST);
+		mainActivity.registerReceiver(receiver, intentFilter);
 	}
 
 	@Override

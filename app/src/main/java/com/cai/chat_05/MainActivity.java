@@ -32,6 +32,8 @@ import android.widget.TextView;
 
 import com.cai.chat_05.aidl.SessionService;
 import com.cai.chat_05.bean.Constants;
+import com.cai.chat_05.bean.Friends;
+import com.cai.chat_05.bean.FriendsGroup;
 import com.cai.chat_05.fragment.ConstactFatherFragment;
 import com.cai.chat_05.fragment.MessageListFragment;
 import com.cai.chat_05.fragment.SettingFragment;
@@ -49,8 +51,8 @@ public class MainActivity extends FragmentActivity {
 
 	private SessionService mSessionService;
 //	private User user;
-//	private List<Friends> friends;
-//	private List<FriendsGroup> friendsGroups;
+	private List<Friends> friends;
+	private List<FriendsGroup> friendsGroups;
 
 	protected static final String TAG = "MainActivity";
 	private Context mContext;
@@ -275,30 +277,30 @@ public class MainActivity extends FragmentActivity {
 	public SessionService getSessionService() {
 		return mSessionService;
 	}
-//
-//	public List<Friends> getFriends() {
-//		return friends;
-//	}
-//
-//	public void setFriends(List<Friends> friends) {
-//		this.friends = friends;
-//	}
-//
-//	public void setFriendsGroups(List<FriendsGroup> friendsGroups) {
-//		this.friendsGroups = friendsGroups;
-//	}
+
+	public List<Friends> getFriends() {
+		return friends;
+	}
+
+	public void setFriends(List<Friends> friends) {
+		this.friends = friends;
+	}
+
+	public void setFriendsGroups(List<FriendsGroup> friendsGroups) {
+		this.friendsGroups = friendsGroups;
+	}
 
 	/**
 	 * 当好友列表发生该表时调用
 	 *
 	 * @param data
 	 */
-//	public void addData(List<Friends> data) {
-//		if (friends == null) {
-//			friends = new ArrayList<Friends>();
-//		}
-//		this.friends.addAll(data);
-//	}
+	public void addData(List<Friends> data) {
+		if (friends == null) {
+			friends = new ArrayList<Friends>();
+		}
+		this.friends.addAll(data);
+	}
 	protected void onDestroy() {
 		this.unbindService(connection);
 		this.unregisterReceiver(receiver);

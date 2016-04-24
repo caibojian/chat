@@ -7,7 +7,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
 
-        <org.weishe.weichat.view.CustomListView
+        <com.cai.chat_05.view.CustomListView
             android:id="@+id/fragment_list_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -26,13 +26,13 @@
             android:visibility="invisible" />
     </FrameLayout>
 
-    <org.weishe.weichat.sort.SideBar
+    <com.cai.chat_05.sort.SideBar
         android:id="@+id/sidrbar"
         android:layout_width="30.0dip"
         android:layout_height="fill_parent"
         android:layout_alignParentRight="true" />
 
-    <org.weishe.weichat.view.LoadingView
+    <com.cai.chat_05.view.LoadingView
         android:id="@+id/loading"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
