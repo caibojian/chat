@@ -1,6 +1,7 @@
 package com.cai.chat_05.fragment;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.RemoteException;
 import android.support.v4.app.Fragment;
@@ -14,6 +15,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.TextView;
 
 
+import com.cai.chat_05.ChatActivity;
 import com.cai.chat_05.MainActivity;
 import com.cai.chat_05.R;
 import com.cai.chat_05.adppter.FriendsAdapter;
@@ -114,6 +116,10 @@ public class FriendsFragment extends Fragment {
 				 * String number = callRecords.get(((Friends) adapter
 				 * .getItem(position)).getName());
 				 */
+				Intent intent = new Intent();
+				intent.setClass(mContext, ChatActivity.class);
+				startActivity(intent);
+
 
 			}
 		});

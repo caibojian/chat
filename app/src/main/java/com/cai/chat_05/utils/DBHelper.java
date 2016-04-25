@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 
+import com.cai.chat_05.bean.Attachment;
 import com.cai.chat_05.bean.Todo;
 import com.cai.chat_05.core.bean.ChatMessage;
 
@@ -45,7 +46,7 @@ public class DBHelper {
 		}
 	}
 
-//	public void addChatMessage(ChatMessage chatMessage, int whoId) {
+	public void addChatMessage(ChatMessage chatMessage, int whoId) {
 //		ChatMessageDao chatMessageDao = daoSession.getChatMessageDao();
 //		QueryBuilder<ChatMessage> qb = chatMessageDao.queryBuilder();
 //		// 先查询
@@ -102,7 +103,7 @@ public class DBHelper {
 //		 * } else { chatMessageDao.insert(chatMessage); } break; default: break;
 //		 * }
 //		 */
-//	}
+	}
 
 //	public void addTodo(Todo todo) {
 //		TodoDao todoDao = daoSession.getTodoDao();
@@ -130,8 +131,8 @@ public class DBHelper {
 	 * @param pageSize
 	 * @return
 	 */
-//	public List<ChatMessage> getChatMessageByPage(int userId, int chatWithId,
-//												  int chatType, int pageSize) {
+	public List<ChatMessage> getChatMessageByPage(int userId, int chatWithId,
+												  int chatType, int pageSize) {
 //		ChatMessageDao chatMessageDao = daoSession.getChatMessageDao();
 //		QueryBuilder<ChatMessage> qb = chatMessageDao.queryBuilder();
 //		switch (chatType) {
@@ -159,7 +160,8 @@ public class DBHelper {
 //
 //		qb.limit(pageSize);
 //		return qb.list();
-//	}
+		return null;
+	}
 
 	/**
 	 * 获取当前用户下载的最大messsageid
@@ -420,7 +422,7 @@ public class DBHelper {
 	 * 
 	 * @param attachment
 	 */
-//	public Attachment addAttachment(Attachment attachment) {
+	public Attachment addAttachment(Attachment attachment) {
 //		AttachmentDao attachmentDao = daoSession.getAttachmentDao();
 //
 //		QueryBuilder<Attachment> qb = attachmentDao.queryBuilder();
@@ -443,10 +445,10 @@ public class DBHelper {
 //				return attachment;
 //			}
 //		}
-//		return null;
-//	}
+		return null;
+	}
 
-//	public Attachment getAttachment(String groupName, String path) {
+	public Attachment getAttachment(String groupName, String path) {
 //		AttachmentDao attachmentDao = daoSession.getAttachmentDao();
 //
 //		QueryBuilder<Attachment> qb = attachmentDao.queryBuilder();
@@ -455,9 +457,10 @@ public class DBHelper {
 //				org.weishe.weichat.AttachmentDao.Properties.Path.eq(path));
 //		Attachment a = qb.unique();
 //		return a;
-//	}
+		return null;
+	}
 
-//	public Attachment getAttachment(long attachmentId) {
+	public Attachment getAttachment(long attachmentId) {
 //		AttachmentDao attachmentDao = daoSession.getAttachmentDao();
 //
 //		QueryBuilder<Attachment> qb = attachmentDao.queryBuilder();
@@ -465,7 +468,8 @@ public class DBHelper {
 //				.eq(attachmentId));
 //		Attachment a = qb.unique();
 //		return a;
-//	}
+		return null;
+	}
 
 	/**
 	 * 更新本地数据库中为附件消息而又没有附件id的数据

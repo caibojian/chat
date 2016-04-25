@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clickable="false"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:id="@+id/message_layout_timecontainer"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="15dip"
+        android:layout_marginTop="15dip"
+        android:gravity="center"
+        android:visibility="visible" >
+
+        <LinearLayout
+            android:id="@+id/message_timestamp_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:layout_marginLeft="5dip"
+            android:layout_marginRight="5dip"
+            android:gravity="center" >
+
+            <TextView
+                android:id="@+id/message_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="09-06 10:19"
+                android:textColor="@color/font_value"
+                android:textSize="12.0sp" />
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="fill_parent"
+            android:layout_height="1dip"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="55dip"
+            android:layout_toLeftOf="@+id/message_timestamp_layout"
+            android:background="@color/timestampline" />
+
+        <ImageView
+            android:layout_width="fill_parent"
+            android:layout_height="1dip"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="55dip"
+            android:layout_toRightOf="@+id/message_timestamp_layout"
+            android:background="@color/timestampline" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="40dip"
+        android:paddingBottom="4dip"
+        android:paddingTop="10dip" >
+
+        <RelativeLayout
+            android:id="@+id/chat_friend_left_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="5dip"
+            android:layout_marginRight="5dip" >
+
+            <!-- org.weishe.weichat.view.CircularImage -->
+
+            <com.cai.chat_05.view.CircularImage
+                android:id="@+id/message_friend_userphoto"
+                android:layout_width="40dip"
+                android:layout_height="40dip"
+                android:layout_alignParentLeft="true"
+                android:src="@drawable/channel_qq" />
+
+            <TextView
+                android:id="@+id/friend_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dip"
+                android:layout_toRightOf="@id/message_friend_userphoto"
+                android:textColor="@color/font_value"
+                android:textSize="12.0sp"
+                android:visibility="gone" />
+
+            <LinearLayout
+                android:id="@+id/chat_message_left_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/friend_name"
+                android:layout_toRightOf="@id/message_friend_userphoto"
+                android:background="@drawable/chat_from_bg_normal"
+                android:orientation="horizontal" >
+
+                <com.cai.chat_05.view.TweetTextView
+                    android:id="@+id/friend_message"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:maxEms="12"
+                    android:textColor="@color/text_color"
+                    android:textSize="16sp" />
+            </LinearLayout>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/chat_user_right_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="5dip"
+            android:layout_marginRight="5dip" >
+
+            <!-- org.weishe.weichat.view.CircularImage -->
+
+            <com.cai.chat_05.view.CircularImage
+                android:id="@+id/message_user_userphoto"
+                android:layout_width="40dip"
+                android:layout_height="40dip"
+                android:layout_alignParentRight="true"
+                android:src="@drawable/messageview" />
+
+            <LinearLayout
+                android:id="@+id/chat_message_right_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@id/message_user_userphoto"
+                android:background="@drawable/chat_to_bg_normal"
+                android:orientation="horizontal" >
+
+                <com.cai.chat_05.view.TweetTextView
+                    android:id="@+id/user_message"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:maxEms="12"
+                    android:singleLine="false"
+                    android:textColor="@color/text_color"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/msg_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="5dip"
+                android:layout_toLeftOf="@+id/chat_message_right_layout"
+                android:clickable="true"
+                android:padding="2dip"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_9" />
+        </RelativeLayout>
+    </RelativeLayout>
+
+</LinearLayout>

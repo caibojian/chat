@@ -255,13 +255,13 @@ public class UIHelper {
 //		context.startActivity(intent);
 	}
 
-//	public static void startChatGroupInforActivity(Context context,
-//			int groupId, String type) {
+	public static void startChatGroupInforActivity(Context context,
+			int groupId, String type) {
 //		Intent intent = new Intent(context, GroupInforActivity.class);
 //		intent.putExtra(Constants.INTENT_EXTRA_CHATGROUP_INFOR_TYPE, type);
 //		intent.putExtra(Constants.INTENT_EXTRA_CHAT_GROUP_ID, groupId);
 //		context.startActivity(intent);
-//	}
+	}
 
 //	public static void startQrCodeActivity(Context context) {
 //		Intent intent = new Intent(context, QrCodeActivity.class);

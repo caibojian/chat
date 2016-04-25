@@ -1,0 +1,33 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white"
+    android:gravity="center_vertical"
+    android:orientation="horizontal" >
+
+    <CheckBox
+        android:id="@+id/voice_title_flag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="4dp"
+        android:background="@drawable/btn_opt_tools_to_text_selector"
+        android:button="@null"
+        android:checked="false"
+        android:contentDescription="@null"
+        android:focusable="false" />
+
+    <com.cai.chat_05.view.VoiceButton
+        android:id="@+id/voidc_record_btn"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:layout_gravity="center_vertical"
+        android:layout_margin="4dp"
+        android:layout_weight="1"
+        android:background="@drawable/btn_default"
+        android:gravity="center_vertical|center_horizontal"
+        android:padding="3dp"
+        android:text="@string/press_record"
+        android:textSize="19sp" />
+
+</LinearLayout>
