@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.RelativeLayout;
 
 import com.cai.chat_05.base.BaseActivity;
+import com.cai.chat_05.bean.User;
 
 public class LoginActivity extends BaseActivity {
 
@@ -31,7 +32,7 @@ public class LoginActivity extends BaseActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
 		mContext = this;
-//		mAppContext = (AppContext) this.getApplication();
+		mAppContext = (AppContext) this.getApplication();
 		initViews();
 		initEvents();
 	}
@@ -71,26 +72,23 @@ public class LoginActivity extends BaseActivity {
 			Intent intent = new Intent();
 			intent.setClass(mContext, MainActivity.class);
 			startActivity(intent);
-//			if (account.equals("")) {
-//				showCustomToast("请填写账号");
-//				mAccount.requestFocus();
-//			} else if (password.equals("")) {
-//				showCustomToast("请填写密码");
-//			} else if (!VerifyUtils.matchAccount(account)) {
-//				showCustomToast("账号格式错误");
-//				mAccount.requestFocus();
-//			} else if (mPassword.length() < 6) {
-//				showCustomToast("密码格式错误");
-//			} else {
-//				tryLogin(account, password);
-//			}
+			if (account.equals("")) {
+				showCustomToast("请填写账号");
+				mAccount.requestFocus();
+			} else if (password.equals("")) {
+				showCustomToast("请填写密码");
+			} else if (mPassword.length() < 6) {
+				showCustomToast("密码格式错误");
+			} else {
+				tryLogin(account, password);
+			}
 		}
 	};
 
 	private void tryLogin(final String account, final String password) {
-//		User user = new User();
-//		user.setAccount(account);
-//		user.setPassword(password);
+		User user = new User();
+		user.setAccount(account);
+		user.setPassword(password);
 //		WeisheApi.login(mHandler, user, mAppContext.getAppId(),
 //				ApiClientHelper.getUserAgent(mAppContext));
 	}
