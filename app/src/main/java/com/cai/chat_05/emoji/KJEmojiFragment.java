@@ -105,7 +105,7 @@ public class KJEmojiFragment extends Fragment implements
 			}
 		});
 		// bottom
-//		mEmojiBottom = (RadioGroup) rootView.findViewById(R.id.emoji_bottom);
+		mEmojiBottom = (RadioGroup) rootView.findViewById(R.id.emoji_bottom);
 		EMOJI_TAB_CONTENT = mEmojiBottom.getChildCount() - 1; // 减一是因为有一个删除按钮
 		mEmojiTabs = new View[EMOJI_TAB_CONTENT];
 		if (EMOJI_TAB_CONTENT <= 1) { // 只有一个分类的时候就不显示了

@@ -1,5 +1,6 @@
 package com.cai.chat_05;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -91,6 +92,10 @@ public class ChatActivity extends BaseActivity implements OnSendClickListener,
 		Intent intent = getIntent();
 //		user = (User) CacheManager.readObject(ChatActivity.this,
 //				Constants.CACHE_CURRENT_USER);
+		user = new User();
+		user.setId(123);
+
+
 
 		chatType = intent.getIntExtra(Constants.INTENT_EXTRA_CHAT_TYPE, 0);
 		switch (chatType) {
@@ -137,6 +142,7 @@ public class ChatActivity extends BaseActivity implements OnSendClickListener,
 //					chatList = DBHelper.getgetInstance(ChatActivity.this)
 //							.getChatMessageByPage(userId, chatWithId, chatType,
 //									200);
+					chatList = new ArrayList<ChatMessage>();
 					chatMessageAdapter.setData(chatList);
 					chatMessageAdapter.notifyDataSetChanged();
 					chatMeessageListView.setSelection(chatList.size());

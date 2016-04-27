@@ -20,6 +20,7 @@ import com.cai.chat_05.MainActivity;
 import com.cai.chat_05.R;
 import com.cai.chat_05.adppter.FriendsAdapter;
 import com.cai.chat_05.base.AsyncTaskBase;
+import com.cai.chat_05.bean.Constants;
 import com.cai.chat_05.bean.Friends;
 import com.cai.chat_05.bean.FriendsGroup;
 import com.cai.chat_05.sort.CharacterParser;
@@ -118,8 +119,8 @@ public class FriendsFragment extends Fragment {
 				 */
 				Intent intent = new Intent();
 				intent.setClass(mContext, ChatActivity.class);
+				intent.putExtra(Constants.INTENT_EXTRA_CHAT_FRIEND, (Friends)adapter.getItem(position));
 				startActivity(intent);
-
 
 			}
 		});

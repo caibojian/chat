@@ -127,7 +127,7 @@ public class DBHelper {
 	 * 获取聊天记录
 	 * 
 	 * @param userId
-	 * @param friendId
+	 *
 	 * @param pageSize
 	 * @return
 	 */
@@ -160,7 +160,8 @@ public class DBHelper {
 //
 //		qb.limit(pageSize);
 //		return qb.list();
-		return null;
+		List<ChatMessage> chatList = new ArrayList<ChatMessage>();
+		return chatList;
 	}
 
 	/**
