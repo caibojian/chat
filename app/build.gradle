@@ -29,4 +29,6 @@ dependencies {
     compile files('libs/android-support-v7-recyclerview.jar')
     compile 'com.google.android.gms:play-services-appindexing:8.1.0'
     compile files('libs/KJFrameForAndroid_v2.223.jar')
+    compile 'com.amazonaws:aws-android-sdk-core:2.2.15'
+    compile 'com.amazonaws:aws-android-sdk-iot:2.2.15'
 }

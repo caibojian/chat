@@ -17,6 +17,10 @@ public class User implements Serializable {
 	 */
 	private int id;
 	/**
+	 * 用户id
+	 */
+	private String uuid;
+	/**
 	 * 账户
 	 */
 	private String account;
@@ -47,6 +51,13 @@ public class User implements Serializable {
 	 */
 	private boolean online;
 
+	public void setUuid(String uuid){
+		this.setUuid(uuid);
+	}
+
+	public String getUuid(){
+		return uuid;
+	}
 	public boolean isOnline() {
 		return online;
 	}
