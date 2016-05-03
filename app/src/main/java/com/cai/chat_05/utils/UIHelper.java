@@ -16,6 +16,7 @@ import com.cai.chat_05.LoginActivity;
 import com.cai.chat_05.MainActivity;
 import com.cai.chat_05.SearchActivity;
 import com.cai.chat_05.bean.ChatGroup;
+import com.cai.chat_05.bean.Constants;
 import com.cai.chat_05.bean.DiscussionGroup;
 import com.cai.chat_05.bean.Friends;
 
@@ -231,11 +232,9 @@ public class UIHelper {
 //		mContext.startActivity(intent);
 	}
 
-	public static void showMainActivity(Context mContext, int startType) {
-//		Intent intent = new Intent(mContext, MainActivity.class);
-//		intent.putExtra(Constants.INTENT_EXTRA_MAIN_START_TYPE, startType);
-//		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//		mContext.startActivity(intent);
+	public static void showMainActivity(Context mContext) {
+		Intent intent = new Intent(mContext, MainActivity.class);
+		mContext.startActivity(intent);
 	}
 
 	public static void startGroupControlActivity(MainActivity mContext) {

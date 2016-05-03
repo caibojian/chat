@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.cai.chat_05.bean.Constants;
 import com.cai.chat_05.bean.User;
 import com.cai.chat_05.cache.CacheManager;
+import com.cai.chat_05.service.IoTService;
 import com.cai.chat_05.utils.SpUtil;
 import com.cai.chat_05.utils.UIHelper;
 import com.cai.chat_05.view.HandyTextView;
@@ -28,6 +29,7 @@ public class WelcomeActivity extends Activity {
     private ImageView mImageView;
 
     private SharedPreferences sp;
+    private Intent intent;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,6 +37,8 @@ public class WelcomeActivity extends Activity {
 //        mAppContext = (AppContext) this.getApplication();
         mAppContext = AppContext.getInstance();
         mContext = this;
+        intent = new Intent(WelcomeActivity.this, IoTService.class);
+        startService(intent);
         findView();
         init();
     }
@@ -55,10 +59,8 @@ public class WelcomeActivity extends Activity {
 					// 快速登陆
 					quickLogin();
 				} else {
-
-					SpUtil.setBooleanSharedPerference(sp, "isFirst", false);
-
-                UIHelper.startLonginActivity(WelcomeActivity.this);
+                    SpUtil.setBooleanSharedPerference(sp, "isFirst", false);
+                    UIHelper.startLonginActivity(WelcomeActivity.this);
 				}
             }
         }, 2000);

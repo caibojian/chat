@@ -40,6 +40,12 @@
             android:launchMode="singleTask"
             android:theme="@android:style/Theme.Light.NoTitleBar" >
         </activity>
+
+        <service android:name=".service.IoTService" >
+            <intent-filter>
+                <action android:name="com.cai.chat_05.service.IoTService" />
+            </intent-filter>
+        </service>
         <!-- ATTENTION: This was auto-generated to add Google Play services to your project for
      App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information. -->
         <meta-data
