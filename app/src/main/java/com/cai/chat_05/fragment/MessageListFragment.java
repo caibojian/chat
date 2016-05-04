@@ -21,6 +21,7 @@ import com.cai.chat_05.MainActivity;
 import com.cai.chat_05.R;
 import com.cai.chat_05.adppter.MessageListAdapter;
 import com.cai.chat_05.bean.ChatGroup;
+import com.cai.chat_05.bean.Constants;
 import com.cai.chat_05.bean.Friends;
 import com.cai.chat_05.bean.Todo;
 import com.cai.chat_05.bean.User;
@@ -219,19 +220,19 @@ public class MessageListFragment extends BaseFragment implements
 //				Constants.CACHE_CURRENT_MESSAGE_LIST + "_" + user.getId());
 		Log.v("cai1", "onCreateView:" + mContext);
 		List data = new ArrayList();
-		ChatMessage msg = new ChatMessage(123L, 123, "聊天",
-				123, 321, new Date(), 1,
-				0, 0, 0,
-				123, true, 123456L,
-				0, "111", "1111",
-				"adc", 2);
-		Todo todo = new Todo(456L, 123, 123, true,
-				0, 678, 0,
-				new Date(), true, true,
-				"sss", "ddd", "fff",
-				"ggg");
-		data.add(msg);
-		data.add(todo);
+//		ChatMessage msg = new ChatMessage(123L, 123, "聊天",
+//				123, 321, new Date(), 1,
+//				0, 0, 0,
+//				123, true, 123456L,
+//				0, "111", "1111",
+//				"adc", 2);
+//		Todo todo = new Todo(456L, 123, 123, true,
+//				0, 678, 0,
+//				new Date(), true, true,
+//				"sss", "ddd", "fff",
+//				"ggg");
+//		data.add(msg);
+//		data.add(todo);
 		adapter.setData(data);
 		Log.v("cai2", "onCreateView:" + mContext);
 		adapter.notifyDataSetChanged();
@@ -307,22 +308,38 @@ public class MessageListFragment extends BaseFragment implements
 
 	@Override
 	public void onReceive(Context context, Intent intent) {
-//		Log.v("org.weishe.weichat", "收到获取到消息广播消息！");
-//
-//		String key = intent.getAction();
-//		switch (key) {
-//		case Constants.INTENT_ACTION_SEND_CHAT_MESSAGE:
-//		case Constants.INTENT_ACTION_RECEIVE_TODO_LIST:
-//		case Constants.INTENT_ACTION_RECEIVE_CHAT_MESSAGE_LIST:
+		Log.v("org.weishe.weichat", "收到获取到消息广播消息！aaaa");
+
+		String key = intent.getAction();
+		String message = intent.getStringExtra("message");
+		switch (key) {
+		case Constants.INTENT_ACTION_SEND_CHAT_MESSAGE:
+		case Constants.INTENT_ACTION_RECEIVE_TODO_LIST:
+		case Constants.INTENT_ACTION_RECEIVE_CHAT_MESSAGE_LIST:
+			Log.v("org.weishe.weichat", "收到获取到消息广播消息！"+message);
 //			List data = DBHelper.getgetInstance(mContext).getRecentMessage(
 //					user.getId());
 //			CacheManager.saveObject(mContext, data,
 //					Constants.CACHE_CURRENT_MESSAGE_LIST + "_" + user.getId());
-//			adapter.setData(data);
-//			adapter.notifyDataSetChanged();
-//			mState = STATE_NONE;
-//			setSwipeRefreshLoadedState();
-//			// 更新当前maxid
+			List data = new ArrayList();
+			ChatMessage msg = new ChatMessage(1231L, 1231, "聊天1",
+					1231, 3211, new Date(), 11,
+					0, 0, 0,
+					1231, true, 1234561L,
+					0, "111", "1111",
+					"adc", 21);
+			Todo todo = new Todo(4561111L, 12311, 12311, true,
+					110, 67811, 110,
+					new Date(), true, true,
+					message, "ddd", "fff",
+					"gggddd");
+			data.add(msg);
+			data.add(todo);
+			adapter.setData(data);
+			adapter.notifyDataSetChanged();
+			mState = STATE_NONE;
+			setSwipeRefreshLoadedState();
+			// 更新当前maxid
 //			int fromMessageId = DBHelper.getgetInstance(mContext)
 //					.getMaxMessageIdByUserId(user.getId());
 //			CacheManager
@@ -331,8 +348,8 @@ public class MessageListFragment extends BaseFragment implements
 //							fromMessageId,
 //							Constants.CACHE_CURRENT_MAX_MESSAGE_ID + "_"
 //									+ user.getId());
-//
-//			break;
+
+			break;
 //		case Constants.INTENT_ACTION_RECEIVE_CHAT_MESSAGE:
 //			List data2 = null;
 //
@@ -350,19 +367,18 @@ public class MessageListFragment extends BaseFragment implements
 //			CacheManager.saveObject(mContext, todoFid,
 //					Constants.CACHE_CURRENT_MAX_TODO_ID + "_" + user.getId());
 //			break;
-//		}
+		}
 
 	}
 
 	@Override
 	public void registerReceiver(BroadcastReceiver receiver) {
-//		IntentFilter intentFilter = new IntentFilter();
-//		intentFilter
-//				.addAction(Constants.INTENT_ACTION_RECEIVE_CHAT_MESSAGE_LIST);
-//		intentFilter.addAction(Constants.INTENT_ACTION_RECEIVE_CHAT_MESSAGE);
-//		intentFilter.addAction(Constants.INTENT_ACTION_SEND_CHAT_MESSAGE);
-//		intentFilter.addAction(Constants.INTENT_ACTION_RECEIVE_TODO_LIST);
-//		mContext.registerReceiver(receiver, intentFilter);
+		IntentFilter intentFilter = new IntentFilter();
+		intentFilter.addAction(Constants.INTENT_ACTION_RECEIVE_CHAT_MESSAGE_LIST);
+		intentFilter.addAction(Constants.INTENT_ACTION_RECEIVE_CHAT_MESSAGE);
+		intentFilter.addAction(Constants.INTENT_ACTION_SEND_CHAT_MESSAGE);
+		intentFilter.addAction(Constants.INTENT_ACTION_RECEIVE_TODO_LIST);
+		mContext.registerReceiver(receiver, intentFilter);
 	}
 
 	@Override
