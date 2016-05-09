@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/chat_05.iml" filepath="$PROJECT_DIR$/chat_05.iml" />
+      <module fileurl="file://$PROJECT_DIR$/dooexcmplegenerator/dooexcmplegenerator.iml" filepath="$PROJECT_DIR$/dooexcmplegenerator/dooexcmplegenerator.iml" />
     </modules>
   </component>
 </project>
