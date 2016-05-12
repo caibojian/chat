@@ -22,9 +22,11 @@ import com.cai.chat_05.R;
 import com.cai.chat_05.adppter.MessageListAdapter;
 import com.cai.chat_05.bean.ChatGroup;
 import com.cai.chat_05.bean.Constants;
+import com.cai.chat_05.bean.DiscussionGroup;
 import com.cai.chat_05.bean.Friends;
 import com.cai.chat_05.bean.Todo;
 import com.cai.chat_05.bean.User;
+import com.cai.chat_05.cache.CacheManager;
 import com.cai.chat_05.core.bean.ChatMessage;
 import com.cai.chat_05.menu.creator.MessageListItemSwipeMenuCreator;
 import com.cai.chat_05.receiver.BaseFragment;
@@ -59,7 +61,7 @@ public class MessageListFragment extends BaseFragment implements
 //
 	private MessageListAdapter adapter;
 	private List<ChatGroup> chatGroups;
-//	private List<DiscussionGroup> discussionGroups;
+	private List<DiscussionGroup> discussionGroups;
 	private User user;
 
 	private boolean firstFlag = true;
@@ -68,8 +70,8 @@ public class MessageListFragment extends BaseFragment implements
 	public void onCreate(Bundle savedInstanceState) {
 		mContext = (MainActivity) getActivity();
 		super.onCreate(savedInstanceState);
-//		user = (User) CacheManager.readObject(mContext,
-//				Constants.CACHE_CURRENT_USER);
+		user = (User) CacheManager.readObject(mContext,
+				Constants.CACHE_CURRENT_USER);
 //		chatGroups = (List<ChatGroup>) CacheManager.readObject(mContext,
 //				ChatGroup.getCacheKey(user.getId()));
 //		discussionGroups = (List<DiscussionGroup>) CacheManager.readObject(
@@ -143,17 +145,17 @@ public class MessageListFragment extends BaseFragment implements
 				if (o instanceof ChatMessage) {
 					ChatMessage msg = (ChatMessage) o;
 					switch (msg.getMsgType()) {
-					case ChatMessage.MSG_TYPE_UU:
+					case Constants.MSG_TYPE_UU:
 
 						Friends friend = null;
 						for (Friends friends : mContext.getFriends()) {
 							switch (msg.getType()) {
-							case ChatMessage.TYPE_RECEIVE:
+							case Constants.TYPE_RECEIVE:
 								if (friends.getUserId() == msg.getFromId()) {
 									friend = friends;
 								}
 								break;
-							case ChatMessage.TYPE_SEND:
+							case Constants.TYPE_SEND:
 								if (friends.getUserId() == msg.getToId()) {
 									friend = friends;
 								}
@@ -174,7 +176,7 @@ public class MessageListFragment extends BaseFragment implements
 							Log.v("org.weishe.weichat", "好友不存在！");
 						}
 						break;
-					case ChatMessage.MSG_TYPE_UCG:
+					case Constants.MSG_TYPE_UCG:
 						ChatGroup cg = null;
 						for (ChatGroup g : chatGroups) {
 							if (msg.getChatGroupId() == g.getId()) {
@@ -187,7 +189,7 @@ public class MessageListFragment extends BaseFragment implements
 //									ChatMessage.MSG_TYPE_UCG, null, cg, null);
 						}
 						break;
-					case ChatMessage.MSG_TYPE_UDG:
+					case Constants.MSG_TYPE_UDG:
 //						DiscussionGroup dg = null;
 //						for (DiscussionGroup g : discussionGroups) {
 //							if (msg.getDiscussionGroupId() == g.getId()) {
@@ -214,33 +216,15 @@ public class MessageListFragment extends BaseFragment implements
 	 * 去数据库刷新数据
 	 */
 	public void rushDBData() {
-//		List data = DBHelper.getgetInstance(mContext).getRecentMessage(
-//				user.getId());
-//		CacheManager.saveObject(mContext, data,
-//				Constants.CACHE_CURRENT_MESSAGE_LIST + "_" + user.getId());
-		Log.v("cai1", "onCreateView:" + mContext);
-		List data = new ArrayList();
-//		ChatMessage msg = new ChatMessage(123L, 123, "聊天",
-//				123, 321, new Date(), 1,
-//				0, 0, 0,
-//				123, true, 123456L,
-//				0, "111", "1111",
-//				"adc", 2);
-//		Todo todo = new Todo(456L, 123, 123, true,
-//				0, 678, 0,
-//				new Date(), true, true,
-//				"sss", "ddd", "fff",
-//				"ggg");
-//		data.add(msg);
-//		data.add(todo);
+		List data = DBHelper.getgetInstance(mContext).getRecentMessage(
+				user.getId());
+		CacheManager.saveObject(mContext, data,
+				Constants.CACHE_CURRENT_MESSAGE_LIST + "_" + user.getId());
+		Log.v("cai1", "onCreateView:" + data.size());
 		adapter.setData(data);
-		Log.v("cai2", "onCreateView:" + mContext);
 		adapter.notifyDataSetChanged();
-		Log.v("cai3", "onCreateView:" + mContext);
 		mState = STATE_NONE;
 		setSwipeRefreshLoadedState();
-		Log.v("cai4", "onCreateView:" + mContext);
-
 	}
 
 	private void requestData(boolean refresh) {
@@ -317,37 +301,24 @@ public class MessageListFragment extends BaseFragment implements
 		case Constants.INTENT_ACTION_RECEIVE_TODO_LIST:
 		case Constants.INTENT_ACTION_RECEIVE_CHAT_MESSAGE_LIST:
 			Log.v("org.weishe.weichat", "收到获取到消息广播消息！"+message);
-//			List data = DBHelper.getgetInstance(mContext).getRecentMessage(
-//					user.getId());
-//			CacheManager.saveObject(mContext, data,
-//					Constants.CACHE_CURRENT_MESSAGE_LIST + "_" + user.getId());
-			List data = new ArrayList();
-			ChatMessage msg = new ChatMessage(1231L, 1231, "聊天1",
-					1231, 3211, new Date(), 11,
-					0, 0, 0,
-					1231, true, 1234561L,
-					0, "111", "1111",
-					"adc", 21);
-			Todo todo = new Todo(4561111L, 12311, 12311, true,
-					110, 67811, 110,
-					new Date(), true, true,
-					message, "ddd", "fff",
-					"gggddd");
-			data.add(msg);
-			data.add(todo);
+			List data = DBHelper.getgetInstance(mContext).getRecentMessage(
+					user.getId());
+			Log.v("org.weishe.weichat", "收到获取到消息广播消息！消息大小"+data.size());
+			CacheManager.saveObject(mContext, data,
+					Constants.CACHE_CURRENT_MESSAGE_LIST + "_" + user.getId());
 			adapter.setData(data);
 			adapter.notifyDataSetChanged();
 			mState = STATE_NONE;
 			setSwipeRefreshLoadedState();
 			// 更新当前maxid
-//			int fromMessageId = DBHelper.getgetInstance(mContext)
-//					.getMaxMessageIdByUserId(user.getId());
-//			CacheManager
-//					.saveObject(
-//							mContext,
-//							fromMessageId,
-//							Constants.CACHE_CURRENT_MAX_MESSAGE_ID + "_"
-//									+ user.getId());
+			int fromMessageId = DBHelper.getgetInstance(mContext)
+					.getMaxMessageIdByUserId(user.getId());
+			CacheManager
+					.saveObject(
+							mContext,
+							fromMessageId,
+							Constants.CACHE_CURRENT_MAX_MESSAGE_ID + "_"
+									+ user.getId());
 
 			break;
 //		case Constants.INTENT_ACTION_RECEIVE_CHAT_MESSAGE:

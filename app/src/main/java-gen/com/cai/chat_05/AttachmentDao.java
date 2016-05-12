@@ -4,8 +4,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteStatement;
 
-
-import com.cai.chat_05.base.Attachment;
+import com.cai.chat_05.bean.Attachment;
 
 import de.greenrobot.dao.AbstractDao;
 import de.greenrobot.dao.Property;

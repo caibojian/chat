@@ -2,9 +2,9 @@ package com.cai.chat_05;
 
 import android.database.sqlite.SQLiteDatabase;
 
-import org.weishe.weichat.bean.Attachment;
-import org.weishe.weichat.bean.Todo;
-import org.weishe.weichat.core.bean.ChatMessage;
+import com.cai.chat_05.bean.Attachment;
+import com.cai.chat_05.bean.Todo;
+import com.cai.chat_05.core.bean.ChatMessage;
 
 import java.util.Map;
 

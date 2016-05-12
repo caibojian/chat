@@ -33,7 +33,9 @@ import com.amazonaws.services.iot.model.AttachPrincipalPolicyRequest;
 import com.amazonaws.services.iot.model.CreateKeysAndCertificateRequest;
 import com.amazonaws.services.iot.model.CreateKeysAndCertificateResult;
 import com.cai.chat_05.base.BaseActivity;
+import com.cai.chat_05.bean.Constants;
 import com.cai.chat_05.bean.User;
+import com.cai.chat_05.cache.CacheManager;
 import com.cai.chat_05.service.IoTService;
 import com.cai.chat_05.utils.SpUtil;
 import com.cai.chat_05.utils.UIHelper;
@@ -149,6 +151,7 @@ public class LoginActivity extends BaseActivity {
 			mContext.startActivity(intent);
 		}else{
 			User user = new User();
+			user.setId(1);
 			user.setAccount(account);
 			user.setPassword(password);
 //			user.setUuid(localuuid);
@@ -159,6 +162,8 @@ public class LoginActivity extends BaseActivity {
 			ioTService.IoTSubscribeToTopic(localuuid, AWSIotMqttQos.QOS1);
 			ioTService.IoTSubscribeToTopic("system", AWSIotMqttQos.QOS1);
 			ioTService.IoTPublishString("system",AWSIotMqttQos.QOS1, "我登陆了："+localuuid);
+			CacheManager.saveObject(LoginActivity.this, user,
+					Constants.CACHE_CURRENT_USER);
 			Log.d(LOG_TAG, " clientId: " + clientId);
 			Intent intent = new Intent(mContext, MainActivity.class);
 			mContext.startActivity(intent);

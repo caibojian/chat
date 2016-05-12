@@ -10,6 +10,7 @@ import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Binder;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.IBinder;
@@ -36,6 +37,9 @@ import com.amazonaws.services.iot.model.CreateKeysAndCertificateResult;
 import com.cai.chat_05.bean.Constants;
 import com.cai.chat_05.bean.Friends;
 import com.cai.chat_05.bean.User;
+import com.cai.chat_05.core.bean.ChatMessage;
+import com.cai.chat_05.utils.DBHelper;
+import com.cai.chat_05.utils.JsonUtil;
 
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttPersistenceException;
@@ -446,10 +450,20 @@ public class IoTService extends Service implements AWSIotMqttNewMessageCallback{
                                         Log.d(LOG_TAG, "Message arrived:");
                                         Log.d(LOG_TAG, "   Topic: " + topic);
                                         Log.d(LOG_TAG, " Message: " + message);
-                                        Intent intent = new Intent();
-                                        intent.setAction(Constants.INTENT_ACTION_RECEIVE_CHAT_MESSAGE_LIST);
-                                        intent.putExtra("message", message);
-                                        IoTService.this.sendBroadcast(intent);
+                                        try{
+                                            ChatMessage msg = JsonUtil.fromJson(message, ChatMessage.class);
+                                            DBHelper.getgetInstance(IoTService.this).addChatMessage(msg, msg.getWhoId());
+                                            Intent intent0 = new Intent();
+                                            intent0.setAction(Constants.INTENT_ACTION_RECEIVE_CHAT_MESSAGE);
+                                            Bundle bundle = new Bundle();
+                                            bundle.putSerializable(Constants.INTENT_EXTRA_CHAT_MESSAGE,
+                                                    msg);
+                                            intent0.putExtras(bundle);
+                                            IoTService.this.sendBroadcast(intent0);
+                                        }catch (Exception e){
+                                            Log.e(LOG_TAG, "Message encoding error.", e);
+                                        }
+
                                     } catch (UnsupportedEncodingException e) {
                                         Log.e(LOG_TAG, "Message encoding error.", e);
                                     }

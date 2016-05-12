@@ -88,9 +88,9 @@ public class ChatMessageAdapter extends BaseAdapter implements OnClickListener {
 	public View getView(int position, View view, ViewGroup parent) {
 		ChatMessage chatEntity = chatEntities.get(position);
 		switch (chatEntity.getContentType()) {
-		case ChatMessage.CONTENT_TYPE_ATTACHMENT:
+		case Constants.CONTENT_TYPE_ATTACHMENT:
 			return getAttachmentView(position, view, parent, chatEntity);
-		case ChatMessage.CONTENT_TYPE_NORMAL:
+		case Constants.CONTENT_TYPE_NORMAL:
 			return getNormalView(position, view, parent, chatEntity);
 		default:
 			return getNormalView(position, view, parent, chatEntity);
@@ -151,25 +151,25 @@ public class ChatMessageAdapter extends BaseAdapter implements OnClickListener {
 			}
 		}
 		Log.v("org.weishe.weichat.w", "length=" + length);
-		if (chatEntity.getType() == ChatMessage.TYPE_SEND) {
+		if (chatEntity.getType() == Constants.TYPE_SEND) {
 
 			switch (chatEntity.getStatus()) {
-			case ChatMessage.STATUS_READ:
+			case Constants.STATUS_READ:
 				msgStatus.setText(R.string.message_read);
 				msgStatus.setBackground(mContext0.getResources().getDrawable(
 						R.drawable.msg_read_status_bg));
 				break;
-			case ChatMessage.STATUS_RECEIVED:
+			case Constants.STATUS_RECEIVED:
 				msgStatus.setText(R.string.message_receive);
 				msgStatus.setBackground(mContext0.getResources().getDrawable(
 						R.drawable.msg_read_status_bg));
 				break;
-			case ChatMessage.STATUS_SEND:
+			case Constants.STATUS_SEND:
 				msgStatus.setText(R.string.message_send);
 				msgStatus.setBackground(mContext0.getResources().getDrawable(
 						R.drawable.msg_send_status_bg));
 				break;
-			case ChatMessage.STATUS_UNKNOWN:
+			case Constants.STATUS_UNKNOWN:
 				msgStatus.setBackground(mContext0.getResources().getDrawable(
 						R.drawable.msg_status_resend_selector));
 				break;
@@ -202,7 +202,7 @@ public class ChatMessageAdapter extends BaseAdapter implements OnClickListener {
 //			}
 			uPhoto.setTag(chatEntity.getFromId());
 			uPhoto.setOnClickListener(onPhoto);
-		} else if (chatEntity.getType() == ChatMessage.TYPE_RECEIVE) {// 本身作为接收方
+		} else if (chatEntity.getType() == Constants.TYPE_RECEIVE) {// 本身作为接收方
 			lVoiceTime.setText(time);
 
 			LayoutParams lp = lVoiceTime.getLayoutParams();
@@ -283,24 +283,24 @@ public class ChatMessageAdapter extends BaseAdapter implements OnClickListener {
 //			friendsNameView.setText(u.getName());
 //		}
 
-		if (chatEntity.getType() == ChatMessage.TYPE_SEND) {
+		if (chatEntity.getType() == Constants.TYPE_SEND) {
 			switch (chatEntity.getStatus()) {
-			case ChatMessage.STATUS_READ:
+			case Constants.STATUS_READ:
 				msgStatus.setText(R.string.message_read);
 				msgStatus.setBackground(mContext0.getResources().getDrawable(
 						R.drawable.msg_read_status_bg));
 				break;
-			case ChatMessage.STATUS_RECEIVED:
+			case Constants.STATUS_RECEIVED:
 				msgStatus.setText(R.string.message_receive);
 				msgStatus.setBackground(mContext0.getResources().getDrawable(
 						R.drawable.msg_read_status_bg));
 				break;
-			case ChatMessage.STATUS_SEND:
+			case Constants.STATUS_SEND:
 				msgStatus.setText(R.string.message_send);
 				msgStatus.setBackground(mContext0.getResources().getDrawable(
 						R.drawable.msg_send_status_bg));
 				break;
-			case ChatMessage.STATUS_UNKNOWN:
+			case Constants.STATUS_UNKNOWN:
 				msgStatus.setBackground(mContext0.getResources().getDrawable(
 						R.drawable.msg_status_resend_selector));
 				msgStatus.setOnClickListener(new OnClickListener() {
@@ -336,7 +336,7 @@ public class ChatMessageAdapter extends BaseAdapter implements OnClickListener {
 //				}
 //			}
 
-		} else if (chatEntity.getType() == ChatMessage.TYPE_RECEIVE) {// 本身作为接收方
+		} else if (chatEntity.getType() == Constants.TYPE_RECEIVE) {// 本身作为接收方
 			leftLayout.setVisibility(View.VISIBLE);
 			rightLayout.setVisibility(View.GONE);
 

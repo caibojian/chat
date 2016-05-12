@@ -20,6 +20,7 @@ import com.cai.chat_05.MainActivity;
 import com.cai.chat_05.R;
 import com.cai.chat_05.adppter.ChatGroupAdapter;
 import com.cai.chat_05.bean.ChatGroup;
+import com.cai.chat_05.bean.Constants;
 import com.cai.chat_05.core.bean.ChatMessage;
 import com.cai.chat_05.sort.CharacterParser;
 import com.cai.chat_05.sort.PinyinComparator;
@@ -107,7 +108,7 @@ public class ChatGroupFragment extends Fragment {
 					int position, long id) {
 
 				ChatGroup chatGroup = (ChatGroup) adapter.getItem(position - 1);
-				UIHelper.startChatActivity(mContext, ChatMessage.MSG_TYPE_UCG,
+				UIHelper.startChatActivity(mContext, Constants.MSG_TYPE_UCG,
 						null, chatGroup, null);
 
 			}

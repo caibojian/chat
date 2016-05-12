@@ -99,18 +99,18 @@ public class ChatActivity extends BaseActivity implements OnSendClickListener,
 
 		chatType = intent.getIntExtra(Constants.INTENT_EXTRA_CHAT_TYPE, 0);
 		switch (chatType) {
-		case ChatMessage.MSG_TYPE_UU:
+		case Constants.MSG_TYPE_UU:
 			friend = (Friends) intent
 					.getSerializableExtra(Constants.INTENT_EXTRA_CHAT_FRIEND);
 			break;
-		case ChatMessage.MSG_TYPE_UCG:
+		case Constants.MSG_TYPE_UCG:
 
 			chatGroup = (ChatGroup) intent
 					.getSerializableExtra(Constants.INTENT_EXTRA_CHAT_CHAT_GROUP);
 			groupInforButton.setVisibility(View.VISIBLE);
 			groupInforButton.setOnClickListener(this);
 			break;
-		case ChatMessage.MSG_TYPE_UDG:
+		case Constants.MSG_TYPE_UDG:
 			groupInforButton.setVisibility(View.VISIBLE);
 			discussionGroup = (DiscussionGroup) intent
 					.getSerializableExtra(Constants.INTENT_EXTRA_CHAT_DISCUSSION_GROUP);
@@ -200,23 +200,23 @@ public class ChatActivity extends BaseActivity implements OnSendClickListener,
 
 		chatMessage.setFromId(user.getId());
 		chatMessage.setDate(new Date());
-		chatMessage.setType(ChatMessage.TYPE_SEND);
-		chatMessage.setContentType(ChatMessage.CONTENT_TYPE_NORMAL);
+		chatMessage.setType(Constants.TYPE_SEND);
+		chatMessage.setContentType(Constants.CONTENT_TYPE_NORMAL);
 		int toId = 0;
 
 		switch (chatType) {
-		case ChatMessage.MSG_TYPE_UU:
-			chatMessage.setMsgType(ChatMessage.MSG_TYPE_UU);
+		case Constants.MSG_TYPE_UU:
+			chatMessage.setMsgType(Constants.MSG_TYPE_UU);
 			chatMessage.setToId(friend.getUserId());
 			toId = friend.getUserId();
 			break;
-		case ChatMessage.MSG_TYPE_UCG:
-			chatMessage.setMsgType(ChatMessage.MSG_TYPE_UCG);
+		case Constants.MSG_TYPE_UCG:
+			chatMessage.setMsgType(Constants.MSG_TYPE_UCG);
 			chatMessage.setChatGroupId(chatGroup.getId());
 			toId = chatGroup.getId();
 			break;
-		case ChatMessage.MSG_TYPE_UDG:
-			chatMessage.setMsgType(ChatMessage.MSG_TYPE_UDG);
+		case Constants.MSG_TYPE_UDG:
+			chatMessage.setMsgType(Constants.MSG_TYPE_UDG);
 			chatMessage.setDiscussionGroupId(discussionGroup.getId());
 			toId = discussionGroup.getId();
 			break;
@@ -272,13 +272,13 @@ public class ChatActivity extends BaseActivity implements OnSendClickListener,
 		TextView title = (TextView) findViewById(R.id.title_bar);
 
 		switch (chatType) {
-		case ChatMessage.MSG_TYPE_UU:
+		case Constants.MSG_TYPE_UU:
 			title.setText(friend.getName());
 			break;
-		case ChatMessage.MSG_TYPE_UCG:
+		case Constants.MSG_TYPE_UCG:
 			title.setText(chatGroup.getName());
 			break;
-		case ChatMessage.MSG_TYPE_UDG:
+		case Constants.MSG_TYPE_UDG:
 			title.setText(discussionGroup.getName());
 			break;
 		}
@@ -291,13 +291,13 @@ public class ChatActivity extends BaseActivity implements OnSendClickListener,
 		userId = user.getId();
 		chatWithId = 0;
 		switch (chatType) {
-		case ChatMessage.MSG_TYPE_UU:
+		case Constants.MSG_TYPE_UU:
 			chatWithId = friend.getUserId();
 			break;
-		case ChatMessage.MSG_TYPE_UCG:
+		case Constants.MSG_TYPE_UCG:
 			chatWithId = chatGroup.getId();
 			break;
-		case ChatMessage.MSG_TYPE_UDG:
+		case Constants.MSG_TYPE_UDG:
 			chatWithId = discussionGroup.getId();
 			break;
 		}
@@ -402,27 +402,27 @@ public class ChatActivity extends BaseActivity implements OnSendClickListener,
 		int toId = 0;
 
 		switch (chatType) {
-		case ChatMessage.MSG_TYPE_UU:
-			chatMessage.setMsgType(ChatMessage.MSG_TYPE_UU);
+		case Constants.MSG_TYPE_UU:
+			chatMessage.setMsgType(Constants.MSG_TYPE_UU);
 			chatMessage.setToId(friend.getUserId());
 			toId = friend.getUserId();
 			break;
-		case ChatMessage.MSG_TYPE_UCG:
-			chatMessage.setMsgType(ChatMessage.MSG_TYPE_UCG);
+		case Constants.MSG_TYPE_UCG:
+			chatMessage.setMsgType(Constants.MSG_TYPE_UCG);
 			chatMessage.setChatGroupId(chatGroup.getId());
 			toId = chatGroup.getId();
 			break;
-		case ChatMessage.MSG_TYPE_UDG:
-			chatMessage.setMsgType(ChatMessage.MSG_TYPE_UDG);
+		case Constants.MSG_TYPE_UDG:
+			chatMessage.setMsgType(Constants.MSG_TYPE_UDG);
 			chatMessage.setDiscussionGroupId(discussionGroup.getId());
 			toId = discussionGroup.getId();
 			break;
 		}
 
 		chatMessage.setDate(new Date());
-		chatMessage.setType(ChatMessage.TYPE_SEND);
+		chatMessage.setType(Constants.TYPE_SEND);
 		chatMessage.setWhoId(user.getId());
-		chatMessage.setContentType(ChatMessage.CONTENT_TYPE_ATTACHMENT);
+		chatMessage.setContentType(Constants.CONTENT_TYPE_ATTACHMENT);
 		chatMessage.setChecked(true);
 		chatMessage.setFileGroupName(a.getGroupName());
 		chatMessage.setFilePath(a.getPath());
@@ -456,11 +456,11 @@ public class ChatActivity extends BaseActivity implements OnSendClickListener,
 	@Override
 	public void onClick(View v) {
 		switch (chatType) {
-		case ChatMessage.MSG_TYPE_UCG:
+		case Constants.MSG_TYPE_UCG:
 			UIHelper.startChatGroupInforActivity(this, chatGroup.getId(),
 					Constants.INTENT_EXTRA_CHATGROUP_INFOR_TYPE_LEAVECHATGROUP);
 			break;
-		case ChatMessage.MSG_TYPE_UDG:
+		case Constants.MSG_TYPE_UDG:
 
 			break;
 		}

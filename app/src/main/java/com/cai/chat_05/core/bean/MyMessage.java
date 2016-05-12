@@ -4,44 +4,27 @@ import java.io.Serializable;
 import java.util.Date;
 
 public class MyMessage implements Serializable {
-	/**
-	 * 发送消息
-	 */
-	public final static int TYPE_SEND = 0;
-	/**
-	 * 接收消息
-	 */
-	public final static int TYPE_RECEIVE = 1;
 
-	public final static int MSG_TYPE_UU = 0;// 人人之间的消息
-	public final static int MSG_TYPE_UCG = 1;// 群消息
-	public final static int MSG_TYPE_UDG = 2;// 讨论组消息
-	public final static int MSG_TYPE_SYS = 3;// 系统消息
-
-	public final static int CONTENT_TYPE_NORMAL = 0;// 普通消息
-	public final static int CONTENT_TYPE_ATTACHMENT = 1;// 为带附件消息
-
-	public final static int STATUS_SENDING = -1;// 发送中
-	public final static int STATUS_UNKNOWN = 0;// 未知状态，在服务端不会出现，在客户端会出现
-	public final static int STATUS_SEND = 1;// 默认状态已发送
-	public final static int STATUS_RECEIVED = 2;// 已收到
-	public final static int STATUS_READ = 3;// 已阅读
-	/**
-	 * 非持久化字段，用于计数还有多少未读消息
-	 */
 	private int unCheckedCount;
 	private String uuid;
 	private int status;
 	private String fileGroupName;
 	private String filePath;
-	private int contentType;// 消息类型
-	private long attachmentId;// 附件在本地的Id
-
+	private int contentType;
+	private long attachmentId;
 	private int chatMessageId;
-
 	private int whoId;
-
 	private Boolean checked;
+	private Long id;
+	private int fromId;
+	private int toId;
+	private String content;
+	private Date date;
+	private int type;
+	private int msgType;
+	private int chatGroupId;
+	private int discussionGroupId;
+	private boolean transfer;
 
 	public MyMessage() {
 	}
@@ -51,11 +34,11 @@ public class MyMessage implements Serializable {
 	}
 
 	public MyMessage(Long id, Integer chatMessageId, String content,
-					 Integer fromId, Integer toId, Date date, Integer type,
-					 Integer msgType, Integer chatGroupId, Integer discussionGroupId,
-					 Integer whoId, Boolean checked, Long attachmentId,
-					 Integer contentType, String fileGroupName, String filePath,
-					 String uuid, Integer status) {
+					   Integer fromId, Integer toId, Date date, Integer type,
+					   Integer msgType, Integer chatGroupId, Integer discussionGroupId,
+					   Integer whoId, Boolean checked, Long attachmentId,
+					   Integer contentType, String fileGroupName, String filePath,
+					   String uuid, Integer status) {
 		this.id = id;
 		this.chatMessageId = chatMessageId;
 		this.content = content;
@@ -75,40 +58,6 @@ public class MyMessage implements Serializable {
 		this.uuid = uuid;
 		this.status = status;
 	}
-
-	private Long id;
-
-	private int fromId;
-
-	private int toId;
-
-	private String content;
-
-	private Date date;
-
-	/**
-	 * 消息类型，0--发送消息，1--接收消息
-	 */
-
-	private int type;
-	/**
-	 * 消息类型，0--人人消息 1--群消息 2--讨论组消息
-	 */
-	private int msgType;
-
-	/**
-	 * 当msgtype为群消息时不为空
-	 */
-
-	private int chatGroupId;
-
-	/**
-	 * 当为讨论组消息时不为空
-	 */
-
-	private int discussionGroupId;
-	// 是否需要转发，如果传入的是clinet则需要转发，如果是服务端则说明本就是转发消息不需要转发
-	private boolean transfer;
 
 	public boolean isTransfer() {
 		return transfer;
@@ -269,4 +218,5 @@ public class MyMessage implements Serializable {
 	public void setStatus(int status) {
 		this.status = status;
 	}
+
 }

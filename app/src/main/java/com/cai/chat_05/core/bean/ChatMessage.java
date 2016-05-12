@@ -4,27 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 public class ChatMessage implements Serializable {
-	/**
-	 * 发送消息
-	 */
-	public final static int TYPE_SEND = 0;
-	/**
-	 * 接收消息
-	 */
-	public final static int TYPE_RECEIVE = 1;
 
-	public final static int MSG_TYPE_UU = 0;// 人人之间的消息
-	public final static int MSG_TYPE_UCG = 1;// 群消息
-	public final static int MSG_TYPE_UDG = 2;// 讨论组消息
-
-	public final static int CONTENT_TYPE_NORMAL = 0;// 普通消息
-	public final static int CONTENT_TYPE_ATTACHMENT = 1;// 为带附件消息
-
-	public final static int STATUS_SENDING = -1;// 发送中
-	public final static int STATUS_UNKNOWN = 0;// 未知状态，在服务端不会出现，在客户端会出现
-	public final static int STATUS_SEND = 1;// 默认状态已发送
-	public final static int STATUS_RECEIVED = 2;// 已收到
-	public final static int STATUS_READ = 3;// 已阅读
 	/**
 	 * 非持久化字段，用于计数还有多少未读消息
 	 */

@@ -161,4 +161,27 @@ public class Constants {
 
 	public static final String CACHE_CURRENT_MESSAGE_LIST = "org.weishe.chat.current.messagelist";
 
+	//消息类型
+	/**
+	 * 发送消息
+	 */
+	public final static int TYPE_SEND = 0;
+	/**
+	 * 接收消息
+	 */
+	public final static int TYPE_RECEIVE = 1;
+
+	public final static int MSG_TYPE_UU = 0;// 人人之间的消息
+	public final static int MSG_TYPE_UCG = 1;// 群消息
+	public final static int MSG_TYPE_UDG = 2;// 讨论组消息
+
+	public final static int CONTENT_TYPE_NORMAL = 0;// 普通消息
+	public final static int CONTENT_TYPE_ATTACHMENT = 1;// 为带附件消息
+
+	public final static int STATUS_SENDING = -1;// 发送中
+	public final static int STATUS_UNKNOWN = 0;// 未知状态，在服务端不会出现，在客户端会出现
+	public final static int STATUS_SEND = 1;// 默认状态已发送
+	public final static int STATUS_RECEIVED = 2;// 已收到
+	public final static int STATUS_READ = 3;// 已阅读
+
 }

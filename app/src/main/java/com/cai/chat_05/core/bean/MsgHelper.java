@@ -1,7 +1,8 @@
 package com.cai.chat_05.core.bean;
 
 
-import com.cai.chat_05.base.Attachment;
+import com.cai.chat_05.bean.Attachment;
+import com.cai.chat_05.bean.Constants;
 
 public class MsgHelper {
 	/**
@@ -55,7 +56,7 @@ public class MsgHelper {
 											   int status) {
 		Msg.ChatMessage chatMessage = Msg.ChatMessage.newBuilder()
 				.setContent(content).setFromId(fromId).setToId(toId)
-				.setMsgType(ChatMessage.MSG_TYPE_UU).setToken(token)
+				.setMsgType(Constants.MSG_TYPE_UU).setToken(token)
 				.setChatMessageId(id).setDate(date).setTransfer(transfer)
 				.setFileGroupName(fileGroupName).setFilePath(path)
 				.setStatus(status).setUuid(uuid).setContentType(contentType)
@@ -88,7 +89,7 @@ public class MsgHelper {
 		Msg.ChatMessage chatMessage = Msg.ChatMessage.newBuilder()
 				.setContent(content).setFromId(fromId)
 				.setChatGroupId(chatGroupId)
-				.setMsgType(ChatMessage.MSG_TYPE_UCG).setToken(token)
+				.setMsgType(Constants.MSG_TYPE_UCG).setToken(token)
 				.setChatMessageId(id).setDate(date).setTransfer(transfer)
 				.setFileGroupName(fileGroupName).setFilePath(path)
 				.setUuid(uuid).setStatus(status).setContentType(contentType)
@@ -121,7 +122,7 @@ public class MsgHelper {
 		Msg.ChatMessage chatMessage = Msg.ChatMessage.newBuilder()
 				.setContent(content).setFromId(fromId)
 				.setDiscussionGroupId(discussionGroupId).setUuid(uuid)
-				.setMsgType(ChatMessage.MSG_TYPE_UDG).setToken(token)
+				.setMsgType(Constants.MSG_TYPE_UDG).setToken(token)
 				.setChatMessageId(id).setDate(date).setTransfer(transfer)
 				.setStatus(status).setFileGroupName(fileGroupName)
 				.setFilePath(path).setContentType(contentType).build();

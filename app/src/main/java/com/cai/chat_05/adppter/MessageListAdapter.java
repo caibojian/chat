@@ -15,6 +15,7 @@ import com.cai.chat_05.MainActivity;
 import com.cai.chat_05.R;
 import com.cai.chat_05.bean.Attachment;
 import com.cai.chat_05.bean.ChatGroup;
+import com.cai.chat_05.bean.Constants;
 import com.cai.chat_05.bean.Todo;
 import com.cai.chat_05.bean.User;
 import com.cai.chat_05.core.bean.ChatMessage;
@@ -90,11 +91,11 @@ public class MessageListAdapter extends BaseAdapter {
 		if (data.get(position) instanceof ChatMessage) {
 			ChatMessage cm = (ChatMessage) data.get(position);
 			switch (cm.getMsgType()) {
-			case ChatMessage.MSG_TYPE_UU:
+			case Constants.MSG_TYPE_UU:
 				return TYPE_UU_CHATMESSAGE;
-			case ChatMessage.MSG_TYPE_UCG:
+			case Constants.MSG_TYPE_UCG:
 				return TYPE_UCG_CHATMESSAGE;
-			case ChatMessage.MSG_TYPE_UDG:
+			case Constants.MSG_TYPE_UDG:
 				return TYPE_UDG_CHATMESSAGE;
 			}
 		} else if (data.get(position) instanceof Todo) {
@@ -261,7 +262,7 @@ public class MessageListAdapter extends BaseAdapter {
 					.getDrawable(R.drawable.grouphead_normal));
 			mhcg.nameView.setText(namecg);
 //			mhcg.dateView.setText(StringUtils.friendly_time(message.getDate()));
-			if (message.getContentType() == ChatMessage.CONTENT_TYPE_ATTACHMENT) {
+			if (message.getContentType() == Constants.CONTENT_TYPE_ATTACHMENT) {
 //				Attachment a = DBHelper.getgetInstance(mActivity)
 //						.getAttachment(message.getFileGroupName(),
 //								message.getFilePath());
