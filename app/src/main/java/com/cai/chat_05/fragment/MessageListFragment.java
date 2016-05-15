@@ -216,6 +216,8 @@ public class MessageListFragment extends BaseFragment implements
 	 * 去数据库刷新数据
 	 */
 	public void rushDBData() {
+//		List data = DBHelper.getgetInstance(mContext).getRecentMessage(
+//				user.getId());
 		List data = DBHelper.getgetInstance(mContext).getRecentMessage(
 				user.getId());
 		CacheManager.saveObject(mContext, data,

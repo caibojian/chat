@@ -139,7 +139,10 @@ public class LoginActivity extends BaseActivity {
 			User user = new User();
 			user.setAccount(account);
 			user.setPassword(password);
+			user.setId(1);
 //			user.setUuid(clientId);
+			CacheManager.saveObject(mContext, user,
+					Constants.CACHE_CURRENT_USER);
 			SpUtil.setStringSharedPerference(sp, "user.uuid", clientId);
 			SpUtil.setStringSharedPerference(sp, "user.password", user.getPassword());
 			SpUtil.setStringSharedPerference(sp, "user.account", user.getAccount());
@@ -156,6 +159,8 @@ public class LoginActivity extends BaseActivity {
 			user.setPassword(password);
 //			user.setUuid(localuuid);
 			clientId = localuuid;
+			CacheManager.saveObject(mContext, user,
+					Constants.CACHE_CURRENT_USER);
 			SpUtil.setStringSharedPerference(sp, "user.uuid", user.getUuid());
 			SpUtil.setStringSharedPerference(sp, "user.password", user.getPassword());
 			SpUtil.setStringSharedPerference(sp, "user.account", user.getAccount());

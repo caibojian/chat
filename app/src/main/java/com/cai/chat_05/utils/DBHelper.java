@@ -250,6 +250,7 @@ public class DBHelper {
 		}
 
 		Map<Integer, ChatMessage> messages = new HashMap<Integer, ChatMessage>();
+		Log.v("org.weishe.weichat", "查询出消息的个数:" + list.size());
 		if (list.size() > 0) {
 			for (Long id : list) {
 				// ChatMessage m = getRecentChatMessageByFromId(id, whoId);

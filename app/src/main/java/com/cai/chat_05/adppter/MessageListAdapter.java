@@ -18,6 +18,7 @@ import com.cai.chat_05.bean.ChatGroup;
 import com.cai.chat_05.bean.Constants;
 import com.cai.chat_05.bean.Todo;
 import com.cai.chat_05.bean.User;
+import com.cai.chat_05.cache.CacheManager;
 import com.cai.chat_05.core.bean.ChatMessage;
 import com.cai.chat_05.view.CircularImage;
 
@@ -45,8 +46,8 @@ public class MessageListAdapter extends BaseAdapter {
 		this.mActivity = context;
 		data = new ArrayList();
 		mInflater = LayoutInflater.from(context);
-//		user = (User) CacheManager.readObject(mActivity,
-//				Constants.CACHE_CURRENT_USER);
+		user = (User) CacheManager.readObject(mActivity,
+				Constants.CACHE_CURRENT_USER);
 //		chatGroups = (List<ChatGroup>) CacheManager.readObject(mActivity,
 //				ChatGroup.getCacheKey(user.getId()));
 	}
