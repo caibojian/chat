@@ -16,11 +16,16 @@ import com.cai.chat_05.R;
 import com.cai.chat_05.bean.Attachment;
 import com.cai.chat_05.bean.ChatGroup;
 import com.cai.chat_05.bean.Constants;
+import com.cai.chat_05.bean.Friends;
 import com.cai.chat_05.bean.Todo;
 import com.cai.chat_05.bean.User;
 import com.cai.chat_05.cache.CacheManager;
 import com.cai.chat_05.core.bean.ChatMessage;
+import com.cai.chat_05.emoji.InputHelper;
+import com.cai.chat_05.utils.DBHelper;
+import com.cai.chat_05.utils.StringUtils;
 import com.cai.chat_05.view.CircularImage;
+import com.cai.chat_05.view.TweetTextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -142,82 +147,82 @@ public class MessageListAdapter extends BaseAdapter {
 			} else {
 				mh.unReadCount.setVisibility(View.INVISIBLE);
 			}
-			//
-			// mh.avatarView = (CircularImage) convertView
-			// .findViewById(R.id.user_photo);
-			// mh.nameView = (TextView) convertView
-			// .findViewById(R.id.friends_name);
-			// mh.dateView = (TextView) convertView
-			// .findViewById(R.id.message_date);
-			// mh.messageView = (TextView) convertView
-			// .findViewById(R.id.friends_message);
-			//
-			// mh.avatarView.setImageResource(R.drawable.channel_qq);
+
+//			 mh.avatarView = (CircularImage) convertView
+//			 .findViewById(R.id.user_photo);
+//			 mh.nameView = (TextView) convertView
+//			 .findViewById(R.id.friends_name);
+//			 mh.dateView = (TextView) convertView
+//			 .findViewById(R.id.message_date);
+//			 mh.messageView = (TextView) convertView
+//			 .findViewById(R.id.friends_message);
+//
+//			 mh.avatarView.setImageResource(R.drawable.channel_qq);
 			String name = "";
-//			if (mActivity.getFriends() != null) {
-//				for (Friends friends : mActivity.getFriends()) {
-//					switch (message.getType()) {
-//					case ChatMessage.TYPE_RECEIVE:
-//						if (friends.getUserId() == message.getFromId()) {
-//							name = friends.getName();
-//							if (friends.getAvatarPath() != null
-//									&& !friends.getAvatarPath().isEmpty()) {
-//								String[] str = friends.getAvatarPath().split(
-//										"#");
-//								if (str.length == 2) {
-//									mh.avatarView.setImage(str[0], str[1]);
-//								}
-//							}
-//						}
-//						break;
-//					case ChatMessage.TYPE_SEND:
-//						if (friends.getUserId() == message.getToId()) {
-//							name = friends.getName();
-//							if (friends.getAvatarPath() != null
-//									&& !friends.getAvatarPath().isEmpty()) {
-//								String[] str = friends.getAvatarPath().split(
-//										"#");
-//								if (str.length == 2) {
-//									mh.avatarView.setImage(str[0], str[1]);
-//								}
-//							}
-//						}
-//						break;
-//					default:
-//						break;
-//					}
-//				}
-//				mh.nameView.setText(name);
-//				mh.dateView
-//						.setText(StringUtils.friendly_time(message.getDate()));
-//				if (message.getContentType() == ChatMessage.CONTENT_TYPE_ATTACHMENT) {
-//					Attachment a = DBHelper.getgetInstance(mActivity)
-//							.getAttachment(message.getFileGroupName(),
-//									message.getFilePath());
-//					if (a != null) {
-//						switch (a.getType()) {
-//						case Attachment.TYPE_VIDEO:
-//							mh.messageView.setText("[视频]");
-//							break;
-//						case Attachment.TYPE_VOICE:
-//							mh.messageView.setText("[语音]");
-//							break;
-//						default:
-//							mh.messageView.setText("[文件]");
-//							break;
-//						}
-//
-//					}
-//				} else {
-//
-//					Spanned span = Html.fromHtml(TweetTextView
-//							.modifyPath(message.getContent()));
-//					span = InputHelper.displayEmoji(mActivity.getResources(),
-//							span.toString());
-//
-//					mh.messageView.setText(span);
-//				}
-//			}
+			if (mActivity.getFriends() != null) {
+				for (Friends friends : mActivity.getFriends()) {
+					switch (message.getType()) {
+					case Constants.TYPE_RECEIVE:
+						if (friends.getUserId() == message.getFromId()) {
+							name = friends.getName();
+							if (friends.getAvatarPath() != null
+									&& !friends.getAvatarPath().isEmpty()) {
+								String[] str = friends.getAvatarPath().split(
+										"#");
+								if (str.length == 2) {
+									mh.avatarView.setImage(str[0], str[1]);
+								}
+							}
+						}
+						break;
+					case Constants.TYPE_SEND:
+						if (friends.getUserId() == message.getToId()) {
+							name = friends.getName();
+							if (friends.getAvatarPath() != null
+									&& !friends.getAvatarPath().isEmpty()) {
+								String[] str = friends.getAvatarPath().split(
+										"#");
+								if (str.length == 2) {
+									mh.avatarView.setImage(str[0], str[1]);
+								}
+							}
+						}
+						break;
+					default:
+						break;
+					}
+				}
+				mh.nameView.setText(name);
+				mh.dateView
+						.setText(StringUtils.friendly_time(message.getDate()));
+				if (message.getContentType() == Constants.CONTENT_TYPE_ATTACHMENT) {
+					Attachment a = DBHelper.getgetInstance(mActivity)
+							.getAttachment(message.getFileGroupName(),
+									message.getFilePath());
+					if (a != null) {
+						switch (a.getType()) {
+						case Attachment.TYPE_VIDEO:
+							mh.messageView.setText("[视频]");
+							break;
+						case Attachment.TYPE_VOICE:
+							mh.messageView.setText("[语音]");
+							break;
+						default:
+							mh.messageView.setText("[文件]");
+							break;
+						}
+
+					}
+				} else {
+
+					Spanned span = Html.fromHtml(TweetTextView
+							.modifyPath(message.getContent()));
+					span = InputHelper.displayEmoji(mActivity.getResources(),
+							span.toString());
+
+					mh.messageView.setText(span);
+				}
+			}
 			break;
 
 		case TYPE_UCG_CHATMESSAGE:

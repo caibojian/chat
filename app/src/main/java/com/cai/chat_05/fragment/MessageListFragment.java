@@ -222,7 +222,7 @@ public class MessageListFragment extends BaseFragment implements
 				user.getId());
 		CacheManager.saveObject(mContext, data,
 				Constants.CACHE_CURRENT_MESSAGE_LIST + "_" + user.getId());
-		Log.v("cai1", "onCreateView:" + data.size());
+		Log.v("MessageListFragment", "查询消息数据:" + data.size());
 		adapter.setData(data);
 		adapter.notifyDataSetChanged();
 		mState = STATE_NONE;
@@ -231,56 +231,56 @@ public class MessageListFragment extends BaseFragment implements
 
 	private void requestData(boolean refresh) {
 
-//		// 获取缓存数据
-//		if (!refresh) {
-//			List data = (List) CacheManager.readObject(mContext,
-//					Constants.CACHE_CURRENT_MESSAGE_LIST + "_" + user.getId());
-//			adapter.setData(data);
-//			adapter.notifyDataSetChanged();
-//			mState = STATE_NONE;
-//			setSwipeRefreshLoadedState();
-//			return;
-//		}
-//
-//		// 先查询本地数据消息
-//		int fromMessageId = 0;
-//		int todoFid = 0;
-//		if (mContext.getSessionService() != null) {
-//
-//			Object o = CacheManager
-//					.readObject(
-//							mContext,
-//							Constants.CACHE_CURRENT_MAX_MESSAGE_ID + "_"
-//									+ user.getId());
-//
-//			Object o1 = CacheManager.readObject(mContext,
-//					Constants.CACHE_CURRENT_MAX_TODO_ID + "_" + user.getId());
-//
-//			if (o != null) {
-//				fromMessageId = (int) o;
-//			}
-//			if (o1 != null) {
-//				todoFid = (int) o1;
-//			}
-//			if (fromMessageId < 1) {
-//				fromMessageId = DBHelper.getgetInstance(mContext)
-//						.getMaxMessageIdByUserId(user.getId());
-//				CacheManager.saveObject(
-//						mContext,
-//						fromMessageId,
-//						Constants.CACHE_CURRENT_MAX_MESSAGE_ID + "_"
-//								+ user.getId());
-//			}
-//			if (todoFid < 1) {
-//				todoFid = DBHelper.getgetInstance(mContext)
-//						.getMaxTodoIdByUserId(user.getId());
-//				CacheManager.saveObject(
-//						mContext,
-//						todoFid,
-//						Constants.CACHE_CURRENT_MAX_TODO_ID + "_"
-//								+ user.getId());
-//			}
-//			// 取新的数据
+		// 获取缓存数据
+		if (!refresh) {
+			List data = (List) CacheManager.readObject(mContext,
+					Constants.CACHE_CURRENT_MESSAGE_LIST + "_" + user.getId());
+			adapter.setData(data);
+			adapter.notifyDataSetChanged();
+			mState = STATE_NONE;
+			setSwipeRefreshLoadedState();
+			return;
+		}
+
+		// 先查询本地数据消息
+		int fromMessageId = 0;
+		int todoFid = 0;
+		if (mContext.getSessionService() != null) {
+
+			Object o = CacheManager
+					.readObject(
+							mContext,
+							Constants.CACHE_CURRENT_MAX_MESSAGE_ID + "_"
+									+ user.getId());
+
+			Object o1 = CacheManager.readObject(mContext,
+					Constants.CACHE_CURRENT_MAX_TODO_ID + "_" + user.getId());
+
+			if (o != null) {
+				fromMessageId = (int) o;
+			}
+			if (o1 != null) {
+				todoFid = (int) o1;
+			}
+			if (fromMessageId < 1) {
+				fromMessageId = DBHelper.getgetInstance(mContext)
+						.getMaxMessageIdByUserId(user.getId());
+				CacheManager.saveObject(
+						mContext,
+						fromMessageId,
+						Constants.CACHE_CURRENT_MAX_MESSAGE_ID + "_"
+								+ user.getId());
+			}
+			if (todoFid < 1) {
+				todoFid = DBHelper.getgetInstance(mContext)
+						.getMaxTodoIdByUserId(user.getId());
+				CacheManager.saveObject(
+						mContext,
+						todoFid,
+						Constants.CACHE_CURRENT_MAX_TODO_ID + "_"
+								+ user.getId());
+			}
+			// 取新的数据
 //			try {
 //				if (mContext.getSessionService() != null) {
 //					mContext.getSessionService().getMessageList(fromMessageId);
@@ -289,7 +289,7 @@ public class MessageListFragment extends BaseFragment implements
 //			} catch (RemoteException e) {
 //				e.printStackTrace();
 //			}
-//		}
+		}
 	}
 
 	@Override
@@ -387,18 +387,18 @@ public class MessageListFragment extends BaseFragment implements
 		mState = STATE_REFRESH;
 	}
 
-//	protected boolean compareTo(List<ChatMessage> data, ChatMessage enity) {
-//		int s = data.size();
-//		if (enity != null) {
-//			for (int i = 0; i < s; i++) {
-//				if (enity.getChatMessageId() == data.get(i).getChatMessageId()) {
-//					return true;
-//				}
-//
-//			}
-//		}
-//		return false;
-//	}
+	protected boolean compareTo(List<ChatMessage> data, ChatMessage enity) {
+		int s = data.size();
+		if (enity != null) {
+			for (int i = 0; i < s; i++) {
+				if (enity.getChatMessageId() == data.get(i).getChatMessageId()) {
+					return true;
+				}
+
+			}
+		}
+		return false;
+	}
 
 	@Override
 	public void onResume() {

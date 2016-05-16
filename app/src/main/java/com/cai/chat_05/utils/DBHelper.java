@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 
+import com.cai.chat_05.AttachmentDao;
 import com.cai.chat_05.ChatMessageDao;
 import com.cai.chat_05.DaoMaster;
 import com.cai.chat_05.DaoSession;
@@ -193,22 +194,21 @@ public class DBHelper {
 	/**
 	 * 获取当前用户下载的最大todoId
 	 * 
-	 * @param userId
 	 * @return
 	 */
-//	public int getMaxTodoIdByUserId(int whoId) {
-//		TodoDao todoDao = daoSession.getTodoDao();
-//		QueryBuilder<Todo> qb = todoDao.queryBuilder();
-//		qb.where(org.weishe.weichat.TodoDao.Properties.WhoId.eq(whoId));
-//		qb.limit(1);
-//		qb.orderDesc(org.weishe.weichat.TodoDao.Properties.TodoId);
-//		Todo m = qb.unique();
-//		int maxId = 0;
-//		if (m != null) {
-//			maxId = m.getId().intValue();
-//		}
-//		return maxId;
-//	}
+	public int getMaxTodoIdByUserId(int whoId) {
+		TodoDao todoDao = daoSession.getTodoDao();
+		QueryBuilder<Todo> qb = todoDao.queryBuilder();
+		qb.where(TodoDao.Properties.WhoId.eq(whoId));
+		qb.limit(1);
+		qb.orderDesc(TodoDao.Properties.TodoId);
+		Todo m = qb.unique();
+		int maxId = 0;
+		if (m != null) {
+			maxId = m.getId().intValue();
+		}
+		return maxId;
+	}
 
 	/**
 	 * 获取代办事项
@@ -417,52 +417,50 @@ public class DBHelper {
 	 * @param attachment
 	 */
 	public Attachment addAttachment(Attachment attachment) {
-//		AttachmentDao attachmentDao = daoSession.getAttachmentDao();
-//
-//		QueryBuilder<Attachment> qb = attachmentDao.queryBuilder();
-//		qb.where(org.weishe.weichat.AttachmentDao.Properties.GroupName
-//				.eq(attachment.getGroupName()),
-//				org.weishe.weichat.AttachmentDao.Properties.Path.eq(attachment
-//						.getPath()));
-//
-//		Attachment a = qb.unique();
-//		if (a != null) {
-//			if (attachment.getAttachmentId() > 0) {
-//				a.setAttachmentId(attachment.getAttachmentId());
-//				attachmentDao.update(a);
-//				return a;
-//			}
-//		} else {
-//			long id = attachmentDao.insert(attachment);
-//			if (id > 0) {
-//				attachment.setId(id);
-//				return attachment;
-//			}
-//		}
+		AttachmentDao attachmentDao = daoSession.getAttachmentDao();
+
+		QueryBuilder<Attachment> qb = attachmentDao.queryBuilder();
+		qb.where(AttachmentDao.Properties.GroupName
+				.eq(attachment.getGroupName()),
+				AttachmentDao.Properties.Path.eq(attachment
+						.getPath()));
+
+		Attachment a = qb.unique();
+		if (a != null) {
+			if (attachment.getAttachmentId() > 0) {
+				a.setAttachmentId(attachment.getAttachmentId());
+				attachmentDao.update(a);
+				return a;
+			}
+		} else {
+			long id = attachmentDao.insert(attachment);
+			if (id > 0) {
+				attachment.setId(id);
+				return attachment;
+			}
+		}
 		return null;
 	}
 
 	public Attachment getAttachment(String groupName, String path) {
-//		AttachmentDao attachmentDao = daoSession.getAttachmentDao();
-//
-//		QueryBuilder<Attachment> qb = attachmentDao.queryBuilder();
-//		qb.where(org.weishe.weichat.AttachmentDao.Properties.GroupName
-//				.eq(groupName),
-//				org.weishe.weichat.AttachmentDao.Properties.Path.eq(path));
-//		Attachment a = qb.unique();
-//		return a;
-		return null;
+		AttachmentDao attachmentDao = daoSession.getAttachmentDao();
+
+		QueryBuilder<Attachment> qb = attachmentDao.queryBuilder();
+		qb.where(AttachmentDao.Properties.GroupName
+				.eq(groupName),
+				AttachmentDao.Properties.Path.eq(path));
+		Attachment a = qb.unique();
+		return a;
 	}
 
 	public Attachment getAttachment(long attachmentId) {
-//		AttachmentDao attachmentDao = daoSession.getAttachmentDao();
-//
-//		QueryBuilder<Attachment> qb = attachmentDao.queryBuilder();
-//		qb.where(org.weishe.weichat.AttachmentDao.Properties.Id
-//				.eq(attachmentId));
-//		Attachment a = qb.unique();
-//		return a;
-		return null;
+		AttachmentDao attachmentDao = daoSession.getAttachmentDao();
+
+		QueryBuilder<Attachment> qb = attachmentDao.queryBuilder();
+		qb.where(AttachmentDao.Properties.Id
+				.eq(attachmentId));
+		Attachment a = qb.unique();
+		return a;
 	}
 
 	/**
@@ -470,105 +468,105 @@ public class DBHelper {
 	 * 
 	 * @param file
 	 */
-//	public void updateChatMessageAttachment(Attachment file) {
-//		if (file == null || file.getId() < 1) {
-//			return;
-//		}
-//		ChatMessageDao cdao = daoSession.getChatMessageDao();
-//		QueryBuilder<ChatMessage> qb = cdao.queryBuilder();
-//		qb.where(
-//				Properties.ContentType.eq(ChatMessage.CONTENT_TYPE_ATTACHMENT),
-//				Properties.FileGroupName.eq(file.getGroupName()),
-//				Properties.FilePath.eq(file.getPath()));
-//		List<ChatMessage> cl = qb.list();
-//		if (cl != null && cl.size() > 0) {
-//			for (ChatMessage cm : cl) {
-//				cm.setAttachmentId(file.getId());
-//				cdao.update(cm);
-//			}
-//		}
-//	}
+	public void updateChatMessageAttachment(Attachment file) {
+		if (file == null || file.getId() < 1) {
+			return;
+		}
+		ChatMessageDao cdao = daoSession.getChatMessageDao();
+		QueryBuilder<ChatMessage> qb = cdao.queryBuilder();
+		qb.where(
+				ChatMessageDao.Properties.ContentType.eq(Constants.CONTENT_TYPE_ATTACHMENT),
+				ChatMessageDao.Properties.FileGroupName.eq(file.getGroupName()),
+				ChatMessageDao.Properties.FilePath.eq(file.getPath()));
+		List<ChatMessage> cl = qb.list();
+		if (cl != null && cl.size() > 0) {
+			for (ChatMessage cm : cl) {
+				cm.setAttachmentId(file.getId());
+				cdao.update(cm);
+			}
+		}
+	}
 
-//	public void updateChatMessageChecked(int whoId, int friendId) {
-//
-//		ContentValues cv = new ContentValues();
-//		cv.put(Properties.Checked.columnName, true);
-//
-//		String[] args = { whoId + "", friendId + "" };
-//		db.update(ChatMessageDao.TABLENAME, cv, Properties.WhoId.columnName
-//				+ " =? and " + Properties.FromId.columnName + " =? ", args);
-//
-//	}
+	public void updateChatMessageChecked(int whoId, int friendId) {
 
-//	public void updateChatMessageUnCheck(Long id) {
-//		ChatMessageDao chatMessageDao = daoSession.getChatMessageDao();
-//		QueryBuilder<ChatMessage> qb = chatMessageDao.queryBuilder();
-//		qb.where(Properties.Id.eq(id));
-//		ChatMessage msg = qb.unique();
-//		if (msg != null) {
-//			if (msg.getType() != ChatMessage.TYPE_SEND) {
-//				msg.setChecked(false);
-//				chatMessageDao.update(msg);
-//			} else {
-//				// 查询一个最近的接收消息至为未读
-//				QueryBuilder<ChatMessage> qb2 = chatMessageDao.queryBuilder();
-//				qb2.where(Properties.FromId.eq(msg.getToId()),
-//						Properties.WhoId.eq(msg.getFromId()));
-//				qb2.limit(1);
-//				qb2.orderDesc(Properties.Id);
-//				ChatMessage m = qb2.unique();
-//				if (m != null) {
-//					m.setChecked(false);
-//					chatMessageDao.update(m);
-//				}
-//			}
-//		}
-//	}
+		ContentValues cv = new ContentValues();
+		cv.put(ChatMessageDao.Properties.Checked.columnName, true);
+
+		String[] args = { whoId + "", friendId + "" };
+		db.update(ChatMessageDao.TABLENAME, cv, ChatMessageDao.Properties.WhoId.columnName
+				+ " =? and " + ChatMessageDao.Properties.FromId.columnName + " =? ", args);
+
+	}
+
+	public void updateChatMessageUnCheck(Long id) {
+		ChatMessageDao chatMessageDao = daoSession.getChatMessageDao();
+		QueryBuilder<ChatMessage> qb = chatMessageDao.queryBuilder();
+		qb.where(ChatMessageDao.Properties.Id.eq(id));
+		ChatMessage msg = qb.unique();
+		if (msg != null) {
+			if (msg.getType() != Constants.TYPE_SEND) {
+				msg.setChecked(false);
+				chatMessageDao.update(msg);
+			} else {
+				// 查询一个最近的接收消息至为未读
+				QueryBuilder<ChatMessage> qb2 = chatMessageDao.queryBuilder();
+				qb2.where(ChatMessageDao.Properties.FromId.eq(msg.getToId()),
+						ChatMessageDao.Properties.WhoId.eq(msg.getFromId()));
+				qb2.limit(1);
+				qb2.orderDesc(ChatMessageDao.Properties.Id);
+				ChatMessage m = qb2.unique();
+				if (m != null) {
+					m.setChecked(false);
+					chatMessageDao.update(m);
+				}
+			}
+		}
+	}
 
 	/**
 	 * 根据聊天对象删除这一类的聊天消息
 	 * 
 	 * @param
 	 */
-//	public void deleteChatMessageByType(Long id) {
-//		ChatMessageDao chatMessageDao = daoSession.getChatMessageDao();
-//		QueryBuilder<ChatMessage> qb = chatMessageDao.queryBuilder();
-//		qb.where(Properties.Id.eq(id));
-//		ChatMessage msg = qb.unique();
-//		if (msg != null) {
-//			String whereClause = "1=2";
-//			String[] whereArgs = null;
-//			switch (msg.getMsgType()) {
-//			case ChatMessage.MSG_TYPE_UU:
-//				whereClause = Properties.MsgType.columnName + " = ? and (("
-//						+ Properties.FromId.columnName + " =  ? and "
-//						+ Properties.ToId.columnName + " =  ? ) or ( "
-//						+ Properties.FromId.columnName + " =  ? and "
-//						+ Properties.ToId.columnName + " = ?  ))";
-//				String arg[] = { ChatMessage.MSG_TYPE_UU + "",
-//						msg.getFromId() + "", msg.getToId() + "",
-//						msg.getToId() + "", msg.getFromId() + "" };
-//				whereArgs = arg;
-//				break;
-//			case ChatMessage.MSG_TYPE_UCG:
-//				whereClause = Properties.MsgType.columnName + " = ? and  "
-//						+ Properties.ChatGroupId + " = ? ";
-//				String argc[] = { ChatMessage.MSG_TYPE_UCG + "",
-//						msg.getChatGroupId() + "" };
-//				whereArgs = argc;
-//				break;
-//			case ChatMessage.MSG_TYPE_UDG:
-//				whereClause = Properties.MsgType.columnName + " = ? and "
-//						+ Properties.DiscussionGroupId.columnName + " =? ";
-//				String argd[] = { ChatMessage.MSG_TYPE_UDG + "",
-//						msg.getDiscussionGroupId() + "" };
-//				whereArgs = argd;
-//				break;
-//			}
-//			db.delete(ChatMessageDao.TABLENAME, whereClause, whereArgs);
-//
-//		}
-//	}
+	public void deleteChatMessageByType(Long id) {
+		ChatMessageDao chatMessageDao = daoSession.getChatMessageDao();
+		QueryBuilder<ChatMessage> qb = chatMessageDao.queryBuilder();
+		qb.where(ChatMessageDao.Properties.Id.eq(id));
+		ChatMessage msg = qb.unique();
+		if (msg != null) {
+			String whereClause = "1=2";
+			String[] whereArgs = null;
+			switch (msg.getMsgType()) {
+			case Constants.MSG_TYPE_UU:
+				whereClause = ChatMessageDao.Properties.MsgType.columnName + " = ? and (("
+						+ ChatMessageDao.Properties.FromId.columnName + " =  ? and "
+						+ ChatMessageDao.Properties.ToId.columnName + " =  ? ) or ( "
+						+ ChatMessageDao.Properties.FromId.columnName + " =  ? and "
+						+ ChatMessageDao.Properties.ToId.columnName + " = ?  ))";
+				String arg[] = { Constants.MSG_TYPE_UU + "",
+						msg.getFromId() + "", msg.getToId() + "",
+						msg.getToId() + "", msg.getFromId() + "" };
+				whereArgs = arg;
+				break;
+			case Constants.MSG_TYPE_UCG:
+				whereClause = ChatMessageDao.Properties.MsgType.columnName + " = ? and  "
+						+ ChatMessageDao.Properties.ChatGroupId + " = ? ";
+				String argc[] = { Constants.MSG_TYPE_UCG + "",
+						msg.getChatGroupId() + "" };
+				whereArgs = argc;
+				break;
+			case Constants.MSG_TYPE_UDG:
+				whereClause = ChatMessageDao.Properties.MsgType.columnName + " = ? and "
+						+ ChatMessageDao.Properties.DiscussionGroupId.columnName + " =? ";
+				String argd[] = { Constants.MSG_TYPE_UDG + "",
+						msg.getDiscussionGroupId() + "" };
+				whereArgs = argd;
+				break;
+			}
+			db.delete(ChatMessageDao.TABLENAME, whereClause, whereArgs);
+
+		}
+	}
 
 	public void updateTodo(int todoId, boolean complete, boolean agree,
 			String handleMsg) {
@@ -584,17 +582,17 @@ public class DBHelper {
 		todoDao.update(todo);
 	}
 
-//	public void updateChatMessageStatus(String uuid, int status) {
-//		ChatMessageDao chatMessageDao = daoSession.getChatMessageDao();
-//		QueryBuilder<ChatMessage> qb = chatMessageDao.queryBuilder();
-//		qb.where(Properties.Uuid.eq(uuid));
-//		ChatMessage cm = qb.unique();
-//		if (cm != null) {
-//			if (cm.getStatus() < status) {
-//				cm.setStatus(status);
-//				chatMessageDao.update(cm);
-//			}
-//		}
-//
-//	}
+	public void updateChatMessageStatus(String uuid, int status) {
+		ChatMessageDao chatMessageDao = daoSession.getChatMessageDao();
+		QueryBuilder<ChatMessage> qb = chatMessageDao.queryBuilder();
+		qb.where(ChatMessageDao.Properties.Uuid.eq(uuid));
+		ChatMessage cm = qb.unique();
+		if (cm != null) {
+			if (cm.getStatus() < status) {
+				cm.setStatus(status);
+				chatMessageDao.update(cm);
+			}
+		}
+
+	}
 }

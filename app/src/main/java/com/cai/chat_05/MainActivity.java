@@ -44,6 +44,7 @@ import com.google.android.gms.common.api.GoogleApiClient;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class MainActivity extends FragmentActivity {
 	public static final int START_TYPE_NORMAL = 0;
@@ -147,6 +148,28 @@ public class MainActivity extends FragmentActivity {
 //				Constants.CACHE_CURRENT_USER);
 //		friends = (List<Friends>) CacheManager.readObject(this,
 //				Friends.getCacheKey(user.getId()));
+		//写些假数据
+		friends = new ArrayList<Friends>();
+		for (int i=0; i<100; i++){
+			Friends friend = new Friends();
+			friend.setId(i);
+			friend.setAge(i);
+			friend.setOnline(true);
+			friend.setUserId(i);
+			friend.setName("名字是"+i);
+			Random random = new Random();
+			int a=random.nextInt(10);
+			friend.setFriendsGroupId(a);
+			friends.add(friend);
+		}
+		friendsGroups = new ArrayList<FriendsGroup>();
+		for (int i=0; i<10; i++){
+			FriendsGroup friendsGroup = new FriendsGroup();
+			friendsGroup.setId(i);
+			friendsGroup.setName("朋友分组"+i);
+			friendsGroup.setPosition(i);
+			friendsGroups.add(friendsGroup);
+		}
 
 		IntentFilter intentFilter = new IntentFilter();
 		intentFilter.addAction(Constants.INTENT_ACTION_RECEIVE_FRIEND_LIST);
