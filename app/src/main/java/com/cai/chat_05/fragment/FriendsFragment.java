@@ -23,6 +23,7 @@ import com.cai.chat_05.base.AsyncTaskBase;
 import com.cai.chat_05.bean.Constants;
 import com.cai.chat_05.bean.Friends;
 import com.cai.chat_05.bean.FriendsGroup;
+import com.cai.chat_05.cache.CacheManager;
 import com.cai.chat_05.sort.CharacterParser;
 import com.cai.chat_05.sort.PinyinComparator;
 import com.cai.chat_05.sort.SideBar;
@@ -147,28 +148,12 @@ public class FriendsFragment extends Fragment {
 			mCustomListView.onRefreshComplete();
 			if (result == 1) {
 				List<Friends> friends = null;
-//				try {
-//					friends = (List<Friends>) CacheManager.readObject(mContext,
-//							Friends.getCacheKey(mContext.getSessionService()
-//									.getUserId()));
-//				} catch (RemoteException e) {
-//					e.printStackTrace();
-//				}
-
-				friends = new ArrayList<Friends>();
-				for(int i=0; i<10; i++){
-					Friends f = new Friends();
-					f.setAge(i);
-					f.setId(i);
-					f.setAvatarPath("sssssss");
-					f.setFriendsGroupId(1);
-					f.setGender(0);
-					f.setName("name"+i);
-					f.setOnline(true);
-					f.setUserId(i);
-					friends.add(f);
+				try {
+					friends = (List<Friends>) CacheManager.readObject(mContext,
+							Friends.getCacheKey(mContext.getUser().getId()));
+				} catch (Exception e) {
+					e.printStackTrace();
 				}
-
 				SourceDateList = filledData(friends);
 				if (SourceDateList == null) {
 					return;

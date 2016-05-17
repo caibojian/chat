@@ -166,15 +166,15 @@ public class FriendListFragment extends BaseFragment implements
 	protected void requestData(boolean refresh) {
 
 		// 取新的数据
-//		try {
-//			if (mainActivity.getSessionService() != null) {
-//				mainActivity.getSessionService().getFriendList();
-//				mainActivity.getSessionService().getFriendGroupsList();
-//
-//			}
-//		} catch (RemoteException e) {
-//			e.printStackTrace();
-//		}
+		try {
+			if (mainActivity.getSessionService() != null) {
+				mainActivity.getSessionService().getFriendList();
+				mainActivity.getSessionService().getFriendGroupsList();
+
+			}
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
 
 	}
 

@@ -14,10 +14,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cai.chat_05.R;
+import com.cai.chat_05.bean.Constants;
 import com.cai.chat_05.bean.Friends;
 import com.cai.chat_05.bean.FriendsGroup;
 import com.cai.chat_05.bean.GroupClass;
 import com.cai.chat_05.bean.User;
+import com.cai.chat_05.cache.CacheManager;
 import com.cai.chat_05.view.CircularImage;
 import com.cai.chat_05.view.IphoneTreeView;
 
@@ -39,34 +41,14 @@ public class FriendListAdapter extends BaseExpandableListAdapter implements
 		this.mContext = mContext;
 
 		// 初始化一部分数据
-//		user = (User) CacheManager.readObject(mContext,
-//				Constants.CACHE_CURRENT_USER);
-//		friend = (List<Friends>) CacheManager.readObject(mContext,
-//				Friends.getCacheKey(user.getId()));
-//		friendsGroups = (List<FriendsGroup>) CacheManager.readObject(mContext,
-//				FriendsGroup.getCacheKey(user.getId()));
+		user = (User) CacheManager.readObject(mContext,
+				Constants.CACHE_CURRENT_USER);
+		friend = (List<Friends>) CacheManager.readObject(mContext,
+				Friends.getCacheKey(user.getId()));
+		friendsGroups = (List<FriendsGroup>) CacheManager.readObject(mContext,
+				FriendsGroup.getCacheKey(user.getId()));
 
-		friend = new ArrayList<Friends>();
-		friendsGroups = new ArrayList<FriendsGroup>();
-		for(int i=0; i<10; i++){
-			Friends f = new Friends();
-			f.setAge(i);
-			f.setId(i);
-			f.setAvatarPath("sssssss");
-			f.setFriendsGroupId(1);
-			f.setGender(0);
-			f.setName("name"+i);
-			f.setOnline(true);
-			f.setUserId(i);
-			friend.add(f);
-		}
 
-		for(int i=0; i<2; i++){
-			FriendsGroup g = new FriendsGroup();
-			g.setName("朋友"+i);
-			g.setId(i);
-			friendsGroups.add(g);
-		}
 		this.friends = this.getFriendsData();
 		this.groupStatusMap = new HashMap<Integer, Integer>();
 	}

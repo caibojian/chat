@@ -34,9 +34,12 @@ import com.cai.chat_05.aidl.SessionService;
 import com.cai.chat_05.bean.Constants;
 import com.cai.chat_05.bean.Friends;
 import com.cai.chat_05.bean.FriendsGroup;
+import com.cai.chat_05.bean.User;
+import com.cai.chat_05.cache.CacheManager;
 import com.cai.chat_05.fragment.ConstactFatherFragment;
 import com.cai.chat_05.fragment.MessageListFragment;
 import com.cai.chat_05.fragment.SettingFragment;
+import com.cai.chat_05.utils.DBHelper;
 import com.cai.chat_05.view.TableView;
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
@@ -51,7 +54,7 @@ public class MainActivity extends FragmentActivity {
 	public static final int START_TYPE_TODO = 1;
 
 	private SessionService mSessionService;
-//	private User user;
+	private User user;
 	private List<Friends> friends;
 	private List<FriendsGroup> friendsGroups;
 
@@ -79,17 +82,17 @@ public class MainActivity extends FragmentActivity {
 
 			String key = intent.getAction();
 			switch (key) {
-//			case Constants.INTENT_ACTION_RECEIVE_FRIEND_LIST:
-//
-//				friends = (List<Friends>) CacheManager.readObject(
-//						MainActivity.this, Friends.getCacheKey(user.getId()));
-//				break;
-//			case Constants.INTENT_ACTION_RECEIVE_FRIEND_GROUP_LIST:
-//				List<FriendsGroup> fg = null;
-//				friendsGroups = (List<FriendsGroup>) CacheManager.readObject(
-//						MainActivity.this,
-//						FriendsGroup.getCacheKey(user.getId()));
-//				break;
+			case Constants.INTENT_ACTION_RECEIVE_FRIEND_LIST:
+
+				friends = (List<Friends>) CacheManager.readObject(
+						MainActivity.this, Friends.getCacheKey(user.getId()));
+				break;
+			case Constants.INTENT_ACTION_RECEIVE_FRIEND_GROUP_LIST:
+				List<FriendsGroup> fg = null;
+				friendsGroups = (List<FriendsGroup>) CacheManager.readObject(
+						MainActivity.this,
+						FriendsGroup.getCacheKey(user.getId()));
+				break;
 				default:
 					break;
 			}
@@ -100,30 +103,30 @@ public class MainActivity extends FragmentActivity {
 		@Override
 		public void onServiceConnected(ComponentName name, IBinder service) {
 			mSessionService = SessionService.Stub.asInterface(service);
-//			Log.v("org.weishe.weichat", "获取  SessionService！");
-//			try {
-//				int fromMessageId = 0;
-//				try {
-//					fromMessageId = DBHelper.getgetInstance(mContext)
-//							.getMaxMessageIdByUserId(
-//									mSessionService.getUserId());
-//				} catch (RemoteException e1) {
-//					e1.printStackTrace();
-//				}
-//				mSessionService.getFriendList();
-//				mSessionService.getFriendGroupsList();
-//				mSessionService.getMessageList(fromMessageId);
-//				mSessionService.getChatGroupList();
-//				mSessionService.getDiscussionGroupList();
-//				mSessionService.getRelateUser();
-//			} catch (RemoteException e) {
-//				e.printStackTrace();
-//			}
+			Log.v("org.weishe.weichat", "获取  SessionService！");
+			try {
+				int fromMessageId = 0;
+				try {
+					fromMessageId = DBHelper.getgetInstance(mContext)
+							.getMaxMessageIdByUserId(
+									mSessionService.getUserId());
+				} catch (RemoteException e1) {
+					e1.printStackTrace();
+				}
+				mSessionService.getFriendList();
+				mSessionService.getFriendGroupsList();
+				mSessionService.getMessageList(fromMessageId);
+				mSessionService.getChatGroupList();
+				mSessionService.getDiscussionGroupList();
+				mSessionService.getRelateUser();
+			} catch (RemoteException e) {
+				e.printStackTrace();
+			}
 		}
 
 		@Override
 		public void onServiceDisconnected(ComponentName name) {
-//			mSessionService = null;
+			mSessionService = null;
 		}
 
 	};
@@ -144,8 +147,8 @@ public class MainActivity extends FragmentActivity {
 		mContext = this;
 
 		// 初始化一部分数据
-//		user = (User) CacheManager.readObject(this,
-//				Constants.CACHE_CURRENT_USER);
+		user = (User) CacheManager.readObject(this,
+				Constants.CACHE_CURRENT_USER);
 //		friends = (List<Friends>) CacheManager.readObject(this,
 //				Friends.getCacheKey(user.getId()));
 		//写些假数据
@@ -170,6 +173,10 @@ public class MainActivity extends FragmentActivity {
 			friendsGroup.setPosition(i);
 			friendsGroups.add(friendsGroup);
 		}
+		CacheManager.saveObject(this, friends,
+				Friends.getCacheKey(user.getId()));
+		CacheManager.saveObject(this, friendsGroups,
+				FriendsGroup.getCacheKey(user.getId()));
 
 		IntentFilter intentFilter = new IntentFilter();
 		intentFilter.addAction(Constants.INTENT_ACTION_RECEIVE_FRIEND_LIST);
@@ -368,5 +375,9 @@ public class MainActivity extends FragmentActivity {
 		);
 		AppIndex.AppIndexApi.end(client, viewAction);
 		client.disconnect();
+	}
+
+	public User getUser(){
+		return user;
 	}
 }

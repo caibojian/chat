@@ -146,6 +146,7 @@ public class LoginActivity extends BaseActivity {
 			SpUtil.setStringSharedPerference(sp, "user.uuid", clientId);
 			SpUtil.setStringSharedPerference(sp, "user.password", user.getPassword());
 			SpUtil.setStringSharedPerference(sp, "user.account", user.getAccount());
+			ioTService.setUser(user);
 			ioTService.IoTSubscribeToTopic(clientId, AWSIotMqttQos.QOS1);
 			ioTService.IoTSubscribeToTopic("system", AWSIotMqttQos.QOS1);
 			ioTService.IoTPublishString("system",AWSIotMqttQos.QOS1, "我登陆了："+clientId);
