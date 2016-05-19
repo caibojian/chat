@@ -52,7 +52,7 @@ public class User implements Serializable {
 	private boolean online;
 
 	public void setUuid(String uuid){
-		this.setUuid(uuid);
+		this.uuid = uuid;
 	}
 
 	public String getUuid(){
@@ -140,5 +140,22 @@ public class User implements Serializable {
 
 	public void setBirthday(Date birthday) {
 		this.birthday = birthday;
+	}
+
+	@Override
+	public String toString() {
+		return "User{" +
+				"id=" + id +
+				", uuid='" + uuid + '\'' +
+				", account='" + account + '\'' +
+				", password='" + password + '\'' +
+				", name='" + name + '\'' +
+				", signature='" + signature + '\'' +
+				", gender=" + gender +
+				", age=" + age +
+				", avatar='" + avatar + '\'' +
+				", birthday=" + birthday +
+				", online=" + online +
+				'}';
 	}
 }

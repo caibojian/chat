@@ -1,9 +1,11 @@
 package com.cai.chat_05;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -36,12 +38,18 @@ import com.cai.chat_05.base.BaseActivity;
 import com.cai.chat_05.bean.Constants;
 import com.cai.chat_05.bean.User;
 import com.cai.chat_05.cache.CacheManager;
+import com.cai.chat_05.core.bean.MyMessage;
 import com.cai.chat_05.service.IoTService;
+import com.cai.chat_05.utils.DBHelper;
+import com.cai.chat_05.utils.JsonUtil;
 import com.cai.chat_05.utils.SpUtil;
 import com.cai.chat_05.utils.UIHelper;
+import com.cai.chat_05.utils.UUIDUtil;
 
 import java.io.UnsupportedEncodingException;
 import java.security.KeyStore;
+import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 public class LoginActivity extends BaseActivity {
@@ -56,6 +64,8 @@ public class LoginActivity extends BaseActivity {
 	private EditText mAccount;
 	private EditText mPassword;
 	private String clientId;
+
+	private BroadcastReceiver receiver;
 
 	private SharedPreferences sp;
 
@@ -75,8 +85,36 @@ public class LoginActivity extends BaseActivity {
 
 		sp = SpUtil.getSharePerference(mContext);
 
-		clientId = UUID.randomUUID().toString();
+		clientId = UUIDUtil.uuid();
+		receiver = new BroadcastReceiver() {
+			@Override
+			public void onReceive(Context context, Intent intent) {
+				Log.v("com.caibojian.chat_05.login", "收到登陆信息");
+				String key = intent.getAction();
+				Bundle bundle = getIntent().getExtras();
+				switch (key) {
+					case Constants.INTENT_ACTION_LOGIN:
+//						User user = bundle.getParcelable(Constants.CACHE_CURRENT_USER);
 
+//						User user = (User) bundle.getSerializable(Constants.CACHE_CURRENT_USER);
+						User user = (User) intent.getSerializableExtra(Constants.CACHE_CURRENT_USER);
+						Log.v("com.caibojian.chat_05.login", "登陆用户信息："+user.toString());
+						if(user.isOnline()){
+							Log.v("com.caibojian.chat_05.login", "跳转到登陆页面：");
+							Intent intent2 = new Intent(mContext, MainActivity.class);
+							startActivity(intent2);
+						}else{
+							Toast.makeText(getApplicationContext(), "登陆失败",
+									Toast.LENGTH_SHORT).show();
+						}
+						break;
+				}
+
+			}
+		};
+		IntentFilter intentFilter = new IntentFilter();
+		intentFilter.addAction(Constants.INTENT_ACTION_LOGIN);
+		mContext.registerReceiver(receiver, intentFilter);
 	}
 
 
@@ -131,49 +169,25 @@ public class LoginActivity extends BaseActivity {
 	};
 
 	private void tryLogin(final String account, final String password) {
-		String localuuid = sp.getString("user.uuid","");
-		String localpassword = sp.getString("user.password","");
-		String localaccount = sp.getString("user.account","");
-		if (localuuid == ""||localuuid == null){
-			clientId = UUID.randomUUID().toString();
-			User user = new User();
-			user.setAccount(account);
-			user.setPassword(password);
-			user.setId(1);
-//			user.setUuid(clientId);
-			CacheManager.saveObject(mContext, user,
-					Constants.CACHE_CURRENT_USER);
-			SpUtil.setStringSharedPerference(sp, "user.uuid", clientId);
-			SpUtil.setStringSharedPerference(sp, "user.password", user.getPassword());
-			SpUtil.setStringSharedPerference(sp, "user.account", user.getAccount());
-			ioTService.setUser(user);
-			ioTService.IoTSubscribeToTopic(clientId, AWSIotMqttQos.QOS1);
-			ioTService.IoTSubscribeToTopic("system", AWSIotMqttQos.QOS1);
-			ioTService.IoTPublishString("system",AWSIotMqttQos.QOS1, "我登陆了："+clientId);
-			Log.d(LOG_TAG, " clientId: " + clientId);
-			Intent intent = new Intent(mContext, MainActivity.class);
-			mContext.startActivity(intent);
-		}else{
-			User user = new User();
-			user.setId(1);
-			user.setAccount(account);
-			user.setPassword(password);
-//			user.setUuid(localuuid);
-			clientId = localuuid;
-			CacheManager.saveObject(mContext, user,
-					Constants.CACHE_CURRENT_USER);
-			SpUtil.setStringSharedPerference(sp, "user.uuid", user.getUuid());
-			SpUtil.setStringSharedPerference(sp, "user.password", user.getPassword());
-			SpUtil.setStringSharedPerference(sp, "user.account", user.getAccount());
-			ioTService.IoTSubscribeToTopic(localuuid, AWSIotMqttQos.QOS1);
-			ioTService.IoTSubscribeToTopic("system", AWSIotMqttQos.QOS1);
-			ioTService.IoTPublishString("system",AWSIotMqttQos.QOS1, "我登陆了："+localuuid);
-			CacheManager.saveObject(LoginActivity.this, user,
-					Constants.CACHE_CURRENT_USER);
-			Log.d(LOG_TAG, " clientId: " + clientId);
-			Intent intent = new Intent(mContext, MainActivity.class);
-			mContext.startActivity(intent);
-		}
+
+		User user = new User();
+		user.setAccount(account);
+		user.setPassword(password);
+		user.setUuid(clientId);
+		String userJson = JsonUtil.toJson(user);
+		MyMessage msg = new MyMessage();
+		msg.setContent(userJson);
+		msg.setDate(new Date());
+		msg.setFromId(clientId);
+		msg.setToId(Constants.IOT_TOPOIC_LOGIN);
+		msg.setMsgType(Constants.MYMSG_TYPE_LOGIN_REQ);
+		String msgJson = JsonUtil.toJson(msg);
+		ioTService.IoTSubscribeToTopic(clientId, AWSIotMqttQos.QOS1);
+		ioTService.IoTSubscribeToTopic("system", AWSIotMqttQos.QOS1);
+		ioTService.IoTPublishString("system",AWSIotMqttQos.QOS1, "我登陆了："+clientId);
+		ioTService.IoTPublishString(Constants.IOT_TOPOIC_LOGIN,AWSIotMqttQos.QOS1, msgJson);
+		Log.d(LOG_TAG, " clientId: " + clientId);
+
 
 
 
@@ -257,8 +271,8 @@ public class LoginActivity extends BaseActivity {
 
 	@Override
 	protected void onDestroy() {
+		mContext.unregisterReceiver(receiver);
 		unbindService(conn);
 		super.onDestroy();
 	}
-
 }

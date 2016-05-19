@@ -18,6 +18,8 @@ public class Constants {
 
 	public static final String INTENT_ACTION_LOGOUT = "org.weishe.action.LOGOUT";
 
+	public static final String INTENT_ACTION_LOGIN = "org.weishe.action.LOGIN";
+
 	/**
 	 * 当前登录用户
 	 */
@@ -183,5 +185,14 @@ public class Constants {
 	public final static int STATUS_SEND = 1;// 默认状态已发送
 	public final static int STATUS_RECEIVED = 2;// 已收到
 	public final static int STATUS_READ = 3;// 已阅读
+	/*
+	通用消息类型
+	 */
+	public final static int MYMSG_TYPE_LOGIN_REQ = 0;// 通用消息类型：登陆请求
+	public final static int MYMSG_TYPE_LOGIN_RESP = 1;// 通用消息类型：登陆返回结果
 
+	/*
+	订阅主题类型topic
+	 */
+	public final static String IOT_TOPOIC_LOGIN = "IOT_TOPOIC_LOGIN";// 订阅主题类型:登陆主题
 }

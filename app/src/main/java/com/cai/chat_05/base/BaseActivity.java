@@ -1,6 +1,8 @@
 package com.cai.chat_05.base;
 
 import android.app.AlertDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -44,6 +46,7 @@ public abstract class BaseActivity extends FragmentActivity {
 		mScreenWidth = metric.widthPixels;
 		mScreenHeight = metric.heightPixels;
 		mDensity = metric.density;
+
 	}
 
 	@Override
@@ -211,4 +214,5 @@ public abstract class BaseActivity extends FragmentActivity {
 	protected void defaultFinish() {
 		super.finish();
 	}
+
 }

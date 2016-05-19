@@ -39,7 +39,9 @@ import com.cai.chat_05.bean.Attachment;
 import com.cai.chat_05.bean.Constants;
 import com.cai.chat_05.bean.Friends;
 import com.cai.chat_05.bean.User;
+import com.cai.chat_05.cache.CacheManager;
 import com.cai.chat_05.core.bean.ChatMessage;
+import com.cai.chat_05.core.bean.MyMessage;
 import com.cai.chat_05.utils.DBHelper;
 import com.cai.chat_05.utils.JsonUtil;
 
@@ -84,12 +86,12 @@ public class IoTService extends Service implements AWSIotMqttNewMessageCallback{
     // AWS IoT permissions.
     private static final String COGNITO_POOL_ID = "ap-northeast-1:96b4bf76-0482-419f-99dc-7e82d70490a1";
     // Name of the AWS IoT policy to attach to a newly created certificate
-    private static final String AWS_IOT_POLICY_NAME = "cai_iot_policy_1";
+    private static final String AWS_IOT_POLICY_NAME = "android_iot";
 
     // Region of AWS IoT
     private static final Regions MY_REGION = Regions.AP_NORTHEAST_1;
     // Filename of KeyStore file on the filesystem
-    private static final String KEYSTORE_NAME = "caibojian";
+    private static final String KEYSTORE_NAME = "caibojian.bks";
     // Password for the private key in the KeyStore
     private static final String KEYSTORE_PASSWORD = "caibojian.1991";
     // Certificate and key aliases in the KeyStore
@@ -453,15 +455,35 @@ public class IoTService extends Service implements AWSIotMqttNewMessageCallback{
                                         Log.d(LOG_TAG, "   Topic: " + topic);
                                         Log.d(LOG_TAG, " Message: " + message);
                                         try{
-                                            ChatMessage msg = JsonUtil.fromJson(message, ChatMessage.class);
-                                            DBHelper.getgetInstance(IoTService.this).addChatMessage(msg, msg.getWhoId());
-                                            Intent intent0 = new Intent();
-                                            intent0.setAction(Constants.INTENT_ACTION_RECEIVE_CHAT_MESSAGE);
-                                            Bundle bundle = new Bundle();
-                                            bundle.putSerializable(Constants.INTENT_EXTRA_CHAT_MESSAGE,
-                                                    msg);
-                                            intent0.putExtras(bundle);
-                                            IoTService.this.sendBroadcast(intent0);
+                                            MyMessage msg = JsonUtil.fromJson(message, MyMessage.class);
+                                            switch (msg.getMsgType()){
+                                                case Constants.MYMSG_TYPE_LOGIN_RESP:
+                                                    User user = JsonUtil.fromJson(msg.getContent(), User.class);
+                                                    setUser(user);
+                                                    Log.d(LOG_TAG, " iot服务接收到的user: " + user.toString());
+                                                    IoTSubscribeToTopic(user.getUuid(), AWSIotMqttQos.QOS1);
+                                                    CacheManager.saveObject(IoTService.this, user,
+                                                    Constants.CACHE_CURRENT_USER);
+                                                    Intent intent0 = new Intent();
+                                                    intent0.setAction(Constants.INTENT_ACTION_LOGIN);
+                                                    Bundle bundle = new Bundle();
+                                                    bundle.putSerializable(Constants.CACHE_CURRENT_USER,
+                                                            user);
+                                                    intent0.putExtras(bundle);
+                                                    IoTService.this.sendBroadcast(intent0);
+                                                    break;
+                                                default:
+                                                    break;
+                                            }
+//                                            ChatMessage msg = JsonUtil.fromJson(message, ChatMessage.class);
+//                                            DBHelper.getgetInstance(IoTService.this).addChatMessage(msg, msg.getWhoId());
+//                                            Intent intent0 = new Intent();
+//                                            intent0.setAction(Constants.INTENT_ACTION_RECEIVE_CHAT_MESSAGE);
+//                                            Bundle bundle = new Bundle();
+//                                            bundle.putSerializable(Constants.INTENT_EXTRA_CHAT_MESSAGE,
+//                                                    msg);
+//                                            intent0.putExtras(bundle);
+//                                            IoTService.this.sendBroadcast(intent0);
                                         }catch (Exception e){
                                             Log.e(LOG_TAG, "Message encoding error.", e);
                                         }

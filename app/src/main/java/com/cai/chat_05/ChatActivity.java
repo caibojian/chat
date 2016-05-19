@@ -309,6 +309,8 @@ public class ChatActivity extends BaseActivity implements OnSendClickListener,
 		chatMeessageListView.setSelection(chatList.size());
 	}
 
+
+
 	@Override
 	protected void onDestroy() {
 		this.unregisterReceiver(receiver);
