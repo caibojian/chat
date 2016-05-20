@@ -39,6 +39,7 @@ import com.cai.chat_05.cache.CacheManager;
 import com.cai.chat_05.fragment.ConstactFatherFragment;
 import com.cai.chat_05.fragment.MessageListFragment;
 import com.cai.chat_05.fragment.SettingFragment;
+import com.cai.chat_05.service.IoTService;
 import com.cai.chat_05.utils.DBHelper;
 import com.cai.chat_05.view.TableView;
 import com.google.android.gms.appindexing.Action;
@@ -53,7 +54,7 @@ public class MainActivity extends FragmentActivity {
 	public static final int START_TYPE_NORMAL = 0;
 	public static final int START_TYPE_TODO = 1;
 
-	private SessionService mSessionService;
+	private IoTService.MsgBinder iBinder;
 	private User user;
 	private List<Friends> friends;
 	private List<FriendsGroup> friendsGroups;
@@ -102,23 +103,23 @@ public class MainActivity extends FragmentActivity {
 
 		@Override
 		public void onServiceConnected(ComponentName name, IBinder service) {
-			mSessionService = SessionService.Stub.asInterface(service);
+			iBinder = (IoTService.MsgBinder) service;
 			Log.v("org.weishe.weichat", "获取  SessionService！");
 			try {
 				int fromMessageId = 0;
 				try {
 					fromMessageId = DBHelper.getgetInstance(mContext)
 							.getMaxMessageIdByUserId(
-									mSessionService.getUserId());
+									iBinder.getUserId());
 				} catch (RemoteException e1) {
 					e1.printStackTrace();
 				}
-				mSessionService.getFriendList();
-				mSessionService.getFriendGroupsList();
-				mSessionService.getMessageList(fromMessageId);
-				mSessionService.getChatGroupList();
-				mSessionService.getDiscussionGroupList();
-				mSessionService.getRelateUser();
+				iBinder.getFriendList();
+				iBinder.getFriendGroupsList();
+				iBinder.getMessageList(fromMessageId);
+				iBinder.getChatGroupList();
+				iBinder.getDiscussionGroupList();
+				iBinder.getRelateUser();
 			} catch (RemoteException e) {
 				e.printStackTrace();
 			}
@@ -126,7 +127,7 @@ public class MainActivity extends FragmentActivity {
 
 		@Override
 		public void onServiceDisconnected(ComponentName name) {
-			mSessionService = null;
+			iBinder = null;
 		}
 
 	};
@@ -139,45 +140,18 @@ public class MainActivity extends FragmentActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		Intent intent = new Intent(Constants.INTENT_SERVICE_SESSION);
-		intent.setAction(Constants.INTENT_SERVICE_SESSION);
-		intent.setPackage("com.cai.chat_05");
+		Intent intent = new Intent(this, IoTService.class);
 		this.bindService(intent, connection, Context.BIND_AUTO_CREATE);
+
 		setContentView(R.layout.activity_main);
 		mContext = this;
 
 		// 初始化一部分数据
 		user = (User) CacheManager.readObject(this,
 				Constants.CACHE_CURRENT_USER);
-//		friends = (List<Friends>) CacheManager.readObject(this,
-//				Friends.getCacheKey(user.getId()));
-		//写些假数据
-		friends = new ArrayList<Friends>();
-		for (int i=0; i<100; i++){
-			Friends friend = new Friends();
-			friend.setId(i);
-			friend.setAge(i);
-			friend.setOnline(true);
-			friend.setUserId(i);
-			friend.setName("名字是"+i);
-			Random random = new Random();
-			int a=random.nextInt(10);
-			friend.setFriendsGroupId(a);
-			friends.add(friend);
-		}
-		friendsGroups = new ArrayList<FriendsGroup>();
-		for (int i=0; i<10; i++){
-			FriendsGroup friendsGroup = new FriendsGroup();
-			friendsGroup.setId(i);
-			friendsGroup.setName("朋友分组"+i);
-			friendsGroup.setPosition(i);
-			friendsGroups.add(friendsGroup);
-		}
-		CacheManager.saveObject(this, friends,
+		friends = (List<Friends>) CacheManager.readObject(this,
 				Friends.getCacheKey(user.getId()));
-		CacheManager.saveObject(this, friendsGroups,
-				FriendsGroup.getCacheKey(user.getId()));
-
+		//写些假数据
 		IntentFilter intentFilter = new IntentFilter();
 		intentFilter.addAction(Constants.INTENT_ACTION_RECEIVE_FRIEND_LIST);
 		intentFilter
@@ -304,8 +278,8 @@ public class MainActivity extends FragmentActivity {
 
 	}
 
-	public SessionService getSessionService() {
-		return mSessionService;
+	public IoTService.MsgBinder getSessionService() {
+		return iBinder;
 	}
 
 	public List<Friends> getFriends() {

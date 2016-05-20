@@ -190,9 +190,15 @@ public class Constants {
 	 */
 	public final static int MYMSG_TYPE_LOGIN_REQ = 0;// 通用消息类型：登陆请求
 	public final static int MYMSG_TYPE_LOGIN_RESP = 1;// 通用消息类型：登陆返回结果
+	public final static int MYMSG_TYPE_GETFRIENDS_REQ = 2;// 通用消息类型：获取好友请求
+	public final static int MYMSG_TYPE_GETFRIENDS_RESP = 3;// 通用消息类型：好友返回结果
+	public final static int MYMSG_TYPE_GETFRIENDSGROUP_REQ = 4;// 通用消息类型：获取好友分组请求
+	public final static int MYMSG_TYPE_GETFRIENDSGROUP_RESP = 5;// 通用消息类型：获取好友分组结果
 
 	/*
 	订阅主题类型topic
 	 */
 	public final static String IOT_TOPOIC_LOGIN = "IOT_TOPOIC_LOGIN";// 订阅主题类型:登陆主题
+	public final static String IOT_TOPOIC_GETFRIENDS = "IOT_TOPOIC_GETFRIENDS";// 订阅主题类型:获取好友
+	public final static String IOT_TOPOIC_GETFRIENDSGROUP = "IOT_TOPOIC_GETFRIENDSGROUP";// 订阅主题类型:获取好友分组
 }

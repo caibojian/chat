@@ -181,6 +181,7 @@ public class LoginActivity extends BaseActivity {
 		msg.setFromId(clientId);
 		msg.setToId(Constants.IOT_TOPOIC_LOGIN);
 		msg.setMsgType(Constants.MYMSG_TYPE_LOGIN_REQ);
+		msg.setUuid(UUIDUtil.uuid());
 		String msgJson = JsonUtil.toJson(msg);
 		ioTService.IoTSubscribeToTopic(clientId, AWSIotMqttQos.QOS1);
 		ioTService.IoTSubscribeToTopic("system", AWSIotMqttQos.QOS1);

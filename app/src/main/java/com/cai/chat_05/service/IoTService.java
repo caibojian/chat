@@ -38,12 +38,15 @@ import com.cai.chat_05.aidl.SessionService;
 import com.cai.chat_05.bean.Attachment;
 import com.cai.chat_05.bean.Constants;
 import com.cai.chat_05.bean.Friends;
+import com.cai.chat_05.bean.FriendsGroup;
 import com.cai.chat_05.bean.User;
 import com.cai.chat_05.cache.CacheManager;
 import com.cai.chat_05.core.bean.ChatMessage;
 import com.cai.chat_05.core.bean.MyMessage;
 import com.cai.chat_05.utils.DBHelper;
 import com.cai.chat_05.utils.JsonUtil;
+import com.cai.chat_05.utils.UUIDUtil;
+import com.google.gson.reflect.TypeToken;
 
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.eclipse.paho.client.mqttv3.MqttPersistenceException;
@@ -53,6 +56,7 @@ import org.eclipse.paho.client.mqttv3.persist.MqttDefaultFilePersistence;
 import java.io.UnsupportedEncodingException;
 import java.nio.channels.SocketChannel;
 import java.security.KeyStore;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 import java.util.logging.FileHandler;
@@ -425,13 +429,144 @@ public class IoTService extends Service implements AWSIotMqttNewMessageCallback{
     }
 
     public class MsgBinder extends Binder {
-    /**
-     * 获取当前Service的实例
-     * @return
-     */
-    public IoTService getService(){
+        /**
+         * 获取当前Service的实例
+         * @return
+         */
+        public IoTService getService(){
             return IoTService.this;
         }
+
+        public void sendMessage(String uuid, int contentType, String message,
+                                int toId, int msgType, String fileGroupName, String filePath)
+                throws RemoteException {
+            Message msg = null;
+
+//            switch (msgType) {
+//                case ChatMessage.MSG_TYPE_UU:
+//                    msg = MsgHelper.newUUChatMessage(uuid, user.getId(), toId,
+//                            message, token, true,
+//                            StringUtils.getCurrentStringDate(), 0, contentType,
+//                            fileGroupName, filePath, ChatMessage.STATUS_SEND);
+//                    break;
+//                case ChatMessage.MSG_TYPE_UCG:
+//                    msg = MsgHelper.newUCGChatMessage(uuid, user.getId(), toId,
+//                            message, token, true,
+//                            StringUtils.getCurrentStringDate(), 0, contentType,
+//                            fileGroupName, filePath, ChatMessage.STATUS_SEND);
+//                    break;
+//                case ChatMessage.MSG_TYPE_UDG:
+//                    msg = MsgHelper.newUUChatMessage(uuid, user.getId(), toId,
+//                            message, token, true,
+//                            StringUtils.getCurrentStringDate(), 0, contentType,
+//                            fileGroupName, filePath, ChatMessage.STATUS_SEND);
+//                    break;
+//            }
+//            socketChannel.writeAndFlush(msg);
+//
+//            BroadcastHelper.onSendChatMessage(Session.this);
+        }
+
+        public void getFriendList() throws RemoteException {
+            Log.i(LOG_TAG, "调用的iotservice的getFriendList（）");
+            MyMessage msg = new MyMessage();
+            msg.setMsgType(Constants.MYMSG_TYPE_GETFRIENDS_REQ);
+            msg.setToId("system");
+            msg.setFromId(user.getUuid());
+            msg.setDate(new Date());
+            msg.setUuid(UUIDUtil.uuid());
+            String msgJson = JsonUtil.toJson(msg);
+            IoTPublishString(Constants.IOT_TOPOIC_GETFRIENDS,AWSIotMqttQos.QOS1, msgJson);
+
+        }
+
+        public void getMessageList(int fromMessageId) throws RemoteException {
+//            Message msg1 = MsgHelper.newClientRequestMessage(
+//                    ClientRequestMessage.CHAT_MESSAGE_LIST, user.getId(),
+//                    token, fromMessageId + "");
+//
+//            socketChannel.writeAndFlush(msg1);
+        }
+
+        public int getUserId() throws RemoteException {
+
+            return user.getId();
+        }
+
+        public String getUserName() throws RemoteException {
+            return user.getName();
+        }
+
+        public void getFriendGroupsList() throws RemoteException {
+            MyMessage msg = new MyMessage();
+            msg.setMsgType(Constants.MYMSG_TYPE_GETFRIENDSGROUP_REQ);
+            msg.setToId("system");
+            msg.setFromId(user.getUuid());
+            msg.setDate(new Date());
+            msg.setUuid(UUIDUtil.uuid());
+            String msgJson = JsonUtil.toJson(msg);
+            IoTPublishString(Constants.IOT_TOPOIC_GETFRIENDSGROUP,AWSIotMqttQos.QOS1, msgJson);
+        }
+
+        public String getToken() throws RemoteException {
+            return token;
+        }
+
+        public void sendAttachment(long id) throws RemoteException {
+//            Attachment a = DBHelper.getgetInstance(Session.this).getAttachment(
+//                    id);
+//            if (a == null) {
+//                return;
+//            }
+//            Message msg = MsgHelper.newFileUpload(a, user.getId(), token);
+//            socketChannel.writeAndFlush(msg);
+        }
+
+        public void getTodoList(int fromMessageId) throws RemoteException {
+//            Message msg1 = MsgHelper.newClientRequestMessage(
+//                    ClientRequestMessage.TODO_LIST, user.getId(), token,
+//                    fromMessageId + "");
+//            socketChannel.writeAndFlush(msg1);
+        }
+
+        public void getChatGroupList() throws RemoteException {
+//            Message msg = MsgHelper.newClientRequestMessage(
+//                    ClientRequestMessage.CHAT_GROUP_LIST, user.getId(), token,
+//                    "");
+//            socketChannel.writeAndFlush(msg);
+        }
+
+        public void getDiscussionGroupList() throws RemoteException {
+//            Message msg = MsgHelper.newClientRequestMessage(
+//                    ClientRequestMessage.DISCUSSION_GROUP_LIST, user.getId(),
+//                    token, "");
+//            socketChannel.writeAndFlush(msg);
+        }
+
+        public void getChatGroupMemberList(int groupId) throws RemoteException {
+//            Message msg = MsgHelper.newClientRequestMessage(
+//                    ClientRequestMessage.CHAT_GROUP_MEMBER_LIST, user.getId(),
+//                    token, "" + groupId);
+//            socketChannel.writeAndFlush(msg);
+
+        }
+
+        public void getDiscussionGroupMemberList(int dGroupId)
+                throws RemoteException {
+//            Message msg = MsgHelper.newClientRequestMessage(
+//                    ClientRequestMessage.DISCUSSION_GROUP_MEMBER_LIST,
+//                    user.getId(), token, "" + dGroupId);
+//            socketChannel.writeAndFlush(msg);
+
+        }
+
+        public void getRelateUser() throws RemoteException {
+//            Message msg = MsgHelper.newClientRequestMessage(
+//                    ClientRequestMessage.RELATE_USER_LIST, user.getId(), token,
+//                    "");
+//            socketChannel.writeAndFlush(msg);
+        }
+
     }
 
     /**
@@ -471,6 +606,19 @@ public class IoTService extends Service implements AWSIotMqttNewMessageCallback{
                                                             user);
                                                     intent0.putExtras(bundle);
                                                     IoTService.this.sendBroadcast(intent0);
+                                                    break;
+                                                case Constants.MYMSG_TYPE_GETFRIENDS_RESP:
+                                                    List<Friends> friends = JsonUtil.fromJson(msg.getContent(),new TypeToken<List<Friends>>() {
+                                                    }.getType());
+                                                    CacheManager.saveObject(IoTService.this, friends,
+                                                            Friends.getCacheKey(getUser().getId()));
+
+                                                    break;
+                                                case Constants.MYMSG_TYPE_GETFRIENDSGROUP_RESP:
+                                                    List<FriendsGroup> friendsGroups = JsonUtil.fromJson(msg.getContent(),new TypeToken<List<FriendsGroup>>() {
+                                                    }.getType());
+                                                    CacheManager.saveObject(IoTService.this, friendsGroups,
+                                                            FriendsGroup.getCacheKey(getUser().getId()));
                                                     break;
                                                 default:
                                                     break;
@@ -514,151 +662,15 @@ public class IoTService extends Service implements AWSIotMqttNewMessageCallback{
         }
     }
 
-    public String getcClientId(){
+    public String getClientId(){
         return clientId;
     }
 
-    public class LocalBinder extends SessionService.Stub {
-
-        public IoTService getService() {
-            return IoTService.this;
-        }
-
-        @Override
-        public void sendMessage(String uuid, int contentType, String message,
-                                int toId, int msgType, String fileGroupName, String filePath)
-                throws RemoteException {
-            Message msg = null;
-
-//            switch (msgType) {
-//                case ChatMessage.MSG_TYPE_UU:
-//                    msg = MsgHelper.newUUChatMessage(uuid, user.getId(), toId,
-//                            message, token, true,
-//                            StringUtils.getCurrentStringDate(), 0, contentType,
-//                            fileGroupName, filePath, ChatMessage.STATUS_SEND);
-//                    break;
-//                case ChatMessage.MSG_TYPE_UCG:
-//                    msg = MsgHelper.newUCGChatMessage(uuid, user.getId(), toId,
-//                            message, token, true,
-//                            StringUtils.getCurrentStringDate(), 0, contentType,
-//                            fileGroupName, filePath, ChatMessage.STATUS_SEND);
-//                    break;
-//                case ChatMessage.MSG_TYPE_UDG:
-//                    msg = MsgHelper.newUUChatMessage(uuid, user.getId(), toId,
-//                            message, token, true,
-//                            StringUtils.getCurrentStringDate(), 0, contentType,
-//                            fileGroupName, filePath, ChatMessage.STATUS_SEND);
-//                    break;
-//            }
-//            socketChannel.writeAndFlush(msg);
-//
-//            BroadcastHelper.onSendChatMessage(Session.this);
-        }
-
-        @Override
-        public void getFriendList() throws RemoteException {
-//            Message msg = MsgHelper.newClientRequestMessage(
-//                    ClientRequestMessage.FRIEND_LIST, user.getId(), token, "");
-//            socketChannel.writeAndFlush(msg);
-        }
-
-        @Override
-        public void getMessageList(int fromMessageId) throws RemoteException {
-//            Message msg1 = MsgHelper.newClientRequestMessage(
-//                    ClientRequestMessage.CHAT_MESSAGE_LIST, user.getId(),
-//                    token, fromMessageId + "");
-//
-//            socketChannel.writeAndFlush(msg1);
-        }
-
-        @Override
-        public int getUserId() throws RemoteException {
-
-            return user.getId();
-        }
-
-        @Override
-        public String getUserName() throws RemoteException {
-            return user.getName();
-        }
-
-        @Override
-        public void getFriendGroupsList() throws RemoteException {
-//            Message msg = MsgHelper.newClientRequestMessage(
-//                    ClientRequestMessage.FRIEND_GROUP_LIST, user.getId(),
-//                    token, "");
-//            socketChannel.writeAndFlush(msg);
-        }
-
-        @Override
-        public String getToken() throws RemoteException {
-            return token;
-        }
-
-        @Override
-        public void sendAttachment(long id) throws RemoteException {
-//            Attachment a = DBHelper.getgetInstance(Session.this).getAttachment(
-//                    id);
-//            if (a == null) {
-//                return;
-//            }
-//            Message msg = MsgHelper.newFileUpload(a, user.getId(), token);
-//            socketChannel.writeAndFlush(msg);
-        }
-
-        @Override
-        public void getTodoList(int fromMessageId) throws RemoteException {
-//            Message msg1 = MsgHelper.newClientRequestMessage(
-//                    ClientRequestMessage.TODO_LIST, user.getId(), token,
-//                    fromMessageId + "");
-//            socketChannel.writeAndFlush(msg1);
-        }
-
-        @Override
-        public void getChatGroupList() throws RemoteException {
-//            Message msg = MsgHelper.newClientRequestMessage(
-//                    ClientRequestMessage.CHAT_GROUP_LIST, user.getId(), token,
-//                    "");
-//            socketChannel.writeAndFlush(msg);
-        }
-
-        @Override
-        public void getDiscussionGroupList() throws RemoteException {
-//            Message msg = MsgHelper.newClientRequestMessage(
-//                    ClientRequestMessage.DISCUSSION_GROUP_LIST, user.getId(),
-//                    token, "");
-//            socketChannel.writeAndFlush(msg);
-        }
-
-        @Override
-        public void getChatGroupMemberList(int groupId) throws RemoteException {
-//            Message msg = MsgHelper.newClientRequestMessage(
-//                    ClientRequestMessage.CHAT_GROUP_MEMBER_LIST, user.getId(),
-//                    token, "" + groupId);
-//            socketChannel.writeAndFlush(msg);
-
-        }
-
-        @Override
-        public void getDiscussionGroupMemberList(int dGroupId)
-                throws RemoteException {
-//            Message msg = MsgHelper.newClientRequestMessage(
-//                    ClientRequestMessage.DISCUSSION_GROUP_MEMBER_LIST,
-//                    user.getId(), token, "" + dGroupId);
-//            socketChannel.writeAndFlush(msg);
-
-        }
-
-        @Override
-        public void getRelateUser() throws RemoteException {
-//            Message msg = MsgHelper.newClientRequestMessage(
-//                    ClientRequestMessage.RELATE_USER_LIST, user.getId(), token,
-//                    "");
-//            socketChannel.writeAndFlush(msg);
-        }
-
-    }
     public void setUser(User user){
         this.user = user;
+    }
+
+    public User getUser(){
+        return this.user;
     }
 }
