@@ -474,7 +474,7 @@ public class IoTService extends Service implements AWSIotMqttNewMessageCallback{
             myMessage.setDate(new Date());
             myMessage.setFromId(user.getId()+"");
             myMessage.setToId(toId+"");
-            myMessage.setMsgType(Constants.MSG_TYPE_UCG);
+            myMessage.setMsgType(Constants.MYMSG_TYPE_CHAT_UU);
             myMessage.setContent(JsonUtil.toJson(chatMessage));
             msgJson = JsonUtil.toJson(JsonUtil.toJson(myMessage));
             IoTPublishString(toId+"",AWSIotMqttQos.QOS1, msgJson);
@@ -662,6 +662,16 @@ public class IoTService extends Service implements AWSIotMqttNewMessageCallback{
                                                     intent2.setAction(Constants.INTENT_ACTION_RECEIVE_FRIEND_GROUP_LIST);
                                                     IoTService.this.sendBroadcast(intent2);
                                                     break;
+                                                case Constants.MYMSG_TYPE_CHAT_UU:
+                                                    Log.d(LOG_TAG, " iot服务接收到的user: " + msg.getContent());
+                                                    ChatMessage chatMessage = JsonUtil.fromJson(msg.getContent(), ChatMessage.class);
+
+                                                    Intent intent3 = new Intent();
+                                                    intent3.setAction(Constants.INTENT_ACTION_RECEIVE_CHAT_MESSAGE);
+                                                    Bundle bundle3 = new Bundle();
+                                                    bundle3.putSerializable(Constants.INTENT_EXTRA_CHAT_MESSAGE,
+                                                            chatMessage);
+                                                    IoTService.this.sendBroadcast(intent3);
                                                 default:
                                                     Log.d(LOG_TAG, " iot服务接收到未知类型的消息: " + msg);
                                                     break;

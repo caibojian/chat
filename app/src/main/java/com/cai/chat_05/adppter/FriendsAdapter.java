@@ -7,6 +7,7 @@ import java.util.Map;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,8 @@ import com.cai.chat_05.view.CircularImage;
 import com.cai.chat_05.view.CustomListView;
 
 public class FriendsAdapter extends BaseAdapter implements SectionIndexer {
+	static final String LOG_TAG = FriendsAdapter.class.getCanonicalName();
+
 	private List<Friends> list = null;
 	private Context mContext;
 	private Map<String, String> mCallRecords;
@@ -50,7 +53,9 @@ public class FriendsAdapter extends BaseAdapter implements SectionIndexer {
 	}
 
 	public Object getItem(int position) {
-		return list.get(position);
+		Log.v(LOG_TAG, "数组大小"+list.size());
+		Log.v(LOG_TAG, "position的值"+position);
+		return list.get(position-1);
 	}
 
 	public long getItemId(int position) {

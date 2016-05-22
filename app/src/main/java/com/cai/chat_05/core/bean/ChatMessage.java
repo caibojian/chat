@@ -5,6 +5,7 @@ import java.util.Date;
 
 public class ChatMessage implements Serializable {
 
+	private static final long serialVersionUID = 11232524855L;
 	/**
 	 * 非持久化字段，用于计数还有多少未读消息
 	 */

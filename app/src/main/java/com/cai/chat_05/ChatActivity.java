@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.os.RemoteException;
 import android.text.Editable;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -49,7 +50,7 @@ public class ChatActivity extends BaseActivity implements OnSendClickListener,
 	public final static int CURRENT_INPUT_TYPE_VOICE = 1;// 语音输入
 
 	private BroadcastReceiver receiver;
-	private IoTService.MsgBinder mSessionService;
+	private IoTService.MsgBinder iBinder;
 
 	private User user;
 	int userId;
@@ -77,13 +78,14 @@ public class ChatActivity extends BaseActivity implements OnSendClickListener,
 
 		@Override
 		public void onServiceConnected(ComponentName name, IBinder service) {
-			mSessionService = (IoTService.MsgBinder) service;
+			iBinder = (IoTService.MsgBinder) service;
 		}
 
 		@Override
 		public void onServiceDisconnected(ComponentName name) {
-			mSessionService = null;
+			iBinder = null;
 		}
+
 	};
 
 	@Override
@@ -121,12 +123,8 @@ public class ChatActivity extends BaseActivity implements OnSendClickListener,
 		initViews();
 		initEvents();
 
-		Intent i = new Intent(Constants.INTENT_SERVICE_SESSION);
-
-		i.setAction(Constants.INTENT_SERVICE_SESSION);
-
-		i.setPackage("org.weishe.weichat");
-		this.bindService(i, connection, Context.BIND_ADJUST_WITH_ACTIVITY);
+		Intent intent1 = new Intent(this, IoTService.class);
+		this.bindService(intent1, connection, Context.BIND_AUTO_CREATE);
 
 		// 注册监听消息
 		receiver = new BroadcastReceiver() {
@@ -230,7 +228,7 @@ public class ChatActivity extends BaseActivity implements OnSendClickListener,
 
 		try {
 
-			mSessionService.sendMessage(uuid, Constants.CONTENT_TYPE_NORMAL,
+			iBinder.sendMessage(uuid, Constants.CONTENT_TYPE_NORMAL,
 					content, toId, chatType, "", "", chatMessage);
 		} catch (RemoteException e) {
 			e.printStackTrace();
@@ -332,30 +330,30 @@ public class ChatActivity extends BaseActivity implements OnSendClickListener,
 //		try {
 //			switch (chatType) {
 //			case ChatMessage.MSG_TYPE_UU:
-////				if ((message.getToId() == mSessionService.getUserId()
+////				if ((message.getToId() == iBinder.getUserId()
 ////						&& message.getType() == ChatMessage.TYPE_RECEIVE && message
 ////						.getFromId() == friend.getUserId())
-////						|| (message.getFromId() == mSessionService.getUserId()
+////						|| (message.getFromId() == iBinder.getUserId()
 ////								&& message.getType() == ChatMessage.TYPE_SEND && message
 ////								.getToId() == friend.getUserId())) {
 ////					return true;
 ////				}
 //				break;
 //			case ChatMessage.MSG_TYPE_UCG:
-////				if ((message.getToId() == mSessionService.getUserId()
+////				if ((message.getToId() == iBinder.getUserId()
 ////						&& message.getType() == ChatMessage.TYPE_RECEIVE && message
 ////						.getChatGroupId() == chatGroup.getId())
-////						|| (message.getFromId() == mSessionService.getUserId()
+////						|| (message.getFromId() == iBinder.getUserId()
 ////								&& message.getType() == ChatMessage.TYPE_SEND && message
 ////								.getChatGroupId() == chatGroup.getId())) {
 ////					return true;
 ////				}
 //				break;
 //			case ChatMessage.MSG_TYPE_UDG:
-////				if ((message.getToId() == mSessionService.getUserId()
+////				if ((message.getToId() == iBinder.getUserId()
 ////						&& message.getType() == ChatMessage.TYPE_RECEIVE && message
 ////						.getDiscussionGroupId() == discussionGroup.getId())
-////						|| (message.getFromId() == mSessionService.getUserId()
+////						|| (message.getFromId() == iBinder.getUserId()
 ////								&& message.getType() == ChatMessage.TYPE_SEND && message
 ////								.getDiscussionGroupId() == discussionGroup
 ////								.getId())) {
@@ -390,7 +388,7 @@ public class ChatActivity extends BaseActivity implements OnSendClickListener,
 	@Override
 	public void onSend(Attachment a) {
 //		try {
-//			mSessionService.sendAttachment(a.getId());
+//			iBinder.sendAttachment(a.getId());
 //		} catch (RemoteException e1) {
 //			e1.printStackTrace();
 //		}
@@ -435,7 +433,7 @@ public class ChatActivity extends BaseActivity implements OnSendClickListener,
 				user.getId());
 
 //		try {
-//			mSessionService.sendMessage(uuid,
+//			iBinder.sendMessage(uuid,
 //					ChatMessage.CONTENT_TYPE_ATTACHMENT, "", toId, chatType,
 //					a.getGroupName(), a.getPath());
 //		} catch (RemoteException e) {
@@ -451,7 +449,7 @@ public class ChatActivity extends BaseActivity implements OnSendClickListener,
 	}
 
 	public IoTService.MsgBinder getSessionService() {
-		return mSessionService;
+		return iBinder;
 	}
 
 	@Override

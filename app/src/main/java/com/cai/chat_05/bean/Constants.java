@@ -194,6 +194,7 @@ public class Constants {
 	public final static int MYMSG_TYPE_GETFRIENDS_RESP = 3;// 通用消息类型：好友返回结果
 	public final static int MYMSG_TYPE_GETFRIENDSGROUP_REQ = 4;// 通用消息类型：获取好友分组请求
 	public final static int MYMSG_TYPE_GETFRIENDSGROUP_RESP = 5;// 通用消息类型：获取好友分组结果
+	public final static int MYMSG_TYPE_CHAT_UU = 6;// 通用消息类型：IOT获取的聊天消息
 
 	/*
 	订阅主题类型topic

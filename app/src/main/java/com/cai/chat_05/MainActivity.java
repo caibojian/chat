@@ -144,8 +144,7 @@ public class MainActivity extends FragmentActivity {
 		//写些假数据
 		IntentFilter intentFilter = new IntentFilter();
 		intentFilter.addAction(Constants.INTENT_ACTION_RECEIVE_FRIEND_LIST);
-		intentFilter
-				.addAction(Constants.INTENT_ACTION_RECEIVE_FRIEND_GROUP_LIST);
+		intentFilter.addAction(Constants.INTENT_ACTION_RECEIVE_FRIEND_GROUP_LIST);
 		this.registerReceiver(receiver, intentFilter);
 
 		findView();
