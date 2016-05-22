@@ -10,6 +10,7 @@ import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.os.RemoteException;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -56,6 +57,7 @@ public class LoginActivity extends BaseActivity {
 	static final String LOG_TAG = LoginActivity.class.getCanonicalName();
 
 	private IoTService ioTService;
+	private IoTService.MsgBinder iBinder;
 	private AppContext mAppContext;
 	private Context mContext;
 	private RelativeLayout rl_user;
@@ -91,15 +93,21 @@ public class LoginActivity extends BaseActivity {
 			public void onReceive(Context context, Intent intent) {
 				Log.v("com.caibojian.chat_05.login", "收到登陆信息");
 				String key = intent.getAction();
-				Bundle bundle = getIntent().getExtras();
 				switch (key) {
 					case Constants.INTENT_ACTION_LOGIN:
-//						User user = bundle.getParcelable(Constants.CACHE_CURRENT_USER);
-
-//						User user = (User) bundle.getSerializable(Constants.CACHE_CURRENT_USER);
 						User user = (User) intent.getSerializableExtra(Constants.CACHE_CURRENT_USER);
 						Log.v("com.caibojian.chat_05.login", "登陆用户信息："+user.toString());
 						if(user.isOnline()){
+							try {
+								iBinder.getFriendList();
+								iBinder.getFriendGroupsList();
+//			iBinder.getMessageList(fromMessageId);
+								iBinder.getChatGroupList();
+								iBinder.getDiscussionGroupList();
+								iBinder.getRelateUser();
+							} catch (RemoteException e) {
+								e.printStackTrace();
+							}
 							Log.v("com.caibojian.chat_05.login", "跳转到登陆页面：");
 							Intent intent2 = new Intent(mContext, MainActivity.class);
 							startActivity(intent2);
@@ -196,6 +204,8 @@ public class LoginActivity extends BaseActivity {
 //				ApiClientHelper.getUserAgent(mAppContext));
 	}
 
+
+
 	private OnClickListener registerOnClickListener = new OnClickListener() {
 
 		@Override
@@ -259,13 +269,14 @@ public class LoginActivity extends BaseActivity {
 	ServiceConnection conn = new ServiceConnection() {
 		@Override
 		public void onServiceDisconnected(ComponentName name) {
-
+			iBinder = null;
 		}
 
 		@Override
 		public void onServiceConnected(ComponentName name, IBinder service) {
 			//返回一个MsgService对象
 			ioTService = ((IoTService.MsgBinder)service).getService();
+			iBinder = (IoTService.MsgBinder) service;
 
 		}
 	};

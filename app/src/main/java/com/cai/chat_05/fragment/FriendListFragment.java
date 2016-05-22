@@ -32,7 +32,10 @@ import com.cai.chat_05.R;
 import com.cai.chat_05.adppter.FriendListAdapter;
 import com.cai.chat_05.bean.Constants;
 import com.cai.chat_05.bean.Friends;
+import com.cai.chat_05.bean.FriendsGroup;
+import com.cai.chat_05.cache.CacheManager;
 import com.cai.chat_05.receiver.BaseFragment;
+import com.cai.chat_05.utils.UIHelper;
 import com.cai.chat_05.view.EmptyLayout;
 import com.cai.chat_05.view.IphoneTreeView;
 
@@ -106,7 +109,6 @@ public class FriendListFragment extends BaseFragment implements
 
 			mErrorLayout.setErrorType(EmptyLayout.NETWORK_LOADING);
 			mState = STATE_NONE;
-			requestData(false);
 		}
 
 		//
@@ -181,48 +183,48 @@ public class FriendListFragment extends BaseFragment implements
 	@Override
 	public void onReceive(Context context, Intent intent) {
 
-//		Log.v("freinds fragment org.weishe.weichat", "收到广播消息(好友列表发生变法)！");
+		Log.v("freinds fragment org.weishe.weichat", "收到广播消息(好友列表发生变法)！");
 
 		String key = intent.getAction();
-//		switch (key) {
-//		case Constants.INTENT_ACTION_RECEIVE_FRIEND_LIST:
-//			List<Friends> friends = null;
-//			try {
-//				friends = (List<Friends>) CacheManager.readObject(mainActivity,
-//						Friends.getCacheKey(mainActivity.getSessionService()
-//								.getUserId()));
-//			} catch (RemoteException e) {
-//				e.printStackTrace();
-//			}
-//			if (friends != null && !friends.isEmpty()) {
-//				mErrorLayout.setErrorType(EmptyLayout.HIDE_LAYOUT);
-//				mainActivity.setFriends(friends);
-//				mAdapter.onDataChanged();
-//			}
-//			mState = STATE_NONE;
-//			setSwipeRefreshLoadedState();
-//			break;
-//		case Constants.INTENT_ACTION_RECEIVE_FRIEND_GROUP_LIST:
-//			List<FriendsGroup> fg = null;
-//			try {
-//				fg = (List<FriendsGroup>) CacheManager.readObject(mainActivity,
-//						FriendsGroup.getCacheKey(mainActivity
-//								.getSessionService().getUserId()));
-//			} catch (RemoteException e) {
-//				e.printStackTrace();
-//			}
-//
-//			if (fg != null && !fg.isEmpty()) {
-//				mErrorLayout.setErrorType(EmptyLayout.HIDE_LAYOUT);
-//				mainActivity.setFriendsGroups(fg);
-//				mAdapter.onDataChanged();
-//			}
-//			mState = STATE_NONE;
-//			setSwipeRefreshLoadedState();
-//			break;
-//		default:
-//			break;
-//		}
+		switch (key) {
+		case Constants.INTENT_ACTION_RECEIVE_FRIEND_LIST:
+			List<Friends> friends = null;
+			try {
+				friends = (List<Friends>) CacheManager.readObject(mainActivity,
+						Friends.getCacheKey(mainActivity.getSessionService()
+								.getUserId()));
+			} catch (RemoteException e) {
+				e.printStackTrace();
+			}
+			if (friends != null && !friends.isEmpty()) {
+				mErrorLayout.setErrorType(EmptyLayout.HIDE_LAYOUT);
+				mainActivity.setFriends(friends);
+				mAdapter.onDataChanged();
+			}
+			mState = STATE_NONE;
+			setSwipeRefreshLoadedState();
+			break;
+		case Constants.INTENT_ACTION_RECEIVE_FRIEND_GROUP_LIST:
+			List<FriendsGroup> fg = null;
+			try {
+				fg = (List<FriendsGroup>) CacheManager.readObject(mainActivity,
+						FriendsGroup.getCacheKey(mainActivity
+								.getSessionService().getUserId()));
+			} catch (RemoteException e) {
+				e.printStackTrace();
+			}
+
+			if (fg != null && !fg.isEmpty()) {
+				mErrorLayout.setErrorType(EmptyLayout.HIDE_LAYOUT);
+				mainActivity.setFriendsGroups(fg);
+				mAdapter.onDataChanged();
+			}
+			mState = STATE_NONE;
+			setSwipeRefreshLoadedState();
+			break;
+		default:
+			break;
+		}
 
 	}
 
@@ -364,21 +366,21 @@ public class FriendListFragment extends BaseFragment implements
 	@Override
 	public boolean onChildClick(ExpandableListView parent, View v,
 			int groupPosition, int childPosition, long id) {
-//		Log.v("org.weishe.weichat", "onChildClick groupPosition："
-//				+ groupPosition + "  childPosition:" + childPosition);
-//		Friends friends = mAdapter.getChild(groupPosition, childPosition);
-//		//UIHelper.startChatActivity(mainActivity, friends);
-//		int myId = 0;
-//		String token = "";
-//		try {
-//			token = mainActivity.getSessionService().getToken();
-//			myId = mainActivity.getSessionService().getUserId();
-//		} catch (RemoteException e) {
-//			e.printStackTrace();
-//		}
-//		UIHelper.startUserInforActivity(mainActivity, myId,
-//				friends.getUserId(), token,
-//				Constants.INTENT_EXTRA_USER_INFOR_TYPE_USERINFOR);
+		Log.v("org.weishe.weichat", "onChildClick groupPosition："
+				+ groupPosition + "  childPosition:" + childPosition);
+		Friends friends = mAdapter.getChild(groupPosition, childPosition);
+		//UIHelper.startChatActivity(mainActivity, friends);
+		int myId = 0;
+		String token = "";
+		try {
+			token = mainActivity.getSessionService().getToken();
+			myId = mainActivity.getSessionService().getUserId();
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
+		UIHelper.startUserInforActivity(mainActivity, myId,
+				friends.getUserId(), token,
+				Constants.INTENT_EXTRA_USER_INFOR_TYPE_USERINFOR);
 		return true;
 	}
 }

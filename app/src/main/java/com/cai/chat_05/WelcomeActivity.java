@@ -28,6 +28,7 @@ public class WelcomeActivity extends Activity {
     private AppContext mAppContext;
     private ImageView mImageView;
 
+
     private SharedPreferences sp;
     private Intent intent;
     @Override

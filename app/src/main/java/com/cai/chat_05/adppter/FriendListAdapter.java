@@ -281,17 +281,20 @@ public class FriendListAdapter extends BaseExpandableListAdapter implements
 	public List<Friends> getFriendsByGroup(int groupId) {
 		ArrayList<Friends> data = new ArrayList<Friends>();
 		// 未分组
-		if (groupId == 0) {
-			for (Friends f : friend) {
-				if (f.getFriendsGroupId() < 1) {
-					data.add(f);
+		if(friend != null){
+			if (groupId == 0) {
+				for (Friends f : friend) {
+					if (f.getFriendsGroupId() < 1) {
+						data.add(f);
+					}
 				}
-			}
-		} else {
-			// 非未分组
-			for (Friends f : friend) {
-				if (f.getFriendsGroupId() == groupId) {
-					data.add(f);
+
+			} else {
+				// 非未分组
+				for (Friends f : friend) {
+					if (f.getFriendsGroupId() == groupId) {
+						data.add(f);
+					}
 				}
 			}
 		}

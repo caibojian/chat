@@ -32,10 +32,12 @@ import com.cai.chat_05.bean.Constants;
 import com.cai.chat_05.bean.DiscussionGroup;
 import com.cai.chat_05.bean.Friends;
 import com.cai.chat_05.bean.User;
+import com.cai.chat_05.cache.CacheManager;
 import com.cai.chat_05.core.bean.ChatMessage;
 import com.cai.chat_05.emoji.KJEmojiFragment;
 import com.cai.chat_05.emoji.OnSendClickListener;
 import com.cai.chat_05.fragment.VoiceFragment;
+import com.cai.chat_05.service.IoTService;
 import com.cai.chat_05.utils.DBHelper;
 import com.cai.chat_05.utils.UIHelper;
 import com.cai.chat_05.utils.UUIDUtil;
@@ -47,11 +49,12 @@ public class ChatActivity extends BaseActivity implements OnSendClickListener,
 	public final static int CURRENT_INPUT_TYPE_VOICE = 1;// 语音输入
 
 	private BroadcastReceiver receiver;
-	private SessionService mSessionService;
+	private IoTService.MsgBinder mSessionService;
 
 	private User user;
 	int userId;
 	int chatWithId = 0;
+	String chatWithUUId = "";
 
 	private Friends friend;
 	private ChatGroup chatGroup;
@@ -74,7 +77,7 @@ public class ChatActivity extends BaseActivity implements OnSendClickListener,
 
 		@Override
 		public void onServiceConnected(ComponentName name, IBinder service) {
-			mSessionService = SessionService.Stub.asInterface(service);
+			mSessionService = (IoTService.MsgBinder) service;
 		}
 
 		@Override
@@ -90,12 +93,8 @@ public class ChatActivity extends BaseActivity implements OnSendClickListener,
 		setContentView(R.layout.activity_chat);
 		groupInforButton = (Button) this.findViewById(R.id.group_infor);
 		Intent intent = getIntent();
-//		user = (User) CacheManager.readObject(ChatActivity.this,
-//				Constants.CACHE_CURRENT_USER);
-		user = new User();
-		user.setId(123);
-
-
+		user = (User) CacheManager.readObject(ChatActivity.this,
+				Constants.CACHE_CURRENT_USER);
 
 		chatType = intent.getIntExtra(Constants.INTENT_EXTRA_CHAT_TYPE, 0);
 		switch (chatType) {
@@ -139,30 +138,30 @@ public class ChatActivity extends BaseActivity implements OnSendClickListener,
 					ChatMessage chatMessage = (ChatMessage) intent
 							.getSerializableExtra(Constants.INTENT_EXTRA_CHAT_MESSAGE);
 
-//					chatList = DBHelper.getgetInstance(ChatActivity.this)
-//							.getChatMessageByPage(userId, chatWithId, chatType,
-//									200);
+					chatList = DBHelper.getgetInstance(ChatActivity.this)
+							.getChatMessageByPage(userId, chatWithId, chatType,
+									200);
 					chatList = new ArrayList<ChatMessage>();
 					chatMessageAdapter.setData(chatList);
 					chatMessageAdapter.notifyDataSetChanged();
 					chatMeessageListView.setSelection(chatList.size());
 					// 更新消息为已读
-//					DBHelper.getgetInstance(ChatActivity.this)
-//							.updateChatMessageChecked(userId,
-//									chatMessage.getFromId());
+					DBHelper.getgetInstance(ChatActivity.this)
+							.updateChatMessageChecked(userId,
+									chatMessage.getFromId());
 
 					break;
 				case Constants.INTENT_ACTION_RECEIVE_RECEIPT_MESSAGE:
-//					chatList = DBHelper.getgetInstance(ChatActivity.this)
-//							.getChatMessageByPage(userId, chatWithId, chatType,
-//									200);
+					chatList = DBHelper.getgetInstance(ChatActivity.this)
+							.getChatMessageByPage(userId, chatWithId, chatType,
+									200);
 					chatMessageAdapter.setData(chatList);
 					chatMessageAdapter.notifyDataSetChanged();
 					chatMeessageListView.setSelection(chatList.size());
 				case Constants.INTENT_ACTION_VOICE_MSG_DOWLOAD:
-//					chatList = DBHelper.getgetInstance(ChatActivity.this)
-//							.getChatMessageByPage(userId, chatWithId, chatType,
-//									200);
+					chatList = DBHelper.getgetInstance(ChatActivity.this)
+							.getChatMessageByPage(userId, chatWithId, chatType,
+									200);
 					chatMessageAdapter.setData(chatList);
 					chatMessageAdapter.notifyDataSetChanged();
 					chatMeessageListView.setSelection(chatList.size());
@@ -229,13 +228,13 @@ public class ChatActivity extends BaseActivity implements OnSendClickListener,
 		DBHelper.getgetInstance(ChatActivity.this).addChatMessage(chatMessage,
 				user.getId());
 
-//		try {
-//
-//			mSessionService.sendMessage(uuid, ChatMessage.CONTENT_TYPE_NORMAL,
-//					content, toId, chatType, "", "");
-//		} catch (RemoteException e) {
-//			e.printStackTrace();
-//		}
+		try {
+
+			mSessionService.sendMessage(uuid, Constants.CONTENT_TYPE_NORMAL,
+					content, toId, chatType, "", "", chatMessage);
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
 		if (isMyMessage(chatMessage)) {
 			if (!compareTo(chatList, chatMessage)) {
 				chatList.add(chatMessage);
@@ -451,7 +450,7 @@ public class ChatActivity extends BaseActivity implements OnSendClickListener,
 		chatMeessageListView.setSelection(chatList.size());
 	}
 
-	public SessionService getSessionService() {
+	public IoTService.MsgBinder getSessionService() {
 		return mSessionService;
 	}
 

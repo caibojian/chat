@@ -105,7 +105,6 @@ public class MainActivity extends FragmentActivity {
 		public void onServiceConnected(ComponentName name, IBinder service) {
 			iBinder = (IoTService.MsgBinder) service;
 			Log.v("org.weishe.weichat", "获取  SessionService！");
-			try {
 				int fromMessageId = 0;
 				try {
 					fromMessageId = DBHelper.getgetInstance(mContext)
@@ -114,15 +113,6 @@ public class MainActivity extends FragmentActivity {
 				} catch (RemoteException e1) {
 					e1.printStackTrace();
 				}
-				iBinder.getFriendList();
-				iBinder.getFriendGroupsList();
-				iBinder.getMessageList(fromMessageId);
-				iBinder.getChatGroupList();
-				iBinder.getDiscussionGroupList();
-				iBinder.getRelateUser();
-			} catch (RemoteException e) {
-				e.printStackTrace();
-			}
 		}
 
 		@Override
@@ -161,6 +151,7 @@ public class MainActivity extends FragmentActivity {
 		findView();
 		initView();
 		init();
+
 		// ATTENTION: This was auto-generated to implement the App Indexing API.
 		// See https://g.co/AppIndexing/AndroidStudio for more information.
 		client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();

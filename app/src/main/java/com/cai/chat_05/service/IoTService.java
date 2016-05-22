@@ -53,6 +53,13 @@ import org.eclipse.paho.client.mqttv3.MqttPersistenceException;
 import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 import org.eclipse.paho.client.mqttv3.persist.MqttDefaultFilePersistence;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.nio.channels.SocketChannel;
 import java.security.KeyStore;
@@ -177,6 +184,7 @@ public class IoTService extends Service implements AWSIotMqttNewMessageCallback{
         // Set keepalive to 10 seconds.  Will recognize disconnects more quickly but will also send
         // MQTT pings every 10 seconds.
         mqttManager.setKeepAlive(10);
+        mqttManager.setReconnectRetryLimits(2, 10);
 
         // Set Last Will and Testament for MQTT.  On an unclean disconnect (loss of connection)
         // AWS IoT will publish this message to alert other clients.
@@ -188,7 +196,26 @@ public class IoTService extends Service implements AWSIotMqttNewMessageCallback{
         mIotAndroidClient = new AWSIotClient(credentialsProvider);
         mIotAndroidClient.setRegion(region);
 
+        try {
+            InputStream inputStream = getAssets().open("caibojian.bks");
+            ByteArrayOutputStream swapStream = new ByteArrayOutputStream();
+            byte[] buff = new byte[100]; //buff用于存放循环读取的临时数据
+            int rc = 0;
+            while ((rc = inputStream.read(buff, 0, 100)) > 0) {
+                swapStream.write(buff, 0, rc);
+            }
+            byte[] in_b = swapStream.toByteArray(); //in_b为转换之后的结果
+            FileOutputStream outStream = this.openFileOutput("caibojian.bks", Context.MODE_WORLD_READABLE);
+            outStream.write(in_b);
+            outStream.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         keystorePath = getFilesDir().getPath();
+
         keystoreName = KEYSTORE_NAME;
         keystorePassword = KEYSTORE_PASSWORD;
         certificateId = CERTIFICATE_ID;
@@ -273,7 +300,7 @@ public class IoTService extends Service implements AWSIotMqttNewMessageCallback{
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         super.onStartCommand(intent, flags, startId);
-        Log.i(LOG_TAG,"链接iot" );
+        Log.i(LOG_TAG,"开始连接iot" );
         connect();
         IoTSubscribeToTopic("system", AWSIotMqttQos.QOS1);
         return START_REDELIVER_INTENT;
@@ -438,30 +465,40 @@ public class IoTService extends Service implements AWSIotMqttNewMessageCallback{
         }
 
         public void sendMessage(String uuid, int contentType, String message,
-                                int toId, int msgType, String fileGroupName, String filePath)
+                                int toId, int msgType, String fileGroupName, String filePath, ChatMessage chatMessage)
                 throws RemoteException {
-            Message msg = null;
+            String msgJson = null;
 
-//            switch (msgType) {
-//                case ChatMessage.MSG_TYPE_UU:
+            MyMessage myMessage = new MyMessage();
+            myMessage.setUuid(uuid);
+            myMessage.setDate(new Date());
+            myMessage.setFromId(user.getId()+"");
+            myMessage.setToId(toId+"");
+            myMessage.setMsgType(Constants.MSG_TYPE_UCG);
+            myMessage.setContent(JsonUtil.toJson(chatMessage));
+            msgJson = JsonUtil.toJson(JsonUtil.toJson(myMessage));
+            IoTPublishString(toId+"",AWSIotMqttQos.QOS1, msgJson);
+
+            switch (msgType) {
+                case Constants.MSG_TYPE_UU:
 //                    msg = MsgHelper.newUUChatMessage(uuid, user.getId(), toId,
 //                            message, token, true,
 //                            StringUtils.getCurrentStringDate(), 0, contentType,
 //                            fileGroupName, filePath, ChatMessage.STATUS_SEND);
-//                    break;
-//                case ChatMessage.MSG_TYPE_UCG:
+                    break;
+                case Constants.MSG_TYPE_UCG:
 //                    msg = MsgHelper.newUCGChatMessage(uuid, user.getId(), toId,
 //                            message, token, true,
 //                            StringUtils.getCurrentStringDate(), 0, contentType,
 //                            fileGroupName, filePath, ChatMessage.STATUS_SEND);
-//                    break;
-//                case ChatMessage.MSG_TYPE_UDG:
+                    break;
+                case Constants.MSG_TYPE_UDG:
 //                    msg = MsgHelper.newUUChatMessage(uuid, user.getId(), toId,
 //                            message, token, true,
 //                            StringUtils.getCurrentStringDate(), 0, contentType,
 //                            fileGroupName, filePath, ChatMessage.STATUS_SEND);
-//                    break;
-//            }
+                    break;
+            }
 //            socketChannel.writeAndFlush(msg);
 //
 //            BroadcastHelper.onSendChatMessage(Session.this);
@@ -472,7 +509,7 @@ public class IoTService extends Service implements AWSIotMqttNewMessageCallback{
             MyMessage msg = new MyMessage();
             msg.setMsgType(Constants.MYMSG_TYPE_GETFRIENDS_REQ);
             msg.setToId("system");
-            msg.setFromId(user.getUuid());
+            msg.setFromId(user.getId()+"");
             msg.setDate(new Date());
             msg.setUuid(UUIDUtil.uuid());
             String msgJson = JsonUtil.toJson(msg);
@@ -501,7 +538,7 @@ public class IoTService extends Service implements AWSIotMqttNewMessageCallback{
             MyMessage msg = new MyMessage();
             msg.setMsgType(Constants.MYMSG_TYPE_GETFRIENDSGROUP_REQ);
             msg.setToId("system");
-            msg.setFromId(user.getUuid());
+            msg.setFromId(user.getId()+"");
             msg.setDate(new Date());
             msg.setUuid(UUIDUtil.uuid());
             String msgJson = JsonUtil.toJson(msg);
@@ -596,7 +633,7 @@ public class IoTService extends Service implements AWSIotMqttNewMessageCallback{
                                                     User user = JsonUtil.fromJson(msg.getContent(), User.class);
                                                     setUser(user);
                                                     Log.d(LOG_TAG, " iot服务接收到的user: " + user.toString());
-                                                    IoTSubscribeToTopic(user.getUuid(), AWSIotMqttQos.QOS1);
+                                                    IoTSubscribeToTopic(user.getId()+"", AWSIotMqttQos.QOS1);
                                                     CacheManager.saveObject(IoTService.this, user,
                                                     Constants.CACHE_CURRENT_USER);
                                                     Intent intent0 = new Intent();
@@ -612,15 +649,21 @@ public class IoTService extends Service implements AWSIotMqttNewMessageCallback{
                                                     }.getType());
                                                     CacheManager.saveObject(IoTService.this, friends,
                                                             Friends.getCacheKey(getUser().getId()));
-
+                                                    Intent intent1 = new Intent();
+                                                    intent1.setAction(Constants.INTENT_ACTION_RECEIVE_FRIEND_LIST);
+                                                    IoTService.this.sendBroadcast(intent1);
                                                     break;
                                                 case Constants.MYMSG_TYPE_GETFRIENDSGROUP_RESP:
                                                     List<FriendsGroup> friendsGroups = JsonUtil.fromJson(msg.getContent(),new TypeToken<List<FriendsGroup>>() {
                                                     }.getType());
                                                     CacheManager.saveObject(IoTService.this, friendsGroups,
                                                             FriendsGroup.getCacheKey(getUser().getId()));
+                                                    Intent intent2 = new Intent();
+                                                    intent2.setAction(Constants.INTENT_ACTION_RECEIVE_FRIEND_GROUP_LIST);
+                                                    IoTService.this.sendBroadcast(intent2);
                                                     break;
                                                 default:
+                                                    Log.d(LOG_TAG, " iot服务接收到未知类型的消息: " + msg);
                                                     break;
                                             }
 //                                            ChatMessage msg = JsonUtil.fromJson(message, ChatMessage.class);
@@ -644,6 +687,31 @@ public class IoTService extends Service implements AWSIotMqttNewMessageCallback{
                         }
                     });
         } catch (Exception e) {
+            mqttManager.connect(clientKeyStore, new AWSIotMqttClientStatusCallback() {
+                @Override
+                public void onStatusChanged(final AWSIotMqttClientStatus status,
+                                            final Throwable throwable) {
+                    Log.d(LOG_TAG, "Status1 = " + String.valueOf(status));
+                    if (status == AWSIotMqttClientStatus.Connecting) {
+                        Log.d(LOG_TAG, "Status2 = " + String.valueOf(status));
+                    } else if (status == AWSIotMqttClientStatus.Connected) {
+                        Log.d(LOG_TAG, "Status3 = " + String.valueOf(status));
+                    } else if (status == AWSIotMqttClientStatus.Reconnecting) {
+                        if (throwable != null) {
+                            Log.e(LOG_TAG, "Connection error.", throwable);
+                        }
+                        Log.d(LOG_TAG, "Status4 = " + String.valueOf(status));
+                    } else if (status == AWSIotMqttClientStatus.ConnectionLost) {
+                        if (throwable != null) {
+                            Log.e(LOG_TAG, "Connection error.", throwable);
+                        }
+                        Log.d(LOG_TAG, "Status5 = " + String.valueOf(status));
+                    } else {
+                        Log.d(LOG_TAG, "Status6 = Disconnected");
+
+                    }
+                }
+            });
             Log.e(LOG_TAG, "Subscription error.", e);
         }
     }

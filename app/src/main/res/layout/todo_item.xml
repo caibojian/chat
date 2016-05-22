@@ -38,7 +38,7 @@
         android:layout_height="25.0dip"
         android:layout_below="@id/subject"
         android:layout_marginLeft="10.0dip"
-        android:layout_toLeftOf="@+id/agree_btn"
+
         android:layout_toRightOf="@id/user_photo"
         android:ellipsize="end"
         android:gravity="left|center"
