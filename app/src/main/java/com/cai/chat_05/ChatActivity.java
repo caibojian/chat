@@ -124,7 +124,7 @@ public class ChatActivity extends BaseActivity implements OnSendClickListener,
 		initEvents();
 
 		Intent intent1 = new Intent(this, IoTService.class);
-		this.bindService(intent1, connection, Context.BIND_AUTO_CREATE);
+		bindService(intent1, connection, Context.BIND_AUTO_CREATE);
 
 		// 注册监听消息
 		receiver = new BroadcastReceiver() {
@@ -133,20 +133,22 @@ public class ChatActivity extends BaseActivity implements OnSendClickListener,
 				String key = intent.getAction();
 				switch (key) {
 				case Constants.INTENT_ACTION_RECEIVE_CHAT_MESSAGE:
+					Log.v("com.caibojian.chat_05.ChatActivity", "收到聊天信息");
 					ChatMessage chatMessage = (ChatMessage) intent
 							.getSerializableExtra(Constants.INTENT_EXTRA_CHAT_MESSAGE);
-
 					chatList = DBHelper.getgetInstance(ChatActivity.this)
 							.getChatMessageByPage(userId, chatWithId, chatType,
 									200);
-					chatList = new ArrayList<ChatMessage>();
 					chatMessageAdapter.setData(chatList);
 					chatMessageAdapter.notifyDataSetChanged();
 					chatMeessageListView.setSelection(chatList.size());
 					// 更新消息为已读
+//					DBHelper.getgetInstance(ChatActivity.this)
+//							.updateChatMessageChecked(userId,
+//									chatMessage.getFromId());
 					DBHelper.getgetInstance(ChatActivity.this)
 							.updateChatMessageChecked(userId,
-									chatMessage.getFromId());
+									chatWithId);
 
 					break;
 				case Constants.INTENT_ACTION_RECEIVE_RECEIPT_MESSAGE:

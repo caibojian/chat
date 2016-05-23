@@ -140,35 +140,33 @@ public class DBHelper {
 	 */
 	public List<ChatMessage> getChatMessageByPage(int userId, int chatWithId,
 												  int chatType, int pageSize) {
-//		ChatMessageDao chatMessageDao = daoSession.getChatMessageDao();
-//		QueryBuilder<ChatMessage> qb = chatMessageDao.queryBuilder();
-//		switch (chatType) {
-//		case ChatMessage.MSG_TYPE_UU:
-//			qb.where(Properties.WhoId.eq(userId), Properties.MsgType
-//					.eq(ChatMessage.MSG_TYPE_UU), qb.or(qb.and(
-//					Properties.FromId.eq(chatWithId),
-//					Properties.Type.eq(ChatMessage.TYPE_RECEIVE),
-//					Properties.ToId.eq(userId)), qb.and(
-//					Properties.FromId.eq(userId),
-//					Properties.Type.eq(ChatMessage.TYPE_SEND),
-//					Properties.ToId.eq(chatWithId))));
-//			break;
-//		case ChatMessage.MSG_TYPE_UCG:
-//			qb.where(Properties.WhoId.eq(userId),
-//					Properties.ChatGroupId.eq(chatWithId),
-//					Properties.MsgType.eq(ChatMessage.MSG_TYPE_UCG));
-//			break;
-//		case ChatMessage.MSG_TYPE_UDG:
-//			qb.where(Properties.WhoId.eq(userId),
-//					Properties.DiscussionGroupId.eq(chatWithId),
-//					Properties.MsgType.eq(ChatMessage.MSG_TYPE_UDG));
-//			break;
-//		}
-//
-//		qb.limit(pageSize);
-//		return qb.list();
-		List<ChatMessage> chatList = new ArrayList<ChatMessage>();
-		return chatList;
+		ChatMessageDao chatMessageDao = daoSession.getChatMessageDao();
+		QueryBuilder<ChatMessage> qb = chatMessageDao.queryBuilder();
+		switch (chatType) {
+		case Constants.MSG_TYPE_UU:
+			qb.where(ChatMessageDao.Properties.WhoId.eq(userId), ChatMessageDao.Properties.MsgType
+					.eq(Constants.MSG_TYPE_UU), qb.or(qb.and(
+					ChatMessageDao.Properties.FromId.eq(chatWithId),
+					ChatMessageDao.Properties.Type.eq(Constants.TYPE_RECEIVE),
+					ChatMessageDao.Properties.ToId.eq(userId)), qb.and(
+					ChatMessageDao.Properties.FromId.eq(userId),
+					ChatMessageDao.Properties.Type.eq(Constants.TYPE_SEND),
+					ChatMessageDao.Properties.ToId.eq(chatWithId))));
+			break;
+		case Constants.MSG_TYPE_UCG:
+			qb.where(ChatMessageDao.Properties.WhoId.eq(userId),
+					ChatMessageDao.Properties.ChatGroupId.eq(chatWithId),
+					ChatMessageDao.Properties.MsgType.eq(Constants.MSG_TYPE_UCG));
+			break;
+		case Constants.MSG_TYPE_UDG:
+			qb.where(ChatMessageDao.Properties.WhoId.eq(userId),
+					ChatMessageDao.Properties.DiscussionGroupId.eq(chatWithId),
+					ChatMessageDao.Properties.MsgType.eq(Constants.MSG_TYPE_UDG));
+			break;
+		}
+
+		qb.limit(pageSize);
+		return qb.list();
 	}
 
 	/**
@@ -191,6 +189,18 @@ public class DBHelper {
 		return maxId;
 	}
 
+	public int getMaxMessageId() {
+		ChatMessageDao chatMessageDao = daoSession.getChatMessageDao();
+		QueryBuilder<ChatMessage> qb = chatMessageDao.queryBuilder();
+		qb.limit(1);
+		qb.orderDesc(ChatMessageDao.Properties.ChatMessageId);
+		ChatMessage m = qb.unique();
+		int maxId = 0;
+		if (m != null) {
+			maxId = m.getChatMessageId();
+		}
+		return maxId;
+	}
 	/**
 	 * 获取当前用户下载的最大todoId
 	 * 

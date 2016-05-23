@@ -43,6 +43,7 @@ import com.cai.chat_05.bean.User;
 import com.cai.chat_05.cache.CacheManager;
 import com.cai.chat_05.core.bean.ChatMessage;
 import com.cai.chat_05.core.bean.MyMessage;
+import com.cai.chat_05.utils.BroadcastHelper;
 import com.cai.chat_05.utils.DBHelper;
 import com.cai.chat_05.utils.JsonUtil;
 import com.cai.chat_05.utils.UUIDUtil;
@@ -478,7 +479,17 @@ public class IoTService extends Service implements AWSIotMqttNewMessageCallback{
             myMessage.setContent(JsonUtil.toJson(chatMessage));
             msgJson = JsonUtil.toJson(JsonUtil.toJson(myMessage));
             IoTPublishString(toId+"",AWSIotMqttQos.QOS1, msgJson);
-
+            chatMessage.setStatus(Constants.STATUS_SEND);
+            Log.d(LOG_TAG, " 发送消息: " + msgJson);
+            DBHelper.getgetInstance(IoTService.this).addChatMessage(chatMessage,
+                    user.getId());
+            Intent intent3 = new Intent();
+            intent3.setAction(Constants.INTENT_ACTION_RECEIVE_CHAT_MESSAGE);
+            Bundle bundle3 = new Bundle();
+            bundle3.putSerializable(Constants.INTENT_EXTRA_CHAT_MESSAGE,
+                    chatMessage);
+            IoTService.this.sendBroadcast(intent3);
+//            BroadcastHelper.onSendChatMessage(IoTService.this);
             switch (msgType) {
                 case Constants.MSG_TYPE_UU:
 //                    msg = MsgHelper.newUUChatMessage(uuid, user.getId(), toId,
@@ -623,11 +634,13 @@ public class IoTService extends Service implements AWSIotMqttNewMessageCallback{
                                 public void run() {
                                     try {
                                         String message = new String(data, "UTF-8");
+//                                        message = message.replaceAll("\\\\","");
                                         Log.d(LOG_TAG, "Message arrived:");
                                         Log.d(LOG_TAG, "   Topic: " + topic);
                                         Log.d(LOG_TAG, " Message: " + message);
                                         try{
-                                            MyMessage msg = JsonUtil.fromJson(message, MyMessage.class);
+                                            MyMessage msg = new MyMessage();
+                                            msg = JsonUtil.fromJson(message, MyMessage.class);
                                             switch (msg.getMsgType()){
                                                 case Constants.MYMSG_TYPE_LOGIN_RESP:
                                                     User user = JsonUtil.fromJson(msg.getContent(), User.class);
@@ -663,9 +676,19 @@ public class IoTService extends Service implements AWSIotMqttNewMessageCallback{
                                                     IoTService.this.sendBroadcast(intent2);
                                                     break;
                                                 case Constants.MYMSG_TYPE_CHAT_UU:
-                                                    Log.d(LOG_TAG, " iot服务接收到的user: " + msg.getContent());
-                                                    ChatMessage chatMessage = JsonUtil.fromJson(msg.getContent(), ChatMessage.class);
-
+                                                    Log.d(LOG_TAG, " iot服务接收到的ChatMessage: " + msg.getContent());
+                                                    ChatMessage chatMessage = new ChatMessage();
+                                                    chatMessage = JsonUtil.fromJson(msg.getContent(), ChatMessage.class);
+                                                    Log.d(LOG_TAG, " iot服务接收到的ChatMessage: " + chatMessage.getContent());
+                                                    Log.d(LOG_TAG, " iot服务接收到的ChatMessage--getFromId: " + chatMessage.getFromId());
+                                                    // 保存数据
+                                                    chatMessage.setDate(new Date());
+                                                    chatMessage.setType(Constants.TYPE_RECEIVE);
+                                                    chatMessage.setWhoId(chatMessage.getToId());
+                                                    chatMessage.setChecked(false);
+                                                    chatMessage.setChatMessageId(DBHelper.getgetInstance(IoTService.this).getMaxMessageIdByUserId(IoTService.this.getUser().getId()+1));
+                                                    DBHelper.getgetInstance(IoTService.this).addChatMessage(chatMessage,
+                                                            IoTService.this.getUser().getId());
                                                     Intent intent3 = new Intent();
                                                     intent3.setAction(Constants.INTENT_ACTION_RECEIVE_CHAT_MESSAGE);
                                                     Bundle bundle3 = new Bundle();
