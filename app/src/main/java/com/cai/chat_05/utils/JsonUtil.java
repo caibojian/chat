@@ -43,6 +43,20 @@ public final class JsonUtil {
     public static <T> T fromJson(String str, Class<T> type) {  
         Gson gson = new Gson();  
         return gson.fromJson(str, type);  
-    }  
+    }
+
+    public static String changJson(String str){
+        String str1 = null;
+        if(str!=null){
+            String part1 = str.substring(1, str.lastIndexOf("{"));
+            part1 = part1.replaceAll("\\\\","");
+            String part2 = str.substring(str.lastIndexOf("{"), str.indexOf("}"));
+            part2 = part2.replaceAll("\\\\\\\\","");
+            String part3 = str.substring(str.indexOf("}"), str.length()-1);
+            part3 = part3.replaceAll("\\\\","");
+            str1 = part1+part2+part3;
+        }
+        return str1;
+    }
   
 } 

@@ -189,15 +189,15 @@ public class DBHelper {
 		return maxId;
 	}
 
-	public int getMaxMessageId() {
+	public long getMaxMessageId() {
 		ChatMessageDao chatMessageDao = daoSession.getChatMessageDao();
 		QueryBuilder<ChatMessage> qb = chatMessageDao.queryBuilder();
 		qb.limit(1);
-		qb.orderDesc(ChatMessageDao.Properties.ChatMessageId);
+		qb.orderDesc(ChatMessageDao.Properties.Id);
 		ChatMessage m = qb.unique();
-		int maxId = 0;
+		long maxId = 0;
 		if (m != null) {
-			maxId = m.getChatMessageId();
+			maxId = m.getId();
 		}
 		return maxId;
 	}

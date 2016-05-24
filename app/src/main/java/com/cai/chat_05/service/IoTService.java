@@ -640,7 +640,13 @@ public class IoTService extends Service implements AWSIotMqttNewMessageCallback{
                                         Log.d(LOG_TAG, " Message: " + message);
                                         try{
                                             MyMessage msg = new MyMessage();
-                                            msg = JsonUtil.fromJson(message, MyMessage.class);
+                                            try{
+                                                msg = JsonUtil.fromJson(message, MyMessage.class);
+                                            }catch (Exception e){
+                                                String changeMsg = JsonUtil.changJson(message);
+                                                Log.d(LOG_TAG, " 处理后的json: " + changeMsg);
+                                                msg = JsonUtil.fromJson(changeMsg, MyMessage.class);
+                                            }
                                             switch (msg.getMsgType()){
                                                 case Constants.MYMSG_TYPE_LOGIN_RESP:
                                                     User user = JsonUtil.fromJson(msg.getContent(), User.class);
@@ -686,10 +692,14 @@ public class IoTService extends Service implements AWSIotMqttNewMessageCallback{
                                                     chatMessage.setType(Constants.TYPE_RECEIVE);
                                                     chatMessage.setWhoId(chatMessage.getToId());
                                                     chatMessage.setChecked(false);
-                                                    chatMessage.setChatMessageId(DBHelper.getgetInstance(IoTService.this).getMaxMessageIdByUserId(IoTService.this.getUser().getId()+1));
+                                                    long maxID = DBHelper.getgetInstance(IoTService.this).getMaxMessageId();
+                                                    Log.d(LOG_TAG, " 数据库消息最大ID: " + maxID);
+                                                    chatMessage.setId(maxID+1);
+                                                    chatMessage.setChatMessageId(DBHelper.getgetInstance(IoTService.this).getMaxMessageIdByUserId(IoTService.this.getUser().getId())+1);
                                                     DBHelper.getgetInstance(IoTService.this).addChatMessage(chatMessage,
                                                             IoTService.this.getUser().getId());
                                                     Intent intent3 = new Intent();
+
                                                     intent3.setAction(Constants.INTENT_ACTION_RECEIVE_CHAT_MESSAGE);
                                                     Bundle bundle3 = new Bundle();
                                                     bundle3.putSerializable(Constants.INTENT_EXTRA_CHAT_MESSAGE,
