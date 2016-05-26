@@ -17,7 +17,9 @@ import android.widget.TextView;
 
 import com.cai.chat_05.R;
 import com.cai.chat_05.bean.Attachment;
+import com.cai.chat_05.bean.Constants;
 import com.cai.chat_05.bean.User;
+import com.cai.chat_05.cache.CacheManager;
 import com.cai.chat_05.view.CircularImage;
 import com.cai.chat_05.view.TitleBarView;
 
@@ -71,8 +73,8 @@ public class SettingFragment extends Fragment {
 		mContext = getActivity();
 		mBaseView = inflater.inflate(R.layout.fragment_my, null);
 		mPopView = inflater.inflate(R.layout.fragment_tools_pop, null);
-//		user = (User) CacheManager.readObject(mContext,
-//				Constants.CACHE_CURRENT_USER);
+		user = (User) CacheManager.readObject(mContext,
+				Constants.CACHE_CURRENT_USER);
 //		avatar = JSON.parseObject(user.getAvatar(), Attachment.class);
 
 		return mBaseView;
@@ -143,17 +145,17 @@ public class SettingFragment extends Fragment {
 			}
 		});
 
-//		name.setText(user.getName());
-//		signature.setText(user.getSignature());
-//		switch (user.getGender()) {
-//		case User.GENDER_FEMALE:
-//			gender.setImageResource(R.drawable.female);
-//			break;
-//
-//		case User.GENDER_MALE:
-//			gender.setImageResource(R.drawable.male);
-//			break;
-//		}
+		name.setText(user.getName());
+		signature.setText(user.getSignature());
+		switch (user.getGender()) {
+		case User.GENDER_FEMALE:
+			gender.setImageResource(R.drawable.female);
+			break;
+
+		case User.GENDER_MALE:
+			gender.setImageResource(R.drawable.male);
+			break;
+		}
 		if (avatar != null) {
 //			photo.setImage(avatar.getGroupName(), avatar.getPath());
 		}

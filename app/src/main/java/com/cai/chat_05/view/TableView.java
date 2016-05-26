@@ -30,6 +30,7 @@ public class TableView extends LinearLayout {
 	public void setTitle(int icon, String title) {
 		imageView.setImageResource(icon);
 		textView.setText(title);
+
 	}
 
 }

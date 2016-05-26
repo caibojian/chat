@@ -53,8 +53,8 @@ public class MessageListAdapter extends BaseAdapter {
 		mInflater = LayoutInflater.from(context);
 		user = (User) CacheManager.readObject(mActivity,
 				Constants.CACHE_CURRENT_USER);
-//		chatGroups = (List<ChatGroup>) CacheManager.readObject(mActivity,
-//				ChatGroup.getCacheKey(user.getId()));
+		chatGroups = (List<ChatGroup>) CacheManager.readObject(mActivity,
+				ChatGroup.getCacheKey(user.getId()));
 	}
 
 	@Override
@@ -150,14 +150,14 @@ public class MessageListAdapter extends BaseAdapter {
 
 //			 mh.avatarView = (CircularImage) convertView
 //			 .findViewById(R.id.user_photo);
-//			 mh.nameView = (TextView) convertView
-//			 .findViewById(R.id.friends_name);
-//			 mh.dateView = (TextView) convertView
-//			 .findViewById(R.id.message_date);
-//			 mh.messageView = (TextView) convertView
-//			 .findViewById(R.id.friends_message);
-//
-//			 mh.avatarView.setImageResource(R.drawable.channel_qq);
+			 mh.nameView = (TextView) convertView
+			 .findViewById(R.id.friends_name);
+			 mh.dateView = (TextView) convertView
+			 .findViewById(R.id.message_date);
+			 mh.messageView = (TextView) convertView
+			 .findViewById(R.id.friends_message);
+
+			 mh.avatarView.setImageResource(R.drawable.channel_qq);
 			String name = "";
 			if (mActivity.getFriends() != null) {
 				for (Friends friends : mActivity.getFriends()) {

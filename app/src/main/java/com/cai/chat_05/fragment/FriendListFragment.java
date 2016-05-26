@@ -379,7 +379,7 @@ public class FriendListFragment extends BaseFragment implements
 			e.printStackTrace();
 		}
 		UIHelper.startUserInforActivity(mainActivity, myId,
-				friends.getUserId(), token,
+				friends.getId(), token,
 				Constants.INTENT_EXTRA_USER_INFOR_TYPE_USERINFOR);
 		return true;
 	}

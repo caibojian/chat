@@ -1,6 +1,7 @@
 package com.cai.chat_05;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
@@ -9,7 +10,9 @@ import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.IBinder;
+import android.os.Message;
 import android.os.RemoteException;
 import android.util.Log;
 import android.view.View;
@@ -22,19 +25,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.amazonaws.auth.CognitoCachingCredentialsProvider;
-import com.amazonaws.mobileconnectors.iot.AWSIotKeystoreHelper;
-import com.amazonaws.mobileconnectors.iot.AWSIotMqttClientStatusCallback;
-import com.amazonaws.mobileconnectors.iot.AWSIotMqttLastWillAndTestament;
-import com.amazonaws.mobileconnectors.iot.AWSIotMqttManager;
-import com.amazonaws.mobileconnectors.iot.AWSIotMqttNewMessageCallback;
 import com.amazonaws.mobileconnectors.iot.AWSIotMqttQos;
-import com.amazonaws.regions.Region;
-import com.amazonaws.regions.Regions;
-import com.amazonaws.services.iot.AWSIotClient;
-import com.amazonaws.services.iot.model.AttachPrincipalPolicyRequest;
-import com.amazonaws.services.iot.model.CreateKeysAndCertificateRequest;
-import com.amazonaws.services.iot.model.CreateKeysAndCertificateResult;
 import com.cai.chat_05.base.BaseActivity;
 import com.cai.chat_05.bean.Constants;
 import com.cai.chat_05.bean.User;
@@ -47,11 +38,7 @@ import com.cai.chat_05.utils.SpUtil;
 import com.cai.chat_05.utils.UIHelper;
 import com.cai.chat_05.utils.UUIDUtil;
 
-import java.io.UnsupportedEncodingException;
-import java.security.KeyStore;
 import java.util.Date;
-import java.util.List;
-import java.util.UUID;
 
 public class LoginActivity extends BaseActivity {
 	static final String LOG_TAG = LoginActivity.class.getCanonicalName();
@@ -70,6 +57,8 @@ public class LoginActivity extends BaseActivity {
 	private BroadcastReceiver receiver;
 
 	private SharedPreferences sp;
+
+	private ProgressDialog dialog;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -111,6 +100,7 @@ public class LoginActivity extends BaseActivity {
 							Log.v("com.caibojian.chat_05.login", "跳转到登陆页面：");
 							Intent intent2 = new Intent(mContext, MainActivity.class);
 							startActivity(intent2);
+							dialog.dismiss();
 						}else{
 							Toast.makeText(getApplicationContext(), "登陆失败",
 									Toast.LENGTH_SHORT).show();
@@ -123,6 +113,22 @@ public class LoginActivity extends BaseActivity {
 		IntentFilter intentFilter = new IntentFilter();
 		intentFilter.addAction(Constants.INTENT_ACTION_LOGIN);
 		mContext.registerReceiver(receiver, intentFilter);
+		dialog = ProgressDialog.show(mContext, "正在联网中...", "请稍后！");
+		Thread thread = new Thread(new Runnable() {
+			public void run() {
+				//do...
+				while (true){
+					if(iBinder != null &&"Connected".equals(iBinder.getIotStatus())){
+						break;
+					}
+				}
+				Message message = new Message();
+				message.what = 0;
+				mHandler.sendMessage(message);
+
+			}
+		});
+		thread.start();
 	}
 
 
@@ -199,7 +205,7 @@ public class LoginActivity extends BaseActivity {
 
 
 
-
+		dialog = ProgressDialog.show(this, "正在登陆中...", "请稍后！");
 //		WeisheApi.login(mHandler, user, mAppContext.getAppId(),
 //				ApiClientHelper.getUserAgent(mAppContext));
 	}
@@ -278,6 +284,8 @@ public class LoginActivity extends BaseActivity {
 			ioTService = ((IoTService.MsgBinder)service).getService();
 			iBinder = (IoTService.MsgBinder) service;
 
+			//dialog.dismiss();
+
 		}
 	};
 
@@ -287,4 +295,15 @@ public class LoginActivity extends BaseActivity {
 		unbindService(conn);
 		super.onDestroy();
 	}
+
+	private Handler mHandler = new Handler() {
+		public void handleMessage(Message msg) {
+			// TODO Auto-generated method stub
+			Log.d(">>>>>Mhandler", "开始handleMessage");
+			Log.d(">>>>>Mhandler", "LoadActivity关闭");
+			if (msg.what == 0) {
+				dialog.dismiss();
+			}
+		}
+	};
 }

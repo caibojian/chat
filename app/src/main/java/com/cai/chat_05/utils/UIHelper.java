@@ -12,9 +12,11 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ZoomButtonsController;
 
+import com.cai.chat_05.ChatActivity;
 import com.cai.chat_05.LoginActivity;
 import com.cai.chat_05.MainActivity;
 import com.cai.chat_05.SearchActivity;
+import com.cai.chat_05.UserInforActivity;
 import com.cai.chat_05.bean.ChatGroup;
 import com.cai.chat_05.bean.Constants;
 import com.cai.chat_05.bean.DiscussionGroup;
@@ -195,12 +197,12 @@ public class UIHelper {
 	 */
 	public static void startUserInforActivity(Activity context, int myId,
 			int userId, String token, String type) {
-//		Intent intent = new Intent(context, UserInforActivity.class);
-//		intent.putExtra(Constants.INTENT_EXTRA_USER_ID, userId);
-//		intent.putExtra(Constants.INTENT_EXTRA_TOKEN, token);
-//		intent.putExtra(Constants.INTENT_EXTRA_USER_INFOR_TYPE, type);
-//		intent.putExtra(Constants.INTENT_EXTRA_MY_ID, myId);
-//		context.startActivity(intent);
+		Intent intent = new Intent(context, UserInforActivity.class);
+		intent.putExtra(Constants.INTENT_EXTRA_USER_ID, userId);
+		intent.putExtra(Constants.INTENT_EXTRA_TOKEN, token);
+		intent.putExtra(Constants.INTENT_EXTRA_USER_INFOR_TYPE, type);
+		intent.putExtra(Constants.INTENT_EXTRA_MY_ID, myId);
+		context.startActivity(intent);
 	}
 
 	public static void startLonginActivity(Activity mContext) {
@@ -212,24 +214,24 @@ public class UIHelper {
 	public static void startChatActivity(Activity mContext, int chatType,
 										 Friends friends, ChatGroup chatGroup,
 										 DiscussionGroup discussionGroup) {
-//		Intent intent = new Intent(mContext, ChatActivity.class);
-//		intent.putExtra(Constants.INTENT_EXTRA_CHAT_TYPE, chatType);
-//		switch (chatType) {
-//		case ChatMessage.MSG_TYPE_UU:
-//			intent.putExtra(Constants.INTENT_EXTRA_CHAT_FRIEND, friends);
-//			break;
-//		case ChatMessage.MSG_TYPE_UCG:
-//			intent.putExtra(Constants.INTENT_EXTRA_CHAT_CHAT_GROUP, chatGroup);
-//			break;
-//		case ChatMessage.MSG_TYPE_UDG:
-//			intent.putExtra(Constants.INTENT_EXTRA_CHAT_DISCUSSION_GROUP,
-//					discussionGroup);
-//			break;
-//		default:
-//			break;
-//		}
-//
-//		mContext.startActivity(intent);
+		Intent intent = new Intent(mContext, ChatActivity.class);
+		intent.putExtra(Constants.INTENT_EXTRA_CHAT_TYPE, chatType);
+		switch (chatType) {
+		case Constants.MSG_TYPE_UU:
+			intent.putExtra(Constants.INTENT_EXTRA_CHAT_FRIEND, friends);
+			break;
+		case Constants.MSG_TYPE_UCG:
+			intent.putExtra(Constants.INTENT_EXTRA_CHAT_CHAT_GROUP, chatGroup);
+			break;
+		case Constants.MSG_TYPE_UDG:
+			intent.putExtra(Constants.INTENT_EXTRA_CHAT_DISCUSSION_GROUP,
+					discussionGroup);
+			break;
+		default:
+			break;
+		}
+
+		mContext.startActivity(intent);
 	}
 
 	public static void showMainActivity(Context mContext) {
@@ -242,12 +244,12 @@ public class UIHelper {
 //		mContext.startActivity(intent);
 	}
 
-//	public static void startGroupSelectorActivity(Context context,
-//			Friends mFriends) {
+	public static void startGroupSelectorActivity(Context context,
+			Friends mFriends) {
 //		Intent intent = new Intent(context, FriendsGroupSelectorActivity.class);
 //		intent.putExtra(Constants.INTENT_EXTRA_FRIENDS, mFriends);
 //		context.startActivity(intent);
-//	}
+	}
 
 	public static void startAddChatGroupActivity(Context context) {
 //		Intent intent = new Intent(context, AddChatGroupActivity.class);

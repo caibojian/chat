@@ -31,6 +31,7 @@ import com.cai.chat_05.core.bean.ChatMessage;
 import com.cai.chat_05.menu.creator.MessageListItemSwipeMenuCreator;
 import com.cai.chat_05.receiver.BaseFragment;
 import com.cai.chat_05.utils.DBHelper;
+import com.cai.chat_05.utils.UIHelper;
 import com.cai.chat_05.view.EmptyLayout;
 import com.cai.chat_05.view.TitleBarView;
 
@@ -72,10 +73,10 @@ public class MessageListFragment extends BaseFragment implements
 		super.onCreate(savedInstanceState);
 		user = (User) CacheManager.readObject(mContext,
 				Constants.CACHE_CURRENT_USER);
-//		chatGroups = (List<ChatGroup>) CacheManager.readObject(mContext,
-//				ChatGroup.getCacheKey(user.getId()));
-//		discussionGroups = (List<DiscussionGroup>) CacheManager.readObject(
-//				mContext, DiscussionGroup.getCacheKey(user.getId()));
+		chatGroups = (List<ChatGroup>) CacheManager.readObject(mContext,
+				ChatGroup.getCacheKey(user.getId()));
+		discussionGroups = (List<DiscussionGroup>) CacheManager.readObject(
+				mContext, DiscussionGroup.getCacheKey(user.getId()));
 
 		Log.v("org.weishe.l", "onCreate:" + this);
 		requestData(true);
@@ -165,13 +166,13 @@ public class MessageListFragment extends BaseFragment implements
 							}
 						}
 						if (friend != null) {
-							// 将所有与该人聊天的记录都至为已读
-//							DBHelper.getgetInstance(mContext)
-//									.updateChatMessageChecked(user.getId(),
-//											friend.getUserId());
-//							// rushDBData();
-//							UIHelper.startChatActivity(mContext,
-//									ChatMessage.MSG_TYPE_UU, friend, null, null);
+							 //将所有与该人聊天的记录都至为已读
+							DBHelper.getgetInstance(mContext)
+									.updateChatMessageChecked(user.getId(),
+											friend.getUserId());
+							// rushDBData();
+							UIHelper.startChatActivity(mContext,
+									Constants.MSG_TYPE_UU, friend, null, null);
 						} else {
 							Log.v("org.weishe.weichat", "好友不存在！");
 						}
@@ -323,23 +324,23 @@ public class MessageListFragment extends BaseFragment implements
 									+ user.getId());
 
 			break;
-//		case Constants.INTENT_ACTION_RECEIVE_CHAT_MESSAGE:
-//			List data2 = null;
-//
-//			data2 = DBHelper.getgetInstance(mContext).getRecentMessage(
-//					user.getId());
-//			CacheManager.saveObject(mContext, data2,
-//					Constants.CACHE_CURRENT_MESSAGE_LIST + "_" + user.getId());
-//			adapter.setData(data2);
-//			adapter.notifyDataSetChanged();
-//			mState = STATE_NONE;
-//			setSwipeRefreshLoadedState();
-//
-//			int todoFid = DBHelper.getgetInstance(mContext)
-//					.getMaxTodoIdByUserId(user.getId());
-//			CacheManager.saveObject(mContext, todoFid,
-//					Constants.CACHE_CURRENT_MAX_TODO_ID + "_" + user.getId());
-//			break;
+		case Constants.INTENT_ACTION_RECEIVE_CHAT_MESSAGE:
+			List data2 = null;
+
+			data2 = DBHelper.getgetInstance(mContext).getRecentMessage(
+					user.getId());
+			CacheManager.saveObject(mContext, data2,
+					Constants.CACHE_CURRENT_MESSAGE_LIST + "_" + user.getId());
+			adapter.setData(data2);
+			adapter.notifyDataSetChanged();
+			mState = STATE_NONE;
+			setSwipeRefreshLoadedState();
+
+			int todoFid = DBHelper.getgetInstance(mContext)
+					.getMaxTodoIdByUserId(user.getId());
+			CacheManager.saveObject(mContext, todoFid,
+					Constants.CACHE_CURRENT_MAX_TODO_ID + "_" + user.getId());
+			break;
 		}
 
 	}
@@ -356,7 +357,7 @@ public class MessageListFragment extends BaseFragment implements
 
 	@Override
 	public void unRegisterReceiver(BroadcastReceiver receiver) {
-//		mContext.unregisterReceiver(receiver);
+		mContext.unregisterReceiver(receiver);
 	}
 
 	/** 设置顶部正在加载的状态 */

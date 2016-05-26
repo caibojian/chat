@@ -76,6 +76,9 @@ public class MainActivity extends FragmentActivity {
 	private View top;
 	private String previousTab;// 之前的，不能是publish
 
+	//定义一个布局
+	private LayoutInflater layoutInflater;
+
 	private BroadcastReceiver receiver = new BroadcastReceiver() {
 		@Override
 		public void onReceive(Context context, Intent intent) {
@@ -171,7 +174,7 @@ public class MainActivity extends FragmentActivity {
 		mTabHost = (FragmentTabHost) findViewById(R.id.tabhost);
 		mTabHost.setup(this, getSupportFragmentManager(), R.id.realtabcontent);
 
-//		 View view =layoutInflater.inflate(R.layout.tab_view, null);
+//		View view =layoutInflater.inflate(R.layout.tab_view, null);
 		messageView = new TableView(this);
 		contactsView = new TableView(this);
 		trendView = new TableView(this);
@@ -203,7 +206,7 @@ public class MainActivity extends FragmentActivity {
 		mTabHost.addTab(myTabSpec, SettingFragment.class, null);
 		mTabHost.getTabWidget().setDividerDrawable(null);
 		//设置高度
-		mTabHost.getTabWidget().setMinimumHeight(10);
+		mTabHost.getTabWidget().setMinimumHeight(8);
 		mTabHost.setOnTabChangedListener(new OnTabChangeListener() {
 
 			@Override

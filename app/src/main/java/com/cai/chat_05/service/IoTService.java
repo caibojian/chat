@@ -84,6 +84,8 @@ public class IoTService extends Service implements AWSIotMqttNewMessageCallback{
     private List<Friends> friends;
     private boolean onInternet;
     private FileHandler fileHandler;
+    //当前iot服务状态
+    private String iotStatus = "";
 
     private boolean firStart = true;
     public boolean reStarting = false;
@@ -345,6 +347,7 @@ public class IoTService extends Service implements AWSIotMqttNewMessageCallback{
                         @Override
                         public void onStatusChanged(final AWSIotMqttClientStatus status,
                                                     final Throwable throwable) {
+                            iotStatus = String.valueOf(status);
                             Log.d(LOG_TAG, "Status1 = " + String.valueOf(status));
                             if (status == AWSIotMqttClientStatus.Connecting) {
                                 Log.d(LOG_TAG, "Status2 = " + String.valueOf(status));
@@ -615,6 +618,9 @@ public class IoTService extends Service implements AWSIotMqttNewMessageCallback{
 //            socketChannel.writeAndFlush(msg);
         }
 
+        public String getIotStatus() {
+            return iotStatus;
+        }
     }
 
     /**
