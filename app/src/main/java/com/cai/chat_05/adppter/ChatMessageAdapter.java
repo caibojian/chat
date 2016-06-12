@@ -34,7 +34,9 @@ import com.cai.chat_05.R;
 import com.cai.chat_05.bean.Attachment;
 import com.cai.chat_05.bean.Constants;
 import com.cai.chat_05.bean.User;
+import com.cai.chat_05.cache.CacheManager;
 import com.cai.chat_05.core.bean.ChatMessage;
+import com.cai.chat_05.emoji.InputHelper;
 import com.cai.chat_05.utils.AttachmentManager;
 import com.cai.chat_05.utils.DBHelper;
 import com.cai.chat_05.utils.StringUtils;
@@ -70,15 +72,15 @@ public class ChatMessageAdapter extends BaseAdapter implements OnClickListener {
 		wm.getDefaultDisplay().getMetrics(dm);
 		mScreenWidth = dm.widthPixels;// 获取屏幕分辨率宽度
 		mScreenHeight = dm.heightPixels;
-//		user = (User) CacheManager.readObject(mContext0,
-//				Constants.CACHE_CURRENT_USER);
-//		token = (String) CacheManager.readObject(mContext0,
-//				Constants.CACHE_CURRENT_USER_TOKEN);
+		user = (User) CacheManager.readObject(mContext0,
+				Constants.CACHE_CURRENT_USER);
+		token = (String) CacheManager.readObject(mContext0,
+				Constants.CACHE_CURRENT_USER_TOKEN);
 	}
 
 	private void getUser(int userId, User user) {
-//		User u = (User) CacheManager.readObject(mContext0,
-//				User.getCacheKey(userId));
+		User u = (User) CacheManager.readObject(mContext0,
+				User.getCacheKey(userId));
 //		if (u == null) {
 //			// 去网络上取
 //		}
@@ -191,15 +193,15 @@ public class ChatMessageAdapter extends BaseAdapter implements OnClickListener {
 			rightLayout.setVisibility(View.VISIBLE);
 			leftLayout.setVisibility(View.GONE);
 
-//			User u = (User) CacheManager.readObject(mContext0,
-//					User.getCacheKey(chatEntity.getFromId()));
+			User u = (User) CacheManager.readObject(mContext0,
+					User.getCacheKey(chatEntity.getFromId()));
 
-//			if (u != null && u.getAvatar() != null && !u.getAvatar().isEmpty()) {
-//				String[] str = u.getAvatar().split("#");
-//				if (str.length == 2) {
-//					uPhoto.setImage(str[0], str[1]);
-//				}
-//			}
+			if (u != null && u.getAvatar() != null && !u.getAvatar().isEmpty()) {
+				String[] str = u.getAvatar().split("#");
+				if (str.length == 2) {
+					uPhoto.setImage(str[0], str[1]);
+				}
+			}
 			uPhoto.setTag(chatEntity.getFromId());
 			uPhoto.setOnClickListener(onPhoto);
 		} else if (chatEntity.getType() == Constants.TYPE_RECEIVE) {// 本身作为接收方
@@ -220,15 +222,15 @@ public class ChatMessageAdapter extends BaseAdapter implements OnClickListener {
 			leftLayout.setVisibility(View.VISIBLE);
 			rightLayout.setVisibility(View.GONE);
 
-//			User u = (User) CacheManager.readObject(mContext0,
-//					User.getCacheKey(chatEntity.getFromId()));
+			User u = (User) CacheManager.readObject(mContext0,
+					User.getCacheKey(chatEntity.getFromId()));
 
-//			if (u != null && u.getAvatar() != null && !u.getAvatar().isEmpty()) {
-//				String[] str = u.getAvatar().split("#");
-//				if (str.length == 2) {
-//					fPhoto.setImage(str[0], str[1]);
-//				}
-//			}
+			if (u != null && u.getAvatar() != null && !u.getAvatar().isEmpty()) {
+				String[] str = u.getAvatar().split("#");
+				if (str.length == 2) {
+					fPhoto.setImage(str[0], str[1]);
+				}
+			}
 			fPhoto.setTag(chatEntity.getFromId());
 			fPhoto.setOnClickListener(onPhoto);
 		}
@@ -273,15 +275,15 @@ public class ChatMessageAdapter extends BaseAdapter implements OnClickListener {
 
 		Spanned span = Html.fromHtml(TweetTextView.modifyPath(chatEntity
 				.getContent()));
-//		span = InputHelper.displayEmoji(parent.getContext().getResources(),
-//				span.toString());
-//		User u = (User) CacheManager.readObject(mContext0,
-//				User.getCacheKey(chatEntity.getFromId()));
+		span = InputHelper.displayEmoji(parent.getContext().getResources(),
+				span.toString());
+		User u = (User) CacheManager.readObject(mContext0,
+				User.getCacheKey(chatEntity.getFromId()));
 
-//		if (chatEntity.getMsgType() != ChatMessage.MSG_TYPE_UU) {
-//			friendsNameView.setVisibility(View.VISIBLE);
-//			friendsNameView.setText(u.getName());
-//		}
+		if (chatEntity.getMsgType() != Constants.MSG_TYPE_UU) {
+			friendsNameView.setVisibility(View.VISIBLE);
+			friendsNameView.setText(u.getName());
+		}
 
 		if (chatEntity.getType() == Constants.TYPE_SEND) {
 			switch (chatEntity.getStatus()) {
@@ -329,12 +331,12 @@ public class ChatMessageAdapter extends BaseAdapter implements OnClickListener {
 			rightMessageView.setText(span);
 			rightPhotoView.setTag(chatEntity.getFromId());
 			rightPhotoView.setOnClickListener(onPhoto);
-//			if (u != null && u.getAvatar() != null && !u.getAvatar().isEmpty()) {
-//				String[] str = u.getAvatar().split("#");
-//				if (str.length == 2) {
-//					rightPhotoView.setImage(str[0], str[1]);
-//				}
-//			}
+			if (u != null && u.getAvatar() != null && !u.getAvatar().isEmpty()) {
+				String[] str = u.getAvatar().split("#");
+				if (str.length == 2) {
+					rightPhotoView.setImage(str[0], str[1]);
+				}
+			}
 
 		} else if (chatEntity.getType() == Constants.TYPE_RECEIVE) {// 本身作为接收方
 			leftLayout.setVisibility(View.VISIBLE);
@@ -345,12 +347,12 @@ public class ChatMessageAdapter extends BaseAdapter implements OnClickListener {
 			leftPhotoView.setTag(chatEntity.getFromId());
 			leftPhotoView.setOnClickListener(onPhoto);
 
-//			if (u != null && u.getAvatar() != null && !u.getAvatar().isEmpty()) {
-//				String[] str = u.getAvatar().split("#");
-//				if (str.length == 2) {
-//					leftPhotoView.setImage(str[0], str[1]);
-//				}
-//			}
+			if (u != null && u.getAvatar() != null && !u.getAvatar().isEmpty()) {
+				String[] str = u.getAvatar().split("#");
+				if (str.length == 2) {
+					leftPhotoView.setImage(str[0], str[1]);
+				}
+			}
 
 		}
 

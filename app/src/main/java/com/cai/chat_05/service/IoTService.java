@@ -162,6 +162,8 @@ public class IoTService extends Service implements AWSIotMqttNewMessageCallback{
     @Override
     public void onCreate() {
         super.onCreate();
+        user = (User) CacheManager.readObject(this,
+                Constants.CACHE_CURRENT_USER);
         mAlarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
         mConnectivityManager = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
         clientId = String.format(DEVICE_ID_FORMAT,

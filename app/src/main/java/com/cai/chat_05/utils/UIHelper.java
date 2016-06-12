@@ -13,6 +13,7 @@ import android.webkit.WebViewClient;
 import android.widget.ZoomButtonsController;
 
 import com.cai.chat_05.ChatActivity;
+import com.cai.chat_05.LEDControlActivity;
 import com.cai.chat_05.LoginActivity;
 import com.cai.chat_05.MainActivity;
 import com.cai.chat_05.SearchActivity;
@@ -273,4 +274,14 @@ public class UIHelper {
 //		Intent intent = new Intent(context, ErcodeScanActivity.class);
 //		context.startActivity(intent);
 //	}
+
+	/**
+	 * LED灯控制ui
+	 * @param mContext
+     */
+	public static void ledControlActivity(Activity mContext) {
+		Intent intent = new Intent(mContext, LEDControlActivity.class);
+		mContext.startActivity(intent);
+		mContext.finish();
+	}
 }

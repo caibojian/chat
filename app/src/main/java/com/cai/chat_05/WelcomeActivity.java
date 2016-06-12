@@ -73,11 +73,16 @@ public class WelcomeActivity extends Activity {
                 Constants.CACHE_CURRENT_USER);
         String token = (String) CacheManager.readObject(this,
                 Constants.CACHE_CURRENT_USER_TOKEN);
-        if (user != null && token != null && !token.isEmpty()) {
-//            WeisheApi.quickLogin(mHandler, user, mAppContext.getAppId(), token);
+        if(user != null){
+            UIHelper.showMainActivity(this);
         } else {
             UIHelper.startLonginActivity(this);
         }
+//        if (user != null && token != null && !token.isEmpty()) {
+//            WeisheApi.quickLogin(mHandler, user, mAppContext.getAppId(), token);
+//        } else {
+//            UIHelper.startLonginActivity(this);
+//        }
     }
 
 //    protected AsyncHttpResponseHandler mHandler = new AsyncHttpResponseHandler() {

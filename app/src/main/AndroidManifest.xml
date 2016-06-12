@@ -45,6 +45,12 @@
             android:launchMode="singleTask"
             android:theme="@android:style/Theme.Light.NoTitleBar" >
         </activity>
+        <!--led灯控制-->
+        <activity
+            android:name=".LEDControlActivity"
+            android:launchMode="singleTask"
+            android:theme="@android:style/Theme.Light.NoTitleBar" >
+        </activity>
 
         <service android:name=".service.IoTService" >
             <intent-filter>

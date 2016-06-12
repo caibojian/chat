@@ -192,5 +192,8 @@
 
     <!-- icon主颜色 -->
     <color name="main_color">#008bcc</color>
-
+    <!-- 九宫格菜单 -->
+    <color name="griditems_bg">#ffe8ecef</color>
+    <color name="commo_text_color">#ff333333</color>
+    <color name="line">#ffd3dde6</color>
 </resources>

@@ -37,6 +37,7 @@ import com.cai.chat_05.bean.FriendsGroup;
 import com.cai.chat_05.bean.User;
 import com.cai.chat_05.cache.CacheManager;
 import com.cai.chat_05.fragment.ConstactFatherFragment;
+import com.cai.chat_05.fragment.FindFragment;
 import com.cai.chat_05.fragment.MessageListFragment;
 import com.cai.chat_05.fragment.SettingFragment;
 import com.cai.chat_05.service.IoTService;
@@ -202,7 +203,7 @@ public class MainActivity extends FragmentActivity {
 
 		mTabHost.addTab(messageTabSpec, MessageListFragment.class, null);
 		mTabHost.addTab(contactsTabSpec, ConstactFatherFragment.class, null);
-		mTabHost.addTab(trendTabSpec, Fragment.class, null);
+		mTabHost.addTab(trendTabSpec, FindFragment.class, null);
 		mTabHost.addTab(myTabSpec, SettingFragment.class, null);
 		mTabHost.getTabWidget().setDividerDrawable(null);
 		//设置高度

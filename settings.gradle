@@ -1,1 +1,1 @@
-include ':app', ':dooexcmplegenerator'
+include ':app'

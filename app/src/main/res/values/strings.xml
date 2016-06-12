@@ -188,5 +188,7 @@
     <string name="tip_share_done">分享完成</string>
     <string name="my_qr_code">我的二维码</string>
     <string name="scan_qr_code_hit">扫一扫上面的二维码图案，加我微聊</string>
+    <!--九宫格菜单名称-->
+    <string name="line_default">菜单名称</string>
 
 </resources>
