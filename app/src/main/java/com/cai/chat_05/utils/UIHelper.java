@@ -282,6 +282,5 @@ public class UIHelper {
 	public static void ledControlActivity(Activity mContext) {
 		Intent intent = new Intent(mContext, LEDControlActivity.class);
 		mContext.startActivity(intent);
-		mContext.finish();
 	}
 }

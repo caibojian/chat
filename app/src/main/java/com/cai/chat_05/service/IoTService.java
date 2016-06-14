@@ -134,17 +134,6 @@ public class IoTService extends Service implements AWSIotMqttNewMessageCallback{
     CognitoCachingCredentialsProvider credentialsProvider;
     private ConnectivityManager mConnectivityManager; // To check for connectivity changes
 
-
-
-
-    private Handler mHanlder = new Handler() {
-        @Override
-        public void handleMessage(android.os.Message msg) {
-            Log.v(LOG_TAG, "Handler"+msg.toString());
-        }
-
-    };
-
     /**
      * Receiver that listens for connectivity chanes
      * via ConnectivityManager
@@ -155,9 +144,6 @@ public class IoTService extends Service implements AWSIotMqttNewMessageCallback{
             Log.i(LOG_TAG,"Connectivity Changed...");
         }
     };
-
-    // 消息提示音
-//    private BeepManager beepManager;
 
     @Override
     public void onCreate() {
@@ -310,22 +296,6 @@ public class IoTService extends Service implements AWSIotMqttNewMessageCallback{
         IoTSubscribeToTopic("system", AWSIotMqttQos.QOS1);
         return START_REDELIVER_INTENT;
     }
-
-
-    /**
-     * Query's the AlarmManager to check if there is
-     * a keep alive currently scheduled
-     * @return true if there is currently one scheduled false otherwise
-     */
-    private synchronized boolean hasScheduledKeepAlives() {
-        Intent i = new Intent();
-        i.setClass(this, IoTService.class);
-        i.setAction(ACTION_KEEPALIVE);
-        PendingIntent pi = PendingIntent.getBroadcast(this, 0, i, PendingIntent.FLAG_NO_CREATE);
-
-        return (pi != null) ? true : false;
-    }
-
     /**
      * Cancels the Pending Intent
      * in the alarm manager
@@ -622,6 +592,31 @@ public class IoTService extends Service implements AWSIotMqttNewMessageCallback{
 
         public String getIotStatus() {
             return iotStatus;
+        }
+
+        public void contralLED(boolean flig){
+            Log.i(LOG_TAG, "调用的iotservice的contralLED（）");
+            if(flig){
+                MyMessage msg = new MyMessage();
+                msg.setMsgType(Constants.MYMSG_TYPE_GETFRIENDS_REQ);
+                msg.setToId("system");
+                msg.setFromId(user.getId()+"");
+                msg.setDate(new Date());
+                msg.setUuid(UUIDUtil.uuid());
+                msg.setContent("0");
+                String msgJson = JsonUtil.toJson(msg);
+                IoTPublishString(Constants.IOT_TOPOIC_LEDCONTROL,AWSIotMqttQos.QOS1, msgJson);
+            }else{
+                MyMessage msg = new MyMessage();
+                msg.setMsgType(Constants.MYMSG_TYPE_GETFRIENDS_REQ);
+                msg.setToId("system");
+                msg.setFromId(user.getId()+"");
+                msg.setDate(new Date());
+                msg.setUuid(UUIDUtil.uuid());
+                msg.setContent("1");
+                String msgJson = JsonUtil.toJson(msg);
+                IoTPublishString(Constants.IOT_TOPOIC_LEDCONTROL,AWSIotMqttQos.QOS1, msgJson);
+            }
         }
     }
 

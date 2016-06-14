@@ -202,4 +202,5 @@ public class Constants {
 	public final static String IOT_TOPOIC_LOGIN = "IOT_TOPOIC_LOGIN";// 订阅主题类型:登陆主题
 	public final static String IOT_TOPOIC_GETFRIENDS = "IOT_TOPOIC_GETFRIENDS";// 订阅主题类型:获取好友
 	public final static String IOT_TOPOIC_GETFRIENDSGROUP = "IOT_TOPOIC_GETFRIENDSGROUP";// 订阅主题类型:获取好友分组
+	public final static String IOT_TOPOIC_LEDCONTROL = "IOT_TOPOIC_LEDCONTROL";// 订阅主题类型:led灯控制主题
 }
