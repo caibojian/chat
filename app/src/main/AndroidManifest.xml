@@ -3,6 +3,9 @@
     package="com.cai.chat_05">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -48,6 +51,12 @@
         <!--led灯控制-->
         <activity
             android:name=".LEDControlActivity"
+            android:launchMode="singleTask"
+            android:theme="@android:style/Theme.Light.NoTitleBar" >
+        </activity>
+        <!--视频直播-->
+        <activity
+            android:name=".LiveVideoActivity"
             android:launchMode="singleTask"
             android:theme="@android:style/Theme.Light.NoTitleBar" >
         </activity>

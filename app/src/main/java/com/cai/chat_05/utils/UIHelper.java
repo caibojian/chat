@@ -14,6 +14,7 @@ import android.widget.ZoomButtonsController;
 
 import com.cai.chat_05.ChatActivity;
 import com.cai.chat_05.LEDControlActivity;
+import com.cai.chat_05.LiveVideoActivity;
 import com.cai.chat_05.LoginActivity;
 import com.cai.chat_05.MainActivity;
 import com.cai.chat_05.SearchActivity;
@@ -235,9 +236,10 @@ public class UIHelper {
 		mContext.startActivity(intent);
 	}
 
-	public static void showMainActivity(Context mContext) {
+	public static void showMainActivity(Activity mContext) {
 		Intent intent = new Intent(mContext, MainActivity.class);
 		mContext.startActivity(intent);
+		mContext.finish();
 	}
 
 	public static void startGroupControlActivity(MainActivity mContext) {
@@ -281,6 +283,14 @@ public class UIHelper {
      */
 	public static void ledControlActivity(Activity mContext) {
 		Intent intent = new Intent(mContext, LEDControlActivity.class);
+		mContext.startActivity(intent);
+	}
+	/**
+	 * 视频直播ui
+	 * @param mContext
+	 */
+	public static void liveVideoActivity(Activity mContext) {
+		Intent intent = new Intent(mContext, LiveVideoActivity.class);
 		mContext.startActivity(intent);
 	}
 }

@@ -93,6 +93,8 @@ public class FindFragment extends BaseFragment{
 						Toast.LENGTH_SHORT).show();
 				if(position==0){
 					UIHelper.ledControlActivity(mainActivity);
+				}else if(position==1){
+					UIHelper.liveVideoActivity(mainActivity);
 				}
 			}
 		});

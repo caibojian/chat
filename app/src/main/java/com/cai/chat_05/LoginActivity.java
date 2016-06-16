@@ -47,6 +47,7 @@ public class LoginActivity extends BaseActivity {
 	private IoTService.MsgBinder iBinder;
 	private AppContext mAppContext;
 	private Context mContext;
+	private Activity mActivity;
 	private RelativeLayout rl_user;
 	private Button mLoginButton;
 	private Button mRegisterButton;
@@ -65,6 +66,7 @@ public class LoginActivity extends BaseActivity {
 		super.onCreate(savedInstanceState);
 
 		mContext = this;
+		mActivity = this;
 		mAppContext = AppContext.getInstance() ;
 
 		Intent intent = new Intent(mContext, IoTService.class);
@@ -98,8 +100,7 @@ public class LoginActivity extends BaseActivity {
 								e.printStackTrace();
 							}
 							Log.v("com.caibojian.chat_05.login", "跳转到登陆页面：");
-							Intent intent2 = new Intent(mContext, MainActivity.class);
-							startActivity(intent2);
+							UIHelper.showMainActivity(mActivity);
 							dialog.dismiss();
 						}else{
 							Toast.makeText(getApplicationContext(), "登陆失败",
