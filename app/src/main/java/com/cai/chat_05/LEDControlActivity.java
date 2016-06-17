@@ -73,7 +73,6 @@ public class LEDControlActivity extends BaseActivity {
 			if(isChecked){
 				Toast.makeText(getApplicationContext(), "true",
 						Toast.LENGTH_SHORT).show();
-
 			}else{
 				Toast.makeText(getApplicationContext(), "false",
 						Toast.LENGTH_SHORT).show();
