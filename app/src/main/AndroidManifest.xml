@@ -73,6 +73,7 @@
             android:launchMode="singleTask"
             android:theme="@android:style/Theme.Light.NoTitleBar" >
         </activity>
+        <activity android:name="org.kymjs.chat.ChatActivity"/>
         <activity
             android:name=".UserInforActivity"
             android:launchMode="singleTask"
@@ -104,13 +105,6 @@
             </intent-filter>
         </receiver>
 
-        <receiver android:name="com.listener.app.client.BootReceiver" >
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-
-                <category android:name="android.intent.category.HOME" />
-            </intent-filter>
-        </receiver>
         <!-- ATTENTION: This was auto-generated to add Google Play services to your project for
      App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information. -->
         <meta-data

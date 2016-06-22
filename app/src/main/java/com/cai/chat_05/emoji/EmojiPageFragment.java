@@ -78,17 +78,17 @@ public class EmojiPageFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                     int position, long id) {
-//                EditText editText = (EditText) getActivity().findViewById(
-//                        R.id.emoji_titile_input);
+                EditText editText = (EditText) getActivity().findViewById(
+                        R.id.emoji_titile_input);
                 if (listener != null) {
                     listener.onEmojiClick((Emojicon) parent.getAdapter()
                             .getItem(position));
                 }
-//                InputHelper.input2OSC(editText, (Emojicon) parent.getAdapter()
-//                        .getItem(position));
+                InputHelper.input2OSC(editText, (Emojicon) parent.getAdapter()
+                        .getItem(position));
             }
         });
-//        sGrid.setSelector(new ColorDrawable(android.R.color.transparent));
+        sGrid.setSelector(new ColorDrawable(android.R.color.transparent));
         return sGrid;
     }
 

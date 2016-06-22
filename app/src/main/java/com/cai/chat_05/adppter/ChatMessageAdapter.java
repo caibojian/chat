@@ -12,7 +12,6 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
-import android.os.RemoteException;
 import android.text.Html;
 import android.text.Spanned;
 import android.util.DisplayMetrics;

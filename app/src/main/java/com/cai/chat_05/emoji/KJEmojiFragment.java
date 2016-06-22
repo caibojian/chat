@@ -115,13 +115,13 @@ public class KJEmojiFragment extends Fragment implements
 			mEmojiTabs[i] = mEmojiBottom.getChildAt(i);
 			mEmojiTabs[i].setOnClickListener(getBottomBarClickListener(i));
 		}
-//		mEmojiBottom.findViewById(R.id.emoji_bottom_del).setOnClickListener(
-//				new OnClickListener() {
-//					@Override
-//					public void onClick(View v) {
-//						InputHelper.backspace(mEt);
-//					}
-//				});
+		mEmojiBottom.findViewById(R.id.emoji_bottom_del).setOnClickListener(
+				new OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						InputHelper.backspace(mEt);
+					}
+				});
 
 		// content必须放在bottom下面初始化
 		mEmojiContent = (LinearLayout) rootView

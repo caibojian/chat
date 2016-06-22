@@ -1,6 +1,5 @@
 package com.cai.chat_05;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -25,7 +24,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.cai.chat_05.adppter.ChatMessageAdapter;
-import com.cai.chat_05.aidl.SessionService;
 import com.cai.chat_05.base.BaseActivity;
 import com.cai.chat_05.bean.Attachment;
 import com.cai.chat_05.bean.ChatGroup;
@@ -92,7 +90,7 @@ public class ChatActivity extends BaseActivity implements OnSendClickListener,
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
-		setContentView(R.layout.activity_chat);
+		setContentView(R.layout.activity_chat_bak);
 		groupInforButton = (Button) this.findViewById(R.id.group_infor);
 		Intent intent = getIntent();
 		user = (User) CacheManager.readObject(ChatActivity.this,

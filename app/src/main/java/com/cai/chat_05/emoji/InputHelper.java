@@ -25,7 +25,6 @@ import android.widget.EditText;
 
 import com.cai.chat_05.R;
 
-
 /**
  * 
  * @author kymjs (http://www.kymjs.com)
@@ -43,6 +42,7 @@ public class InputHelper {
 	/**
 	 * 获取name对应的资源
 	 * 
+	 * @param map
 	 * @param name
 	 * @return
 	 */
