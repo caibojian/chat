@@ -49,9 +49,6 @@ public class ChatActivity extends KJActivity {
 
     public static final int REQUEST_CODE_GETIMAGE_BYSDCARD = 0x1;
 
-    public final static int CURRENT_INPUT_TYPE_KEYBOARD = 0;// 键盘文字输入
-    public final static int CURRENT_INPUT_TYPE_VOICE = 1;// 语音输入
-
     private KJChatKeyboard box;
     private ListView mRealListView;
 

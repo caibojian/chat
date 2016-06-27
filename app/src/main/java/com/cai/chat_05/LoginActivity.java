@@ -217,8 +217,8 @@ public class LoginActivity extends BaseActivity {
 
 		@Override
 		public void onClick(View v) {
-//			Intent intent = new Intent(mContext, RegisterActivity.class);
-//			startActivity(intent);
+			Intent intent = new Intent(mContext, RegisterActivity.class);
+			startActivity(intent);
 		}
 	};
 //	protected AsyncHttpResponseHandler mHandler = new AsyncHttpResponseHandler() {
