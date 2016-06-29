@@ -24,6 +24,7 @@ import com.cai.chat_05.register.StepBaseInfo;
 import com.cai.chat_05.register.StepBirthday;
 import com.cai.chat_05.register.StepPhoto;
 import com.cai.chat_05.register.StepSetPassword;
+import com.cai.chat_05.utils.PhotoUtils;
 import com.cai.chat_05.view.HeaderLayout;
 
 public class RegisterActivity extends BaseActivity implements OnClickListener,
@@ -64,7 +65,7 @@ public class RegisterActivity extends BaseActivity implements OnClickListener,
 	@Override
 	protected void initViews() {
 		mHeaderLayout = (HeaderLayout) findViewById(R.id.reg_header);
-		mHeaderLayout.init(HeaderStyle.TITLE_RIGHT_TEXT);
+		mHeaderLayout.init(HeaderLayout.HeaderStyle.TITLE_RIGHT_TEXT);
 		mVfFlipper = (ViewFlipper) findViewById(R.id.reg_vf_viewflipper);
 		mVfFlipper.setDisplayedChild(0);
 		mBtnPrevious = (Button) findViewById(R.id.reg_btn_previous);

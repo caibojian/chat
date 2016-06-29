@@ -4,7 +4,7 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.view.View;
 
-import org.weishe.weichat.activity.RegisterActivity;
+import com.cai.chat_05.RegisterActivity;
 
 public abstract class RegisterStep {
 	protected RegisterActivity mActivity;

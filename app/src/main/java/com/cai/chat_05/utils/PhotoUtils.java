@@ -31,6 +31,10 @@ import android.provider.MediaStore;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 
+import com.cai.chat_05.R;
+import com.cai.chat_05.imagefactory.ImageFactoryActivity;
+import com.cai.chat_05.imagefactory.ImageFactoryFliter;
+
 public class PhotoUtils {
 	// 图片在SD卡中的缓存路径
 	private static final String IMAGE_PATH = Environment
@@ -316,10 +320,10 @@ public class PhotoUtils {
 	 *            默认图片
 	 * @return
 	 */
-	public static Bitmap getFilter(FilterType filterType, Bitmap defaultBitmap) {
-		if (filterType.equals(FilterType.默认)) {
+	public static Bitmap getFilter(ImageFactoryFliter.FilterType filterType, Bitmap defaultBitmap) {
+		if (filterType.equals(ImageFactoryFliter.FilterType.默认)) {
 			return defaultBitmap;
-		} else if (filterType.equals(FilterType.LOMO)) {
+		} else if (filterType.equals(ImageFactoryFliter.FilterType.LOMO)) {
 			return lomoFilter(defaultBitmap);
 		}
 		return defaultBitmap;

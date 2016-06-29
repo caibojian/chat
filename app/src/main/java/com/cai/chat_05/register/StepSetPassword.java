@@ -5,9 +5,9 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 
-import org.weishe.weichat.R;
-import org.weishe.weichat.activity.RegisterActivity;
-import org.weishe.weichat.util.VerifyUtils;
+import com.cai.chat_05.R;
+import com.cai.chat_05.RegisterActivity;
+import com.cai.chat_05.utils.VerifyUtils;
 
 public class StepSetPassword extends RegisterStep implements TextWatcher {
 

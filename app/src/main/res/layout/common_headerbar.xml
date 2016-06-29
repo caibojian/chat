@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="54dip"
-    android:background="@drawable/bg_topbar"
+    android:background="@color/welcome_backgroud"
     android:focusable="true"
     android:gravity="center_vertical"
     android:orientation="horizontal" >
@@ -151,13 +151,13 @@
         android:gravity="center_vertical"
         android:orientation="horizontal" >
 
-        <org.weishe.weichat.view.SwitcherButton
+        <com.cai.chat_05.view.SwitcherButton
             android:id="@+id/header_sb_rightview_switcherbutton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="6dip"
             android:visibility="gone" >
-        </org.weishe.weichat.view.SwitcherButton>
+        </com.cai.chat_05.view.SwitcherButton>
     </LinearLayout>
 
 </LinearLayout>

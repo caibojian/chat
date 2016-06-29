@@ -9,19 +9,15 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.alibaba.fastjson.JSON;
-import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.cai.chat_05.R;
+import com.cai.chat_05.RegisterActivity;
+import com.cai.chat_05.bean.Attachment;
+import com.cai.chat_05.bean.Result;
+import com.cai.chat_05.bean.User;
+import com.cai.chat_05.utils.FastDFSUtil;
+import com.cai.chat_05.utils.PhotoUtils;
 
-import org.apache.http.Header;
 import org.csource.common.MyException;
-import org.weishe.weichat.R;
-import org.weishe.weichat.activity.LoginActivity;
-import org.weishe.weichat.activity.RegisterActivity;
-import org.weishe.weichat.api.remote.WeisheApi;
-import org.weishe.weichat.bean.Attachment;
-import org.weishe.weichat.bean.Result;
-import org.weishe.weichat.bean.User;
-import org.weishe.weichat.util.FastDFSUtil;
-import org.weishe.weichat.util.PhotoUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -68,7 +64,7 @@ public class StepPhoto extends RegisterStep implements OnClickListener {
 					try {
 						Attachment a = FastDFSUtil.getInstance().upload(file);
 						if (a != null) {
-							WeisheApi.addAttachment(aHandler, a);
+//							WeisheApi.addAttachment(aHandler, a);
 						}
 
 						return a;
@@ -128,63 +124,63 @@ public class StepPhoto extends RegisterStep implements OnClickListener {
 		user.setBirthday(mBirthday);
 		user.setAvatar(mAvatarId + "");
 
-		WeisheApi.register(mHandler, user);
+//		WeisheApi.register(mHandler, user);
 	}
 
-	protected AsyncHttpResponseHandler aHandler = new AsyncHttpResponseHandler() {
-		@Override
-		public void onSuccess(int arg0, Header[] arg1, byte[] responseBytes) {
-			String data = new String(responseBytes);
-			Result r = JSON.parseObject(data, Result.class);
-			if (r != null && r.isSuccess()) {
-				Attachment b = JSON.parseObject(r.getObj().toString(),
-						Attachment.class);
-				if (b != null) {
-					mAvatarId = b.getId().intValue();
-				}
-			}
-		}
-
-		@Override
-		public void onFailure(int arg0, Header[] arg1, byte[] arg2,
-				Throwable arg3) {
-
-		}
-	};
-	protected AsyncHttpResponseHandler mHandler = new AsyncHttpResponseHandler() {
-
-		@Override
-		public void onSuccess(int statusCode, Header[] headers,
-				byte[] responseBytes) {
-			String data = new String(responseBytes);
-			Result r = (Result) JSON.parseObject(data, Result.class);
-
-			if (r != null) {
-				if (r.isSuccess()) {
-
-					showCustomToast("注册成功,请登录!");
-					Intent intent = new Intent(mContext, LoginActivity.class);
-					mContext.startActivity(intent);
-
-					if (mContext instanceof RegisterActivity) {
-						RegisterActivity activity = (RegisterActivity) mContext;
-						activity.finish();
-					}
-
-				}
-			} else {
-				showCustomToast("注册发生异常！");
-			}
-		}
-
-		@Override
-		public void onFailure(int arg0, Header[] arg1, byte[] arg2,
-				Throwable arg3) {
-			showCustomToast("注册发生异常！");
-
-		}
-
-	};
+//	protected AsyncHttpResponseHandler aHandler = new AsyncHttpResponseHandler() {
+//		@Override
+//		public void onSuccess(int arg0, Header[] arg1, byte[] responseBytes) {
+//			String data = new String(responseBytes);
+//			Result r = JSON.parseObject(data, Result.class);
+//			if (r != null && r.isSuccess()) {
+//				Attachment b = JSON.parseObject(r.getObj().toString(),
+//						Attachment.class);
+//				if (b != null) {
+//					mAvatarId = b.getId().intValue();
+//				}
+//			}
+//		}
+//
+//		@Override
+//		public void onFailure(int arg0, Header[] arg1, byte[] arg2,
+//				Throwable arg3) {
+//
+//		}
+//	};
+//	protected AsyncHttpResponseHandler mHandler = new AsyncHttpResponseHandler() {
+//
+//		@Override
+//		public void onSuccess(int statusCode, Header[] headers,
+//				byte[] responseBytes) {
+//			String data = new String(responseBytes);
+//			Result r = (Result) JSON.parseObject(data, Result.class);
+//
+//			if (r != null) {
+//				if (r.isSuccess()) {
+//
+//					showCustomToast("注册成功,请登录!");
+//					Intent intent = new Intent(mContext, LoginActivity.class);
+//					mContext.startActivity(intent);
+//
+//					if (mContext instanceof RegisterActivity) {
+//						RegisterActivity activity = (RegisterActivity) mContext;
+//						activity.finish();
+//					}
+//
+//				}
+//			} else {
+//				showCustomToast("注册发生异常！");
+//			}
+//		}
+//
+//		@Override
+//		public void onFailure(int arg0, Header[] arg1, byte[] arg2,
+//				Throwable arg3) {
+//			showCustomToast("注册发生异常！");
+//
+//		}
+//
+//	};
 
 	@Override
 	public boolean isChange() {

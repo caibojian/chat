@@ -9,10 +9,10 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 
-import org.weishe.weichat.R;
-import org.weishe.weichat.activity.RegisterActivity;
-import org.weishe.weichat.base.BaseDialog;
-import org.weishe.weichat.util.VerifyUtils;
+import com.cai.chat_05.R;
+import com.cai.chat_05.RegisterActivity;
+import com.cai.chat_05.base.BaseDialog;
+import com.cai.chat_05.utils.VerifyUtils;
 
 public class StepBaseInfo extends RegisterStep implements TextWatcher,
 		OnCheckedChangeListener {

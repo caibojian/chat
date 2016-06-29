@@ -79,6 +79,17 @@
             android:launchMode="singleTask"
             android:theme="@android:style/Theme.Light.NoTitleBar" >
         </activity>
+        <!--用户注册-->
+        <activity
+            android:name=".RegisterActivity"
+            android:launchMode="singleTask"
+            android:theme="@android:style/Theme.Light.NoTitleBar" >
+        </activity>
+        <activity
+            android:name=".imagefactory.ImageFactoryActivity"
+            android:launchMode="singleTask"
+            android:theme="@android:style/Theme.Light.NoTitleBar" >
+        </activity>
         <!--led灯控制-->
         <activity
             android:name=".LEDControlActivity"

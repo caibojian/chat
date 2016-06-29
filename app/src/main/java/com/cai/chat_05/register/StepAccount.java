@@ -6,7 +6,10 @@ import android.view.View;
 import android.widget.EditText;
 
 import com.alibaba.fastjson.JSON;
+import com.cai.chat_05.R;
 import com.cai.chat_05.RegisterActivity;
+import com.cai.chat_05.bean.Result;
+import com.cai.chat_05.utils.VerifyUtils;
 import com.cai.chat_05.view.HandyTextView;
 
 public class StepAccount extends RegisterStep implements TextWatcher {
@@ -42,8 +45,8 @@ public class StepAccount extends RegisterStep implements TextWatcher {
 
 	@Override
 	public void doNext() {
-		WeisheApi.isAccountExist(mHandler, mEtAccount.getText().toString()
-				.trim());
+//		WeisheApi.isAccountExist(mHandler, mEtAccount.getText().toString()
+//				.trim());
 	}
 
 	@Override
@@ -96,35 +99,35 @@ public class StepAccount extends RegisterStep implements TextWatcher {
 		}
 	}
 
-	protected AsyncHttpResponseHandler mHandler = new AsyncHttpResponseHandler() {
-
-		@Override
-		public void onSuccess(int statusCode, Header[] headers,
-				byte[] responseBytes) {
-			String data = new String(responseBytes);
-			Result r = (Result) JSON.parseObject(data, Result.class);
-
-			if (r != null) {
-				showCustomToast(r.getMessage());
-				if (!r.isSuccess()) {
-					mIsChange = false;
-					showCustomToast("该账号可用");
-					mOnNextActionListener.next();
-				}
-			} else {
-				showCustomToast("注册发生异常！");
-			}
-
-			mIsReceived = false;
-		}
-
-		@Override
-		public void onFailure(int arg0, Header[] arg1, byte[] arg2,
-				Throwable arg3) {
-			showCustomToast("注册发生异常！");
-
-		}
-
-	};
+//	protected AsyncHttpResponseHandler mHandler = new AsyncHttpResponseHandler() {
+//
+//		@Override
+//		public void onSuccess(int statusCode, Header[] headers,
+//				byte[] responseBytes) {
+//			String data = new String(responseBytes);
+//			Result r = (Result) JSON.parseObject(data, Result.class);
+//
+//			if (r != null) {
+//				showCustomToast(r.getMessage());
+//				if (!r.isSuccess()) {
+//					mIsChange = false;
+//					showCustomToast("该账号可用");
+//					mOnNextActionListener.next();
+//				}
+//			} else {
+//				showCustomToast("注册发生异常！");
+//			}
+//
+//			mIsReceived = false;
+//		}
+//
+//		@Override
+//		public void onFailure(int arg0, Header[] arg1, byte[] arg2,
+//				Throwable arg3) {
+//			showCustomToast("注册发生异常！");
+//
+//		}
+//
+//	};
 
 }

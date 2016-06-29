@@ -4,11 +4,11 @@ import android.view.View;
 import android.widget.DatePicker;
 import android.widget.DatePicker.OnDateChangedListener;
 
-import org.weishe.weichat.R;
-import org.weishe.weichat.activity.RegisterActivity;
-import org.weishe.weichat.util.DateUtils;
-import org.weishe.weichat.util.TextUtils;
-import org.weishe.weichat.view.HandyTextView;
+import com.cai.chat_05.R;
+import com.cai.chat_05.RegisterActivity;
+import com.cai.chat_05.utils.DateUtils;
+import com.cai.chat_05.utils.TextUtils;
+import com.cai.chat_05.view.HandyTextView;
 
 import java.util.Calendar;
 import java.util.Date;
