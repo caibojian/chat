@@ -92,7 +92,7 @@
         </activity>
         <!--led灯控制-->
         <activity
-            android:name=".LEDControlActivity"
+            android:name=".PiControlActivity"
             android:launchMode="singleTask"
             android:theme="@android:style/Theme.Light.NoTitleBar" >
         </activity>

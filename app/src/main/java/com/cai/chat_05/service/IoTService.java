@@ -278,24 +278,49 @@ public class IoTService extends IoTBaseService{
             Log.i(LOG_TAG, "调用的iotservice的contralLED（）");
             if(flig){
                 MyMessage msg = new MyMessage();
-                msg.setMsgType(Constants.MYMSG_TYPE_GETFRIENDS_REQ);
+                msg.setMsgType(Constants.MYMSG_TYPE_LEDCONTROL_REQ);
                 msg.setToId("system");
                 msg.setFromId(user.getId()+"");
                 msg.setDate(new Date());
                 msg.setUuid(UUIDUtil.uuid());
                 msg.setContent("0");
                 String msgJson = JsonUtil.toJson(msg);
-                IoTPublishString(Constants.IOT_TOPOIC_LEDCONTROL,AWSIotMqttQos.QOS1, msgJson);
+                IoTPublishString(Constants.IOT_TOPOIC_PICONTROL,AWSIotMqttQos.QOS1, msgJson);
             }else{
                 MyMessage msg = new MyMessage();
-                msg.setMsgType(Constants.MYMSG_TYPE_GETFRIENDS_REQ);
+                msg.setMsgType(Constants.MYMSG_TYPE_LEDCONTROL_REQ);
                 msg.setToId("system");
                 msg.setFromId(user.getId()+"");
                 msg.setDate(new Date());
                 msg.setUuid(UUIDUtil.uuid());
                 msg.setContent("1");
                 String msgJson = JsonUtil.toJson(msg);
-                IoTPublishString(Constants.IOT_TOPOIC_LEDCONTROL,AWSIotMqttQos.QOS1, msgJson);
+                IoTPublishString(Constants.IOT_TOPOIC_PICONTROL,AWSIotMqttQos.QOS1, msgJson);
+            }
+        }
+
+        public void contralInfrared(boolean flig){
+            Log.i(LOG_TAG, "调用的iotservice的contralLED（）");
+            if(flig){
+                MyMessage msg = new MyMessage();
+                msg.setMsgType(Constants.MYMSG_TYPE_CONTROLINFRARED_REQ);
+                msg.setToId("system");
+                msg.setFromId(user.getId()+"");
+                msg.setDate(new Date());
+                msg.setUuid(UUIDUtil.uuid());
+                msg.setContent("0");
+                String msgJson = JsonUtil.toJson(msg);
+                IoTPublishString(Constants.IOT_TOPOIC_PICONTROL,AWSIotMqttQos.QOS1, msgJson);
+            }else{
+                MyMessage msg = new MyMessage();
+                msg.setMsgType(Constants.MYMSG_TYPE_CONTROLINFRARED_REQ);
+                msg.setToId("system");
+                msg.setFromId(user.getId()+"");
+                msg.setDate(new Date());
+                msg.setUuid(UUIDUtil.uuid());
+                msg.setContent("1");
+                String msgJson = JsonUtil.toJson(msg);
+                IoTPublishString(Constants.IOT_TOPOIC_PICONTROL,AWSIotMqttQos.QOS1, msgJson);
             }
         }
     }
@@ -400,6 +425,8 @@ public class IoTService extends IoTBaseService{
                                                     if(friend != null){
                                                         notificationHelper.showChatMessageNotify(chatMessage,friend);
                                                     }
+                                                case Constants.MYMSG_TYPE_CONTROLINFRARED_RESP:
+                                                    notificationHelper.showNomalNotify(msg.getContent(), "红外警告");
                                                 default:
                                                     Log.d(LOG_TAG, " iot服务接收到未知类型的消息: " + msg);
                                                     break;

@@ -125,6 +125,47 @@ public class NotificationHelper {
 
 	}
 
+	public void showNomalNotify(String msg,String title) {
+		Builder mBuilder = new Builder(mContext);
+		RemoteViews mRemoteViews = new RemoteViews(mContext.getPackageName(),
+				R.layout.chatmassage_notification_item);
+		mRemoteViews.setImageViewResource(R.id.user_photo,
+				R.drawable.channel_qq);
+		// API3.0 以上的时候显示按钮，否则消失
+		mRemoteViews.setTextViewText(R.id.subject, title);
+		mRemoteViews.setTextViewText(R.id.request_msg, msg);
+
+		// 点击的事件处理
+//		Intent intent = new Intent();
+//		intent.setClass(mContext, ChatActivity.class);
+//		intent.putExtra(Constants.INTENT_EXTRA_CHAT_FRIEND, msg);
+//
+//		PendingIntent intent_paly = PendingIntent.getBroadcast(mContext, 2,
+//				intent, PendingIntent.FLAG_UPDATE_CURRENT);
+//		mRemoteViews.setOnClickPendingIntent(R.id.notification, intent_paly);
+
+		// textStyle.bigText("好顶顶顶顶顶顶顶顶顶顶顶");
+		mBuilder.setContent(mRemoteViews)
+				.setContentIntent(
+						getDefalutIntent(Notification.FLAG_ONGOING_EVENT))
+				.setWhen(System.currentTimeMillis())
+				// 通知产生的时间，会在通知信息里显示
+				.setTicker("重要通知").setPriority(Notification.PRIORITY_DEFAULT)// 设置该通知优先级
+				.setOngoing(false).setSmallIcon(R.drawable.icon);
+
+		Notification notify = mBuilder.build();
+		notify.bigContentView = mRemoteViews;
+		notify.flags = Notification.FLAG_AUTO_CANCEL;
+		notify.defaults = Notification.DEFAULT_SOUND;
+		// 会报错，还在找解决思路
+		// notify.contentView = mRemoteViews;
+		// notify.contentIntent = PendingIntent.getActivity(this, 0, new
+		// Intent(), 0);
+		mNotificationManager.notify(0, notify);
+		notificationMap.put(0,notify);
+
+	}
+
 	public PendingIntent getDefalutIntent(int flags) {
 		PendingIntent pendingIntent = PendingIntent.getActivity(mContext, 1,
 				new Intent(), flags);

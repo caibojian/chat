@@ -13,7 +13,7 @@ import android.webkit.WebViewClient;
 import android.widget.ZoomButtonsController;
 
 import com.cai.chat_05.ChatActivity;
-import com.cai.chat_05.LEDControlActivity;
+import com.cai.chat_05.PiControlActivity;
 import com.cai.chat_05.LiveVideoActivity;
 import com.cai.chat_05.LoginActivity;
 import com.cai.chat_05.MainActivity;
@@ -282,7 +282,7 @@ public class UIHelper {
 	 * @param mContext
      */
 	public static void ledControlActivity(Activity mContext) {
-		Intent intent = new Intent(mContext, LEDControlActivity.class);
+		Intent intent = new Intent(mContext, PiControlActivity.class);
 		mContext.startActivity(intent);
 	}
 	/**

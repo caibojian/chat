@@ -115,7 +115,7 @@ public abstract class IoTBaseService extends Service {
         keystorePassword = KEYSTORE_PASSWORD;
         certificateId = CERTIFICATE_ID;
 
-        if (AWSIotKeystoreHelper.isKeystorePresent(keystorePath, keystoreName)) {
+        if (!AWSIotKeystoreHelper.isKeystorePresent(keystorePath, keystoreName)) {
             try {
                 InputStream inputStream = getAssets().open("caibojian.bks");
                 ByteArrayOutputStream swapStream = new ByteArrayOutputStream();

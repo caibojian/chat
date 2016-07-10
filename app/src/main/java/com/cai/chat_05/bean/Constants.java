@@ -185,6 +185,7 @@ public class Constants {
 	public final static int STATUS_SEND = 1;// 默认状态已发送
 	public final static int STATUS_RECEIVED = 2;// 已收到
 	public final static int STATUS_READ = 3;// 已阅读
+
 	/*
 	通用消息类型
 	 */
@@ -195,6 +196,12 @@ public class Constants {
 	public final static int MYMSG_TYPE_GETFRIENDSGROUP_REQ = 4;// 通用消息类型：获取好友分组请求
 	public final static int MYMSG_TYPE_GETFRIENDSGROUP_RESP = 5;// 通用消息类型：获取好友分组结果
 	public final static int MYMSG_TYPE_CHAT_UU = 6;// 通用消息类型：IOT获取的聊天消息
+	//控制树莓派
+	public final static int MYMSG_TYPE_CONTROLINFRARED_REQ = 7;// 树莓派消息类型：控制红外线开关
+	public final static int MYMSG_TYPE_CONTROLINFRARED_RESP  = 8;// 树莓派消息类型：返回有人入侵消息
+
+	public final static int MYMSG_TYPE_LEDCONTROL_REQ = 9;// 树莓派消息类型：控制LED灯开关
+	public final static int MYMSG_TYPE_LEDCONTROL_RESP = 10;// 树莓派消息类型：返回LED灯状态
 
 	/*
 	订阅主题类型topic
@@ -202,5 +209,5 @@ public class Constants {
 	public final static String IOT_TOPOIC_LOGIN = "IOT_TOPOIC_LOGIN";// 订阅主题类型:登陆主题
 	public final static String IOT_TOPOIC_GETFRIENDS = "IOT_TOPOIC_GETFRIENDS";// 订阅主题类型:获取好友
 	public final static String IOT_TOPOIC_GETFRIENDSGROUP = "IOT_TOPOIC_GETFRIENDSGROUP";// 订阅主题类型:获取好友分组
-	public final static String IOT_TOPOIC_LEDCONTROL = "IOT_TOPOIC_LEDCONTROL";// 订阅主题类型:led灯控制主题
+	public final static String IOT_TOPOIC_PICONTROL = "IOT_TOPOIC_PICONTROL";// 订阅主题类型:树莓派控制主题
 }
